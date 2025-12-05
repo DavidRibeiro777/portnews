@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Ribeiro - Designer de Fotos para Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --card: #111118;
+            --muted: #c7c7ce;
+            --acc: #7c3aed;
+            --acc-2: #a855f7;
+        }
+        
+        body {
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            background-color: var(--bg);
+            color: white;
+        }
+        
+        .paper {
+            position: relative;
+            background: 
+                radial-gradient(1200px 600px at 30% -10%, rgba(124,58,237,.16), transparent 60%),
+                radial-gradient(1000px 500px at 80% 10%, rgba(168,85,247,.12), transparent 60%),
+                #0b0b0f;
+        }
+        
+        .paper:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .18;
+            pointer-events: none;
+            background: repeating-linear-gradient(145deg, rgba(255,255,255,.04) 0 2px, rgba(0,0,0,.03) 2px 4px);
+            mix-blend-mode: overlay;
+        }
+        
+        .badge {
+            background: linear-gradient(90deg, var(--acc), var(--acc-2));
+        }
+        
+        .sig {
+            font-family: Pacifico, cursive;
+            letter-spacing: .5px;
+        }
+        
+        /* Keyframes para animações */
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Estilos para o carrossel */
+        .carousel-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            aspect-ratio: 1/1; /* Proporção quadrada 1:1 */
+            overflow: hidden;
+            border-radius: 1.5rem;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);
+        }
+        
+        .carousel-images {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+        
+        .carousel-image {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o container mantendo proporção */
+            flex-shrink: 0;
+        }
+        
+        /* Indicadores simplificados - apenas visuais */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            gap: 6px;
+            pointer-events: none; /* Impede interação */
+        }
+        
+        .carousel-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            .carousel-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="paper">
+    <!-- Navbar -->
+    <header class="fixed inset-x-0 top-0 z-50">
+        <div class="mx-auto max-w-7xl px-4">
+            <div class="mt-4 flex items-center justify-between rounded-2xl bg-black/30 px-4 py-3 ring-1 ring-white/10 backdrop-blur">
+                <a href="#home" class="font-extrabold tracking-tight">David <span class="text-[var(--acc)]">Ribeiro</span></a>
+                <nav class="hidden gap-6 md:flex text-sm text-gray-300">
+                    <a href="#segmentos" class="hover:text-white transition">Segmentos</a>
+                    <a href="#nichos" class="hover:text-white transition">Nichos</a>
+                    <a href="#resultados" class="hover:text-white transition">Resultados</a>
+                    <a href="#investimento" class="hover:text-white transition">Investimento</a>
+                    <a href="#contato" class="hover:text-white transition">Contato</a>
+                </nav>
+                <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento%20para%20imagens%20de%20produto." class="hidden md:inline-flex items-center gap-2 rounded-xl badge px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 transition hover:scale-[1.03] active:scale-95">Solicitar orçamento</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+<!-- Hero Section -->
+<section id="home" class="relative pt-28 md:pt-36 overflow-hidden">
+    <!-- Elementos decorativos de fundo -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-[var(--acc)]/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-[var(--acc-2)]/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 relative z-10">
+        <div class="grid items-center gap-12 lg:gap-20 md:grid-cols-12">
+            <!-- Conteúdo Textual -->
+            <div class="md:col-span-7 space-y-6 [animation:fade-up_0.8s_ease-out_both]">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-3">
+                    <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+                        Destaque-se
+                    </span>
+                    <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+                </div>
+
+                <!-- Título Principal -->
+                <div class="space-y-4">
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                        <span class="text-white">DESIGNER</span>
+                        <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">de FOTOS</span>
+                    </h1>
+                    <p class="text-xl font-semibold text-white/90 tracking-wide uppercase">PARA MARKETPLACE</p>
+                </div>
+
+                <!-- Descrição -->
+                <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-xl">
+                    Transformo seus produtos em <strong class="text-white">imagens que vendem</strong>. 
+                    Edições estratégicas baseadas em SEO e visual moderno para 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)] font-semibold">Shopee, Mercado Livre, TikTok Shop</span> e mais.
+                </p>
+
+                <!-- Estatísticas Rápidas -->
+                <div class="grid grid-cols-3 gap-4 py-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">+200</div>
+                        <div class="text-xs text-[var(--muted)]">Fotos Editadas</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">+100</div>
+                        <div class="text-xs text-[var(--muted)]">Clientes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">+50%</div>
+                        <div class="text-xs text-[var(--muted)]">Conversão</div>
+                    </div>
+                </div>
+
+                <!-- Call-to-Action -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#investimento" 
+                       class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-black px-6 py-4 text-base font-semibold transition-all hover:scale-[1.05] hover:shadow-2xl hover:shadow-white/20">
+                        Ver Planos e Preços
+                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </a>
+                    
+                    <a href="https://wa.me/5519994772654?text=Olá David! Quero um orçamento para imagens de produto." 
+                       class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white/5 px-6 py-4 text-base font-semibold ring-1 ring-white/20 transition-all hover:scale-[1.05] hover:bg-white/10 hover:ring-white/30">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411"/>
+                        </svg>
+                        Falar no WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Carrossel de Imagens -->
+            <div class="md:col-span-5 relative [animation:fade-up_0.8s_.2s_both]">
+                <div class="relative overflow-hidden rounded-3xl shadow-2xl shadow-purple-500/20">
+                    <div class="carousel-container">
+                        <!-- Destaque no carrossel -->
+                        <div class="absolute top-4 left-4 z-10">
+                         <div class="absolute top-4 right-4 z-10">
+  <span class="inline-block rounded-md badge px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/30 ring-1 ring-white/20 backdrop-blur-sm">
+    Fotos criadas por mim
+  </span>
+</div>
+                        </div>
+                        
+                        <!-- Indicadores do Carrossel (apenas visuais) -->
+                        <div class="carousel-indicators">
+                            <div class="carousel-indicator active"></div>
+                            <div class="carousel-indicator"></div>
+                            <div class="carousel-indicator"></div>
+                            <div class="carousel-indicator"></div>
+                        </div>
+
+                        <div class="carousel-images">
+                            <!-- Imagens com proporção 1:1 -->
+                            <img src="img/2.png" alt="Edição profissional para marketplace - produto otimizado" class="carousel-image" />
+                            <img src="img/teclado2.png" alt="Composição criativa para anúncios - aumento de conversão" class="carousel-image" />
+                        <img src="img/beneficios.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+                            <img src="img/10.png" alt="Produto em destaque - edição estratégica para vendas" class="carousel-image" />
+                        </div>
+                        
+                        <!-- Overlay gradiente -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
+                    </div>
+                </div>
+
+                <!-- Elemento decorativo flutuante -->
+                <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)] rounded-2xl rotate-12 opacity-20 blur-xl"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div class="w-1 h-3 bg-white/60 rounded-full mt-2"></div>
+        </div>
+    </div>
+</section>
+
+    <script>
+        // Carrossel automático sem interação do usuário
+        const carousel = document.querySelector('.carousel-images');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        let currentIndex = 0;
+        const totalSlides = 4; // Número total de slides
+
+        // Função para atualizar os indicadores
+        function updateIndicators() {
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Função para avançar para o próximo slide
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateIndicators();
+        }
+
+        // Iniciar carrossel automático
+        setInterval(nextSlide, 3000);
+
+        // Atualizar indicadores iniciais
+        updateIndicators();
+    </script>
+  <!-- SEGMENTOS -->
+<!-- SEGMENTOS MELHORADO -->
+<section id="segmentos" class="mx-auto mt-24 max-w-7xl px-4">
+  <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+    <!-- Conteúdo Textual -->
+    <div class="space-y-6 [animation:fade-up_0.7s_ease-out_both]">
+      <div class="inline-flex items-center gap-3">
+        <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+          Segmentos
+        </span>
+        <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+      </div>
+      
+      <h2 class="text-3xl font-bold leading-tight md:text-4xl">
+        Imagens estratégicas que <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">aumentam o desejo</span> de compra
+      </h2>
+      
+      <ul class="space-y-4 text-[var(--muted)]">
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 flex h-2 w-2 flex-shrink-0 rounded-full bg-[var(--acc)]"></div>
+          <span>Destaque de <strong class="text-white">benefícios</strong> e <strong class="text-white">detalhes</strong> do produto</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 flex h-2 w-2 flex-shrink-0 rounded-full bg-[var(--acc)]"></div>
+          <span>Transformo fotos simples em <strong class="text-white">anúncios impactantes</strong></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 flex h-2 w-2 flex-shrink-0 rounded-full bg-[var(--acc)]"></div>
+          <span><strong class="text-white">Edição e montagem</strong> de kits e composições</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="mt-1.5 flex h-2 w-2 flex-shrink-0 rounded-full bg-[var(--acc)]"></div>
+          <span>Entrega rápida no <strong class="text-white">formato ideal</strong> para cada plataforma</span>
+        </li>
+      </ul>
+
+      <!-- Call to Action adicional -->
+      <div class="pt-4">
+        <a href="#investimento" class="group inline-flex items-center gap-2 rounded-xl bg-white/5 px-4 py-3 text-sm font-semibold ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
+          <span>Ver planos e preços</span>
+          <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Grid de Imagens Melhorado -->
+    <div class="grid grid-cols-2 gap-4 lg:gap-6">
+      <!-- Imagem Principal -->
+      <div class="col-span-2 rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both] aspect-[4/3]">
+        <div class="relative h-full w-full">
+          <img 
+            src="img/mouse.png" 
+            alt="Exemplos de segmentação e composições" 
+            class="h-full w-full rounded-xl object-cover"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 to-transparent"></div>
+        </div>
+      </div>
+      
+      <!-- Imagens Secundárias -->
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both] aspect-square">
+        <img 
+          src="img/alicate.png" 
+          alt="Edição estratégica para marketplace" 
+          class="h-full w-full rounded-xl object-cover"
+          loading="lazy"
+        />
+      </div>
+      
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.3s_both] aspect-square">
+        <img 
+          src="img/92.png" 
+          alt="Exemplo de montagem e composições" 
+          class="h-full w-full rounded-xl object-cover"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- NICHOS / GALERIA CORRIGIDA -->
+<section id="nichos" class="mx-auto mt-24 max-w-7xl px-4">
+  <div class="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-12">
+    <!-- Cabeçalho e Texto -->
+    <div class="space-y-6 [animation:fade-up_0.7s_ease-out_both]">
+      <div class="inline-flex items-center gap-3">
+        <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+          Nichos
+        </span>
+        <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+      </div>
+      
+      <h2 class="text-3xl font-bold leading-tight md:text-4xl">
+        Para <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">todos os nichos</span>
+      </h2>
+      
+      <p class="text-lg text-[var(--muted)]">
+        Crio imagens impactantes para diversos segmentos, sempre focando na conversão e no apelo visual.
+      </p>
+
+      <!-- Lista de Nichos -->
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Moda & Vestuário</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Eletrônicos</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Beleza</span>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Casa & Decoração</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Esportes</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 w-1.5 rounded-full bg-[var(--acc)] flex-shrink-0"></div>
+            <span class="text-sm font-medium text-white">Infantil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de Imagens Corrigido -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+      <!-- Imagem Principal -->
+      <div class="sm:col-span-2 rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both]">
+        <div class="aspect-[4/3] relative group">
+          <img 
+            src="img/estojo felpudo.png" 
+            alt="Estojo felpudo - exemplo de produto de moda e beleza" 
+            class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <!-- Badge sobre a imagem -->
+          <div class="absolute bottom-3 left-3">
+            <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+              Infantil
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Imagens Secundárias -->
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both]">
+        <div class="aspect-square relative group">
+          <img 
+            src="img/caixa organizadora.png" 
+            alt="Composição de produtos para casa e decoração" 
+            class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <!-- Badge sobre a imagem -->
+          <div class="absolute bottom-3 left-3">
+            <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+              Casa & Decora
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.3s_both]">
+        <div class="aspect-square relative group">
+          <img 
+            src="img/tenis.png" 
+            alt="Exemplo de edição para produtos eletrônicos" 
+            class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <!-- Badge sobre a imagem -->
+          <div class="absolute bottom-3 left-3">
+            <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+              
+Moda & Vestuário
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- RESULTADOS / SOCIAL PROOF -->
+<!-- RESULTADOS / SOCIAL PROOF MELHORADO -->
+<!-- RESULTADOS / SOCIAL PROOF MELHORADO -->
+<section id="resultados" class="mx-auto mt-24 max-w-7xl px-4">
+  <div class="grid gap-12 lg:grid-cols-2 lg:items-start">
+    <!-- Lado Esquerdo - Resultados e Plataformas -->
+    <div class="space-y-6 [animation:fade-up_0.7s_ease-out_both]">
+      <div class="inline-flex items-center gap-3">
+        <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+          Resultados
+        </span>
+        <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+      </div>
+      
+      <h2 class="text-3xl font-bold leading-tight md:text-4xl">
+        Resultados <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">que impressionam</span>
+      </h2>
+      
+      <p class="text-lg text-[var(--muted)]">
+        Clientes relatam aumento significativo de cliques, engajamento e vendas após otimizar as imagens dos anúncios.
+      </p>
+
+      <!-- Estatísticas -->
+      <div class="grid grid-cols-2 gap-4 pt-4">
+        <div class="rounded-xl bg-gradient-to-br from-black/30 to-black/50 p-4 ring-1 ring-white/10 text-center">
+          <div class="text-2xl font-bold text-white">+200%</div>
+          <div class="text-xs text-[var(--muted)] mt-1">Aumento de cliques</div>
+        </div>
+        <div class="rounded-xl bg-gradient-to-br from-black/30 to-black/50 p-4 ring-1 ring-white/10 text-center">
+          <div class="text-2xl font-bold text-white">+50%</div>
+          <div class="text-xs text-[var(--muted)] mt-1">Conversão em vendas</div>
+        </div>
+      </div>
+
+      <!-- Plataformas -->
+      <div class="rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 mt-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="h-1.5 w-6 rounded-full bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]"></div>
+          <p class="text-sm font-semibold uppercase tracking-widest text-white/80">Plataformas Atendidas</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-green-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">Mercado Livre</span>
+            </div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-orange-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">Shopee</span>
+            </div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-red-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">TikTok Shop</span>
+            </div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-pink-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">Shein</span>
+            </div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-yellow-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">Amazon</span>
+            </div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02] group">
+            <div class="flex items-center gap-2">
+              <div class="h-2 w-2 rounded-full bg-blue-400 flex-shrink-0"></div>
+              <span class="text-sm font-medium text-white">Magalu</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-white/10">
+          <p class="text-xs text-[var(--muted)] text-center">
+            E muitas outras plataformas
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado Direito - Dois Depoimentos no formato 1200:750 -->
+    <div class="space-y-6">
+      <!-- Primeiro Depoimento -->
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both]">
+        <div class="aspect-[1200/750] relative group">
+          <img 
+            src="img/relatos.PNG" 
+            alt="Depoimento de cliente - feedback positivo sobre aumento de vendas" 
+            class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <!-- Badge sobre a imagem -->
+          <div class="absolute top-3 left-3">
+            <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+              Metricas Clientes
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segundo Depoimento -->
+      <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both]">
+        <div class="aspect-[1200/750] relative group">
+          <img 
+            src="img/calculadora.PNG" 
+            alt="Outro depoimento de cliente - resultados com imagens otimizadas" 
+            class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <!-- Badge sobre a imagem -->
+          <div class="absolute top-3 left-3">
+            <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+              Metricas Clientes
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO / PACOTES REALIZADOS COM CARROSSEL MANUAL -->
+<!-- PORTFÓLIO / PACOTES REALIZADOS COM TEXTOS MELHORADOS -->
+<section id="portfolio" class="mx-auto mt-24 max-w-7xl px-4">
+  <div class="text-center mb-12 [animation:fade-up_0.7s_ease-out_both]">
+    <div class="inline-flex items-center gap-3 justify-center">
+      <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+        Portfólio
+      </span>
+      <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+    </div>
+    
+    <h2 class="mt-4 text-3xl font-bold leading-tight md:text-4xl">
+      Transformações <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">que vendem</span> mais
+    </h2>
+    
+    <p class="mt-4 text-lg text-[var(--muted)] max-w-2xl mx-auto">
+      Veja como transformei produtos comuns em anúncios de alto desempenho para meus clientes
+    </p>
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Pacote 1 - Mochilas Escolares -->
+    <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.1s_both]">
+      <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
+        <div class="carousel-images-small">
+          <img src="img/12.png" alt="Mochila escolar - composição criativa" class="carousel-image-small" loading="lazy" />
+          <img src="img/13.png" alt="Mochila - detalhes dos compartimentos" class="carousel-image-small" loading="lazy" />
+          <img src="img/14.png" alt="Mochila - design ergonômico" class="carousel-image-small" loading="lazy" />
+          <img src="img/15.png" alt="Mochila - materiais resistentes" class="carousel-image-small" loading="lazy" />
+          <img src="img/16.png" alt="Mochila - cores vibrantes" class="carousel-image-small" loading="lazy" />
+          <img src="img/7.png" alt="Mochila - uso prático" class="carousel-image-small" loading="lazy" />
+          <img src="img/8.png" alt="Mochila - organização interna" class="carousel-image-small" loading="lazy" />
+          <img src="img/9.png" alt="Mochila - alças acolchoadas" class="carousel-image-small" loading="lazy" />
+          <img src="img/10.png" alt="Mochila - durabilidade" class="carousel-image-small" loading="lazy" />
+          <img src="img/11.png" alt="Mochila - estilo juvenil" class="carousel-image-small" loading="lazy" />
+        </div>
+        
+        <!-- Indicadores do Carrossel -->
+        <div class="carousel-indicators-small">
+          <div class="carousel-indicator-small active" data-index="0"></div>
+          <div class="carousel-indicator-small" data-index="1"></div>
+          <div class="carousel-indicator-small" data-index="2"></div>
+          <div class="carousel-indicator-small" data-index="3"></div>
+          <div class="carousel-indicator-small" data-index="4"></div>
+          <div class="carousel-indicator-small" data-index="5"></div>
+          <div class="carousel-indicator-small" data-index="6"></div>
+          <div class="carousel-indicator-small" data-index="7"></div>
+          <div class="carousel-indicator-small" data-index="8"></div>
+          <div class="carousel-indicator-small" data-index="9"></div>
+        </div>
+        
+        <!-- Badge de quantidade -->
+        <div class="absolute top-3 right-3">
+          <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+            10 fotos
+          </span>
+        </div>
+        
+        <!-- Botões de navegação -->
+        <button class="carousel-prev-small absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="carousel-next-small absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Conteúdo Melhorado -->
+      <div class="space-y-4">
+        <!-- Header com ícone -->
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 ring-1 ring-purple-500/30">
+              <svg class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white">Mochilas</h3>
+              <div class="mt-1 flex items-center gap-2">
+                <span class="inline-block rounded-full bg-purple-500/20 px-2 py-1 text-xs font-medium text-purple-400 ring-1 ring-purple-500/30">
+                  Nicho: Escolar
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Descrição Melhorada -->
+        <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
+          <p class="text-sm leading-relaxed text-[var(--muted)]">
+           <span class="font-semibold text-white">Criação estratégica de imagens</span> para mochilas infanto-juvenis, destacando 
+<span class="text-white">composições criativas</span>, <span class="text-white">layout personalizado</span> e 
+<span class="text-white">benefícios visuais</span> que aumentam a conversão.
+          </p>
+        </div>
+
+        <!-- Benefícios em Destaque -->
+     <div class="space-y-2">
+  <div class="flex items-center gap-2 text-sm">
+    <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span class="text-[var(--muted)]">Imagens que destacam a <strong class="text-white">Mochila</strong> visualmente</span>
+  </div>
+  <div class="flex items-center gap-2 text-sm">
+    <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span class="text-[var(--muted)]">Composição criativa dos <strong class="text-white">Produtos</strong></span>
+  </div>
+  <div class="flex items-center gap-2 text-sm">
+    <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span class="text-[var(--muted)]">Destaque personalizado de <strong class="text-white">Benefícios</strong></span>
+  </div>
+</div>
+
+        <!-- Footer com Plataforma e Resultados -->
+        <div class="flex items-center justify-between border-t border-white/10 pt-3">
+          <div class="flex items-center gap-2">
+            <div class="rounded-lg bg-green-500/20 p-1.5">
+              <svg class="h-3 w-3 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold text-white">Mercado Livre</span>
+          </div>
+          <span class="rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 px-3 py-1 text-xs font-bold text-green-400 ring-1 ring-green-500/30">
+            +30% CTR
+          </span>
+        </div>
+
+        <!-- Tags de Destaque -->
+        <div class="flex flex-wrap gap-1">
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Conforto</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Organização</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Durabilidade</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Estilo Juvenil</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pacote 2 - Telas de Proteção -->
+    <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.2s_both]">
+      <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
+        <div class="carousel-images-small">
+          <img src="img/suporte1.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+           <img src="img/suporte2.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+             <img src="img/suporte3.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+               <img src="img/suporte4.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+                 <img src="img/suporte5.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
+        </div>
+        
+        <!-- Indicadores do Carrossel -->
+        <div class="carousel-indicators-small">
+          <div class="carousel-indicator-small active" data-index="0"></div>
+          <div class="carousel-indicator-small" data-index="1"></div>
+          <div class="carousel-indicator-small" data-index="2"></div>
+          <div class="carousel-indicator-small" data-index="3"></div>
+          <div class="carousel-indicator-small" data-index="4"></div>
+        </div>
+        
+        <!-- Badge de quantidade -->
+        <div class="absolute top-3 right-3">
+          <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+            5 fotos
+          </span>
+        </div>
+        
+        <!-- Botões de navegação -->
+        <button class="carousel-prev-small absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="carousel-next-small absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Conteúdo Melhorado -->
+     <!-- Conteúdo Melhorado -->
+<div class="space-y-4">
+  <!-- Header com ícone -->
+  <div class="flex items-start justify-between">
+    <div class="flex items-center gap-3">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 ring-1 ring-purple-500/30">
+        <svg class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold text-white">Suporte para Notebook</h3>
+        <div class="mt-1 flex items-center gap-2">
+          <span class="inline-block rounded-full bg-purple-500/20 px-2 py-1 text-xs font-medium text-purple-400 ring-1 ring-purple-500/30">
+            Nicho: Acessórios Tech
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Descrição Focada na Criação -->
+  <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
+    <p class="text-sm leading-relaxed text-[var(--muted)]">
+      <span class="font-semibold text-white">Criação estratégica de imagens</span> para suportes de notebook, com 
+      <span class="text-white">composições criativas</span> que destacam 
+      <span class="text-white">ajustabilidade</span>, <span class="text-white">funcionalidade</span> e 
+      <span class="text-white">design moderno</span> para aumentar conversões.
+    </p>
+  </div>
+
+  <!-- Benefícios Visuais em Destaque -->
+  <div class="space-y-2">
+    <div class="flex items-center gap-2 text-sm">
+   
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <span class="text-[var(--muted)]">Composição criativa da <strong class="text-white">ajustabilidade</strong></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <span class="text-[var(--muted)]">Layout que destaca o <strong class="text-white">design</strong></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <span class="text-[var(--muted)]">Fotos que mostram os <strong class="text-white">benefícios</strong> </span>
+    </div>
+  </div>
+
+  <!-- Footer com Plataforma e Resultados -->
+  <div class="flex items-center justify-between border-t border-white/10 pt-3">
+    <div class="flex items-center gap-2">
+      <div class="rounded-lg bg-green-500/20 p-1.5">
+        <svg class="h-3 w-3 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+      </div>
+      <span class="text-xs font-semibold text-white">Mercado Livre</span>
+    </div>
+    <span class="rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 px-3 py-1 text-xs font-bold text-green-400 ring-1 ring-green-500/30">
+      + Conversão
+    </span>
+  </div>
+
+  <!-- Tags de Destaque Visual -->
+  <div class="flex flex-wrap gap-1">
+    <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Portátil</span>
+    <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Ajustável</span>
+    <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Design Moderno</span>
+    <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Conforto</span>
+
+  </div>
+</div>
+</div>
+
+    <!-- Pacote 3 - Moda Infantil (mantido como exemplo) -->
+    <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.3s_both]">
+      <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
+        <div class="carousel-images-small">
+          <img src="img/42.jpeg" alt="Composição criativa - Tênis Adidas ângulo frontal" class="carousel-image-small" loading="lazy" />
+          <img src="img/44.png" alt="Layout personalizado - Detalhes do design esportivo" class="carousel-image-small" loading="lazy" />
+          <img src="img/40.png" alt="Imagem estratégica - Conforto e tecnologia" class="carousel-image-small" loading="lazy" />
+          <img src="img/45.png" alt="Criação visual - Destaque dos materiais premium" class="carousel-image-small" loading="lazy" />
+          <img src="img/41.png" alt="Composição inovadora - Estilo urbano e esportivo" class="carousel-image-small" loading="lazy" />
+          <img src="img/43.png" alt="Layout criativo - Benefícios do calçado em uso" class="carousel-image-small" loading="lazy" />
+        </div>
+        
+        <!-- Indicadores do Carrossel -->
+        <div class="carousel-indicators-small">
+          <div class="carousel-indicator-small active" data-index="0"></div>
+          <div class="carousel-indicator-small" data-index="1"></div>
+          <div class="carousel-indicator-small" data-index="2"></div>
+          <div class="carousel-indicator-small" data-index="3"></div>
+          <div class="carousel-indicator-small" data-index="4"></div>
+          <div class="carousel-indicator-small" data-index="5"></div>
+        </div>
+        
+        <!-- Badge de quantidade -->
+        <div class="absolute top-3 right-3">
+          <span class="inline-block rounded-md bg-black/60 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+            6 fotos
+          </span>
+        </div>
+        
+        <!-- Botões de navegação -->
+        <button class="carousel-prev-small absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="carousel-next-small absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-1.5 transition-all opacity-0 group-hover:opacity-100">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Conteúdo Melhorado -->
+      <div class="space-y-4">
+        <!-- Header com ícone -->
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/20 to-black/20 ring-1 ring-red-500/30">
+              <svg class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white">Coleção Adidas</h3>
+              <div class="mt-1 flex items-center gap-2">
+                <span class="inline-block rounded-full bg-red-500/20 px-2 py-1 text-xs font-medium text-red-400 ring-1 ring-red-500/30">
+                  Nicho: Calçados Esportivos
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Descrição Focada na Criação -->
+        <div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
+          <p class="text-sm leading-relaxed text-[var(--muted)]">
+            <span class="font-semibold text-white">Criação estratégica de imagens</span> para tênis da marca Adidas, com 
+            <span class="text-white">composições criativas</span> que destacam tecnologia, 
+            <span class="text-white">design inovador</span> e <span class="text-white">conforto premium</span>.
+          </p>
+        </div>
+    
+        <!-- Benefícios Visuais -->
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-[var(--muted)]">Fotos que evidenciam a <strong class="text-white">tecnologia</strong> esportiva</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-[var(--muted)]">Composição criativa do <strong class="text-white">design</strong> exclusivo</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-[var(--muted)]">Layout que destaca o <strong class="text-white">conforto</strong> premium</span>
+          </div>
+        </div>
+    
+        <!-- Footer com Plataforma e Resultados -->
+        <div class="flex items-center justify-between border-t border-white/10 pt-3">
+          <div class="flex items-center gap-2">
+            <div class="rounded-lg bg-green-500/20 p-1.5">
+              <svg class="h-3 w-3 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold text-white">Mercado Livre</span>
+          </div>
+          <span class="rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 px-3 py-1 text-xs font-bold text-green-400 ring-1 ring-green-500/30">
+            +30% Engajamento
+          </span>
+        </div>
+    
+        <!-- Tags de Destaque Visual -->
+        <div class="flex flex-wrap gap-1">
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Tecnologia</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Design</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Conforto</span>
+          <span class="inline-block rounded-full bg-white/10 px-2 py-1 text-[10px] font-medium text-white/80">Esportivo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Estilos para os carrosseis pequenos do portfólio */
+  .carousel-container-small {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+  
+  .carousel-images-small {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-image-small {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  
+  .carousel-indicators-small {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    pointer-events: none;
+  }
+  
+  .carousel-indicator-small {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: all;
+  }
+  
+  .carousel-indicator-small.active {
+    background-color: white;
+    transform: scale(1.2);
+  }
+  
+  .carousel-prev-small,
+  .carousel-next-small {
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+  }
+</style>
+
+<script>
+  // Inicializar todos os carrosseis do portfólio - SEM AUTOPLAY
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousels = document.querySelectorAll('.carousel-container-small');
+    
+    carousels.forEach(container => {
+      const images = container.querySelector('.carousel-images-small');
+      const indicators = container.querySelectorAll('.carousel-indicator-small');
+      const prevBtn = container.querySelector('.carousel-prev-small');
+      const nextBtn = container.querySelector('.carousel-next-small');
+      
+      let currentIndex = 0;
+      const totalSlides = images.children.length;
+      
+      // Função para atualizar indicadores
+      function updateIndicators() {
+        indicators.forEach((indicator, index) => {
+          if (index === currentIndex) {
+            indicator.classList.add('active');
+          } else {
+            indicator.classList.remove('active');
+          }
+        });
+      }
+      
+      // Função para ir para um slide específico
+      function goToSlide(index) {
+        currentIndex = index;
+        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateIndicators();
+      }
+      
+      // Função para próximo slide
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateIndicators();
+      }
+      
+      // Função para slide anterior
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateIndicators();
+      }
+      
+      // Event listeners para botões
+      if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+      }
+      
+      // Event listeners para indicadores
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          goToSlide(index);
+        });
+      });
+      
+      // REMOVIDO: Código do carrossel automático
+      // Não há mais setInterval para autoplay
+      
+      // Inicializar
+      updateIndicators();
+    });
+  });
+</script>
+
+<!-- INVESTIMENTO / PLANOS MELHORADO -->
+<section id="investimento" class="mx-auto mt-24 max-w-7xl px-4">
+  <div class="text-center mb-12 [animation:fade-up_0.7s_ease-out_both]">
+    <div class="inline-flex items-center gap-3 justify-center">
+      <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+        Investimento
+      </span>
+      <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+    </div>
+    
+    <h2 class="mt-4 text-3xl font-bold leading-tight md:text-4xl">
+      Planos <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">sob medida</span> para seu negócio
+    </h2>
+    
+    <p class="mt-4 text-lg text-[var(--muted)] max-w-2xl mx-auto">
+      Escolha o pacote ideal para potencializar suas vendas com imagens profissionais otimizadas para marketplaces
+    </p>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
+    <!-- Lado Esquerdo - Planos de Fotos -->
+    <div class="space-y-6">
+      <!-- Plano Básico -->
+      <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.1s_both]">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-white">Pacote Essencial</h3>
+            <p class="mt-1 text-sm text-[var(--muted)]">Ideal para testar ou produtos específicos</p>
+          </div>
+          <div class="text-right">
+            <p class="text-3xl font-extrabold text-white">R$ 39,90</p>
+            <p class="text-xs text-[var(--muted)]">5 fotos</p>
+          </div>
+        </div>
+        
+        <ul class="mt-4 space-y-2 text-sm text-[var(--muted)]">
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Tratamento profissional de 5 imagens</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Exportação nos formatos ideais</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Otimização para SEO visual</span>
+          </li>
+        </ul>
+        
+        <a href="https://wa.me/5519994772654?text=Olá! Gostaria do Pacote Essencial de 5 fotos por R$39,90" 
+           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:shadow-lg">
+          Escolher este plano
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Plano Intermediário -->
+      <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.2s_both]">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-white">Pacote Profissional</h3>
+            <p class="mt-1 text-sm text-[var(--muted)]">Perfeito para anúncios completos</p>
+          </div>
+          <div class="text-right">
+            <p class="text-3xl font-extrabold text-white">R$ 64,90</p>
+            <p class="text-xs text-[var(--muted)]">10 fotos</p>
+          </div>
+        </div>
+        
+        <ul class="mt-4 space-y-2 text-sm text-[var(--muted)]">
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Edição completa de 10 imagens</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Composições estratégicas inclusas</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Formatos para todas as plataformas</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Prioridade na entrega</span>
+          </li>
+        </ul>
+        
+        <a href="https://wa.me/5519994772654?text=Olá! Gostaria do Pacote Profissional de 10 fotos por R$64,90" 
+           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:shadow-lg">
+          Escolher este plano
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Plano Avançado -->
+      <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.3s_both]">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-white">Pacote Premium</h3>
+            <p class="mt-1 text-sm text-[var(--muted)]">Ideal para catálogos e lojas</p>
+          </div>
+          <div class="text-right">
+            <p class="text-3xl font-extrabold text-white">R$ 119,90</p>
+            <p class="text-xs text-[var(--muted)]">20 fotos</p>
+          </div>
+        </div>
+        
+        <ul class="mt-4 space-y-2 text-sm text-[var(--muted)]">
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Edição completa de 20 imagens</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Montagens e composições criativas</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Variações de cores e ângulos</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Entrega expressa (24-48h)</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-[var(--acc)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Suporte prioritário</span>
+          </li>
+        </ul>
+        
+        <a href="https://wa.me/5519994772654?text=Olá! Gostaria do Pacote Premium de 20 fotos por R$119,90" 
+           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black transition-all hover:scale-[1.02] hover:shadow-lg">
+          Escolher este plano
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Lado Direito - Plano Completo Anúncio Otimizado -->
+    <div class="space-y-6">
+      <!-- Plano Anúncio Completo -->
+      <div class="group rounded-2xl bg-gradient-to-br from-[var(--acc)]/20 to-[var(--acc-2)]/20 p-6 ring-1 ring-[var(--acc)]/30 transition-all duration-300 hover:ring-[var(--acc)]/50 hover:-translate-y-1 [animation:fade-up_0.7s_.4s_both]">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-white">Anúncio Completo</h3>
+            <p class="mt-1 text-sm text-white/80">5 fotos + título e descrição SEO</p>
+          </div>
+          <div class="text-right">
+            <p class="text-3xl font-extrabold text-white">R$ 79,90</p>
+            <p class="text-xs text-white/80">Pacote completo</p>
+          </div>
+        </div>
+        
+        <ul class="mt-4 space-y-2 text-sm text-white/80">
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>5 fotos profissionais</strong> editadas</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>Título otimizado para SEO</strong> com palavras-chave</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>Descrição estratégica</strong> para conversão</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>Palavras-chave pesquisadas</strong> no mercado</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>Estrutura persuasiva</strong> que vende mais</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="h-4 w-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span><strong>Entrega prioritária</strong> em 24-48h</span>
+          </li>
+        </ul>
+        
+        <a href="https://wa.me/5519994772654?text=Olá! Gostaria do Anúncio Completo com 5 fotos + título e descrição SEO por R$79,90" 
+           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-[var(--acc)] transition-all hover:scale-[1.02] hover:shadow-lg">
+          Quero Anúncio Completo
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Informações de Pagamento -->
+      <div class="rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 [animation:fade-up_0.7s_.5s_both]">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="h-1.5 w-6 rounded-full bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]"></div>
+          <p class="text-sm font-semibold uppercase tracking-widest text-white/80">Formas de Pagamento</p>
+        </div>
+        
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-[var(--muted)]">PIX</span>
+            <span class="text-sm font-medium text-white"></span>
+          </div>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t border-white/10">
+          <p class="text-xs text-[var(--muted)] text-center">
+            <strong>PIX:</strong> 19 99477-2654 — David Ribeiro
+          </p>
+        </div>
+      </div>
+
+      <!-- Garantia -->
+      <div class="rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 [animation:fade-up_0.7s_.6s_both]">
+        <div class="flex items-center gap-3">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-500/20">
+            <svg class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Garantia de Satisfação</p>
+            <p class="text-xs text-[var(--muted)]">Revisões gratuitas até ficar perfeito</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Final -->
+  <div class="mt-12 text-center [animation:fade-up_0.7s_.7s_both]">
+    <a href="https://wa.me/5519994772654?text=Olá David! Gostaria de tirar dúvidas sobre os planos antes de escolher." 
+       class="inline-flex items-center gap-2 rounded-2xl badge px-6 py-4 text-base font-semibold shadow-lg shadow-purple-500/20 transition hover:scale-[1.03]">
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+      </svg>
+      Tirar dúvidas no WhatsApp
+    </a>
+  </div>
+</section>
+
+  <!-- CONTATO (CTA DIRETO) -->
+<!-- CONTATO / CTA FINAL MELHORADO -->
+<section id="contato" class="mx-auto mt-24 max-w-4xl px-4 pb-24">
+  <div class="rounded-3xl bg-gradient-to-br from-[var(--acc)]/10 to-[var(--acc-2)]/10 p-8 ring-1 ring-white/10 md:p-12 text-center [animation:fade-up_0.7s_ease-out_both] relative overflow-hidden">
+    <!-- Elementos decorativos de fundo -->
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-[var(--acc)]/5 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-[var(--acc-2)]/5 rounded-full blur-xl"></div>
+    
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-3 justify-center mb-6">
+        <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
+          Vamos Começar?
+        </span>
+        <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
+      </div>
+      
+      <h2 class="text-3xl font-bold leading-tight md:text-4xl">
+        Pronto para <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">transformar</span> suas vendas?
+      </h2>
+      
+      <p class="mt-4 text-lg text-[var(--muted)] max-w-2xl mx-auto">
+        Vamos juntos criar imagens que destacam seus produtos e aumentam suas conversões. 
+        Atendo todas as principais plataformas de marketplace.
+      </p>
+
+      <!-- Benefícios Rápidos -->
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+        <div class="flex items-center gap-3 justify-center p-3 rounded-xl bg-white/5 ring-1 ring-white/10">
+          <svg class="h-5 w-5 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-sm font-medium text-white">Resposta em 5min</span>
+        </div>
+        <div class="flex items-center gap-3 justify-center p-3 rounded-xl bg-white/5 ring-1 ring-white/10">
+          <svg class="h-5 w-5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <span class="text-sm font-medium text-white">Orçamento Grátis</span>
+        </div>
+        <div class="flex items-center gap-3 justify-center p-3 rounded-xl bg-white/5 ring-1 ring-white/10">
+          <svg class="h-5 w-5 text-purple-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span class="text-sm font-medium text-white">Início Imediato</span>
+        </div>
+      </div>
+
+      <!-- CTA Principal -->
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="https://wa.me/5519994772654?text=Olá David! Vim pelo site e quero um orçamento para imagens de produto." 
+           class="group inline-flex items-center gap-3 rounded-2xl badge px-8 py-4 text-lg font-semibold shadow-2xl shadow-purple-500/30 transition-all hover:scale-[1.05] active:scale-95 hover:shadow-purple-500/40">
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411"/>
+          </svg>
+          Falar no WhatsApp Agora
+          <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+        
+      </div>
+
+      <!-- Informações de Contato Adicionais -->
+      <div class="mt-8 pt-6 border-t border-white/10">
+        <p class="text-sm text-[var(--muted)]">
+          <strong>Horário de Atendimento:</strong> Segunda a Sabado • 
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="border-t border-white/10 py-12 bg-black/20">
+  <div class="mx-auto max-w-7xl px-4">
+    <div class="grid gap-8 md:grid-cols-4 md:gap-12">
+      <!-- Logo e Descrição -->
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <a href="#home" class="font-extrabold tracking-tight text-xl">David <span class="text-[var(--acc)]">Ribeiro</span></a>
+        </div>
+        <p class="text-[var(--muted)] text-sm leading-relaxed max-w-md">
+          Transformo produtos em imagens que vendem. Especialista em edição estratégica para marketplaces 
+          com foco em aumentar conversões e engajamento.
+        </p>
+        <div class="mt-4 flex gap-3">
+          <a href="https://wa.me/5519994772654" class="text-[var(--muted)] hover:text-white transition-colors" aria-label="WhatsApp">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com" class="text-[var(--muted)] hover:text-white transition-colors" aria-label="Instagram">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+          </a>
+          <a href="mailto:davidribeiro@email.com" class="text-[var(--muted)] hover:text-white transition-colors" aria-label="Email">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links Rápidos -->
+      <div>
+        <h3 class="font-semibold text-white mb-4 text-sm uppercase tracking-widest">Navegação</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#segmentos" class="text-[var(--muted)] hover:text-white transition-colors">Segmentos</a>
+          </li>
+          <li>
+            <a href="#nichos" class="text-[var(--muted)] hover:text-white transition-colors">Nichos</a>
+          </li>
+          <li>
+            <a href="#resultados" class="text-[var(--muted)] hover:text-white transition-colors">Resultados</a>
+          </li>
+          <li>
+            <a href="#investimento" class="text-[var(--muted)] hover:text-white transition-colors">Investimento</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contato -->
+      <div>
+        <h3 class="font-semibold text-white mb-4 text-sm uppercase tracking-widest">Contato</h3>
+        <ul class="space-y-2 text-sm">
+          <li class="text-[var(--muted)]">
+            <strong class="text-white">WhatsApp:</strong> (19) 99477-2654
+          </li>
+          <li class="text-[var(--muted)]">
+            <strong class="text-white">Email:</strong> davidribeirosuporte@gmail.com
+          </li>
+          <li class="text-[var(--muted)]">
+            <strong class="text-white"></strong> Seg - Sab
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="mt-8 pt-8 border-t border-white/10">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <!-- Copyright -->
+        <div class="text-[var(--muted)] text-sm">
+          <p>© <span id="year"></span> David Ribeiro • Imagens que vendem</p>
+        </div>
+
+        <!-- Links Legais -->
+        <div class="flex gap-6 text-xs text-[var(--muted)]">
+          <a href="#" class="hover:text-white transition-colors">Política de Privacidade</a>
+          <a href="#" class="hover:text-white transition-colors">Termos de Uso</a>
+        </div>
+      </div>
+
+      <!-- Mensagem Final -->
+      <div class="mt-4 text-center md:text-left">
+        <p class="text-xs text-[var(--muted)]">
+          Transformando produtos em experiências visuais desde 2024
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    // Parallax sutil no hero
+    // Evita interferir no carrossel: só aplica se existir um elemento marcado como .hero-image
+    const heroImg = document.querySelector('#home .hero-image');
+    if (heroImg) {
+      heroImg.parentElement.addEventListener('mousemove', (e) => {
+        const r = heroImg.getBoundingClientRect();
+        const rx = (e.clientX - r.left - r.width/2) / r.width;
+        const ry = (e.clientY - r.top - r.height/2) / r.height;
+        heroImg.style.transform = `translate3d(${rx*6}px, ${ry*6}px, 0) scale(1.02)`;
+      });
+      heroImg.parentElement.addEventListener('mouseleave', ()=>{
+        heroImg.style.transform = 'translate3d(0,0,0) scale(1)';
+      });
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

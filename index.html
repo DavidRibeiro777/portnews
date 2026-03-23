@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="img/adaptadorhdmi.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,6 +22,16 @@
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
             background-color: var(--bg);
             color: white;
+            content-visibility: auto;
+        }
+
+        section {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 500px;
+        }
+
+        #home {
+            content-visibility: visible;
         }
         
         .paper {
@@ -152,7 +163,7 @@
                 <!-- Badge -->
                 <div class="inline-flex items-center gap-3">
                     <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
-                        Destaque-se
+                        Solução 360°
                     </span>
                     <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
                 </div>
@@ -160,33 +171,32 @@
                 <!-- Título Principal -->
                 <div class="space-y-4">
                     <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
-                        <span class="text-white">DESIGNER</span>
+                        <span class="text-white">ANÚNCIOS</span>
                         <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">de FOTOS</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">COMPLETOS</span>
                     </h1>
-                    <p class="text-xl font-semibold text-white/90 tracking-wide uppercase">PARA MARKETPLACE</p>
+                    <p class="text-xl font-semibold text-white/90 tracking-wide uppercase">PRONTOS PARA VENDER</p>
                 </div>
 
                 <!-- Descrição -->
                 <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-xl">
-                    Transformo seus produtos em <strong class="text-white">imagens que vendem</strong>. 
-                    Edições estratégicas baseadas em SEO e visual moderno para 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)] font-semibold">Shopee, Mercado Livre, TikTok Shop</span> e mais.
+                    Não entrego apenas fotos, entrego <strong class="text-white">vendas no automático</strong>. 
+                    Criação de <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)] font-semibold">Imagens de Alta Conversão, Títulos com SEO e Descrições Persuasivas</span> para dominar o Mercado Livre, Shopee e Amazon.
                 </p>
 
                 <!-- Estatísticas Rápidas -->
                 <div class="grid grid-cols-3 gap-4 py-4">
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-white">+200</div>
-                        <div class="text-xs text-[var(--muted)]">Fotos Editadas</div>
+                        <div class="text-2xl font-bold text-white">+500</div>
+                        <div class="text-xs text-[var(--muted)]">Anúncios Criados</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-white">+100</div>
-                        <div class="text-xs text-[var(--muted)]">Clientes</div>
+                        <div class="text-2xl font-bold text-white">Top 1%</div>
+                        <div class="text-xs text-[var(--muted)]">Posicionamento</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-white">+50%</div>
-                        <div class="text-xs text-[var(--muted)]">Conversão</div>
+                        <div class="text-2xl font-bold text-white">+300%</div>
+                        <div class="text-xs text-[var(--muted)]">CTR Médio</div>
                     </div>
                 </div>
 
@@ -194,18 +204,18 @@
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
                     <a href="#investimento" 
                        class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-black px-6 py-4 text-base font-semibold transition-all hover:scale-[1.05] hover:shadow-2xl hover:shadow-white/20">
-                        Ver Planos e Preços
+                        Ver Pacote Completo
                         <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </a>
                     
-                    <a href="https://wa.me/5519994772654?text=Olá David! Quero um orçamento para imagens de produto." 
+                    <a href="https://wa.me/5519994772654?text=Olá David! Quero um anúncio completo e otimizado para o meu produto." 
                        class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white/5 px-6 py-4 text-base font-semibold ring-1 ring-white/20 transition-all hover:scale-[1.05] hover:bg-white/10 hover:ring-white/30">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411"/>
                         </svg>
-                        Falar no WhatsApp
+                        Anúncio Completo
                     </a>
                 </div>
             </div>
@@ -233,10 +243,10 @@
 
                         <div class="carousel-images">
                             <!-- Imagens com proporção 1:1 -->
-                            <img src="img/adaptadorhdmi.jpg" alt="Edição profissional para marketplace - produto otimizado" class="carousel-image" />
-                            <img src="img/maletaa3.png" alt="Composição criativa para anúncios - aumento de conversão" class="carousel-image" />
-                        <img src="img/beneficios.png" alt="Proteção para pets - segurança" class="carousel-image-small" loading="lazy" />
-                            <img src="img/teclado2.png" alt="Produto em destaque - edição estratégica para vendas" class="carousel-image" />
+                            <img src="img/adaptadorhdmi.jpg" alt="Edição profissional para marketplace - produto otimizado" class="carousel-image" width="500" height="500" fetchpriority="high" decoding="async" />
+                            <img src="img/maletaa3.jpg" alt="Composição criativa para anúncios - aumento de conversão" class="carousel-image" width="500" height="500" loading="lazy" decoding="async" />
+                            <img src="img/beneficios.jpg" alt="Proteção para pets - segurança" class="carousel-image" width="500" height="500" loading="lazy" decoding="async" />
+                            <img src="img/teclado2.jpg" alt="Produto em destaque - edição estratégica para vendas" class="carousel-image" width="500" height="500" loading="lazy" decoding="async" />
                         </div>
                         
                         <!-- Overlay gradiente -->
@@ -342,10 +352,13 @@
       <div class="col-span-2 rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both] aspect-[4/3]">
         <div class="relative h-full w-full">
           <img 
-            src="img/mouse.png" 
+            src="img/mouse.jpg" 
             alt="Exemplos de segmentação e composições" 
             class="h-full w-full rounded-xl object-cover"
             loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
@@ -354,19 +367,25 @@
       <!-- Imagens Secundárias -->
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both] aspect-square">
         <img 
-          src="img/alicate.png" 
+          src="img/alicate.jpg" 
           alt="Edição estratégica para marketplace" 
           class="h-full w-full rounded-xl object-cover"
           loading="lazy"
+          decoding="async"
+          width="300"
+          height="300"
         />
       </div>
       
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.3s_both] aspect-square">
         <img 
-          src="img/92.png" 
+          src="img/92.jpg" 
           alt="Exemplo de montagem e composições" 
           class="h-full w-full rounded-xl object-cover"
           loading="lazy"
+          decoding="async"
+          width="300"
+          height="300"
         />
       </div>
     </div>
@@ -431,10 +450,13 @@
       <div class="sm:col-span-2 rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both]">
         <div class="aspect-[4/3] relative group">
           <img 
-            src="img/estojo felpudo.png" 
+            src="img/estojo felpudo.jpg" 
             alt="Estojo felpudo - exemplo de produto de moda e beleza" 
             class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <!-- Badge sobre a imagem -->
@@ -450,10 +472,13 @@
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both]">
         <div class="aspect-square relative group">
           <img 
-            src="img/caixa organizadora.png" 
+            src="img/caixa organizadora.jpg" 
             alt="Composição de produtos para casa e decoração" 
             class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            decoding="async"
+            width="300"
+            height="300"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <!-- Badge sobre a imagem -->
@@ -468,10 +493,13 @@
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.3s_both]">
         <div class="aspect-square relative group">
           <img 
-            src="img/tenis.png" 
+            src="img/tenis.jpg" 
             alt="Exemplo de edição para produtos eletrônicos" 
             class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            decoding="async"
+            width="300"
+            height="300"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <!-- Badge sobre a imagem -->
@@ -581,10 +609,13 @@ Moda & Vestuário
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.1s_both]">
         <div class="aspect-[1200/750] relative group">
           <img 
-            src="img/relatos.PNG" 
+            src="img/relatos.jpg" 
             alt="Depoimento de cliente - feedback positivo sobre aumento de vendas" 
             class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            decoding="async"
+            width="600"
+            height="375"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <!-- Badge sobre a imagem -->
@@ -600,10 +631,13 @@ Moda & Vestuário
       <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-black/30 to-black/50 p-3 ring-1 ring-white/10 transition-all duration-300 hover:scale-[1.02] hover:ring-white/20 [animation:fade-up_0.7s_.2s_both]">
         <div class="aspect-[1200/750] relative group">
           <img 
-            src="img/calculadora.PNG" 
+            src="img/calculadora.jpg" 
             alt="Outro depoimento de cliente - resultados com imagens otimizadas" 
             class="w-full h-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            decoding="async"
+            width="600"
+            height="375"
           />
           <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <!-- Badge sobre a imagem -->
@@ -642,16 +676,16 @@ Moda & Vestuário
 <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.1s_both]">
   <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
     <div class="carousel-images-small">
-      <img src="img/painel1.jpeg" alt="Painel Ripado - composição criativa" class="carousel-image-small" loading="lazy" />
-      <img src="img/painel2.jpeg" alt="Painel Ripado - detalhes do acabamento" class="carousel-image-small" loading="lazy" />
-      <img src="img/painel3.jpeg" alt="Painel Ripado - design moderno" class="carousel-image-small" loading="lazy" />
-      <img src="img/painel4.jpeg" alt="Painel Ripado - instalação" class="carousel-image-small" loading="lazy" />
-      <img src="img/painel5.jpeg" alt="Painel Ripado - versatilidade" class="carousel-image-small" loading="lazy" />
-      <img src="img/painelmadeira1.png" alt="Painel Ripado - aplicação em ambientes" class="carousel-image-small" loading="lazy" />
-      <img src="img/painelmadeira2.png" alt="Painel Ripado - textura" class="carousel-image-small" loading="lazy" />
-      <img src="img/painelmadeira3.png" alt="Painel Ripado - iluminação" class="carousel-image-small" loading="lazy" />
-      <img src="img/painelmadeira4.png" alt="Painel Ripado - ambientes decorados" class="carousel-image-small" loading="lazy" />
-      <img src="img/painelmadeira5.png" alt="Painel Ripado - destaque na parede" class="carousel-image-small" loading="lazy" />
+      <img src="img/painel1.jpg" alt="Painel Ripado - composição criativa" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painel2.jpg" alt="Painel Ripado - detalhes do acabamento" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painel3.jpg" alt="Painel Ripado - design moderno" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painel4.jpg" alt="Painel Ripado - instalação" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painel5.jpg" alt="Painel Ripado - versatilidade" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painelmadeira1.jpg" alt="Painel Ripado - aplicação em ambientes" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painelmadeira2.jpg" alt="Painel Ripado - textura" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painelmadeira3.jpg" alt="Painel Ripado - iluminação" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painelmadeira4.jpg" alt="Painel Ripado - ambientes decorados" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/painelmadeira5.jpg" alt="Painel Ripado - destaque na parede" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
     </div>
     
     <!-- Indicadores do Carrossel -->
@@ -768,11 +802,11 @@ Moda & Vestuário
 <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.2s_both]">
   <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
     <div class="carousel-images-small">
-      <img src="img/caixa1.png" alt="Caixa Organizadora - organização" class="carousel-image-small" loading="lazy" />
-      <img src="img/caixa2.png" alt="Caixa Organizadora - empilhável" class="carousel-image-small" loading="lazy" />
-      <img src="img/caixa3.png" alt="Caixa Organizadora - diversos tamanhos" class="carousel-image-small" loading="lazy" />
-      <img src="img/caixa4.png" alt="Caixa Organizadora - uso em closet" class="carousel-image-small" loading="lazy" />
-      <img src="img/caixa5.png" alt="Caixa Organizadora - material resistente" class="carousel-image-small" loading="lazy" />
+      <img src="img/caixa1.jpg" alt="Caixa Organizadora - organização" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/caixa2.jpg" alt="Caixa Organizadora - empilhável" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/caixa3.jpg" alt="Caixa Organizadora - diversos tamanhos" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/caixa4.jpg" alt="Caixa Organizadora - uso em closet" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+      <img src="img/caixa5.jpg" alt="Caixa Organizadora - material resistente" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
     </div>
     
     <!-- Indicadores do Carrossel -->
@@ -883,12 +917,12 @@ Moda & Vestuário
     <div class="group rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30 hover:-translate-y-1 [animation:fade-up_0.7s_.3s_both]">
       <div class="relative overflow-hidden rounded-xl mb-4 aspect-square carousel-container-small">
         <div class="carousel-images-small">
-          <img src="img/42.jpeg" alt="Composição criativa - Tênis Adidas ângulo frontal" class="carousel-image-small" loading="lazy" />
-          <img src="img/44.png" alt="Layout personalizado - Detalhes do design esportivo" class="carousel-image-small" loading="lazy" />
-          <img src="img/40.png" alt="Imagem estratégica - Conforto e tecnologia" class="carousel-image-small" loading="lazy" />
-          <img src="img/45.png" alt="Criação visual - Destaque dos materiais premium" class="carousel-image-small" loading="lazy" />
-          <img src="img/41.png" alt="Composição inovadora - Estilo urbano e esportivo" class="carousel-image-small" loading="lazy" />
-          <img src="img/43.png" alt="Layout criativo - Benefícios do calçado em uso" class="carousel-image-small" loading="lazy" />
+          <img src="img/42.jpg" alt="Composição criativa - Tênis Adidas ângulo frontal" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+          <img src="img/44.jpg" alt="Layout personalizado - Detalhes do design esportivo" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+          <img src="img/40.jpg" alt="Imagem estratégica - Conforto e tecnologia" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+          <img src="img/45.jpg" alt="Criação visual - Destaque dos materiais premium" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+          <img src="img/41.jpg" alt="Composição inovadora - Estilo urbano e esportivo" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
+          <img src="img/43.jpg" alt="Layout criativo - Benefícios do calçado em uso" class="carousel-image-small" loading="lazy" decoding="async" width="400" height="400" />
         </div>
         
         <!-- Indicadores do Carrossel -->
@@ -1158,177 +1192,307 @@ Moda & Vestuário
     img.setAttribute('draggable', 'false');
   }
 </script>
-<!-- INVESTIMENTO / PLANOS MELHORADO - APENAS ANÚNCIO COMPLETO -->
-<section id="investimento" class="mx-auto mt-24 max-w-7xl px-4">
-  <div class="text-center mb-12 [animation:fade-up_0.7s_ease-out_both]">
-    <div class="inline-flex items-center gap-3 justify-center">
-      <span class="inline-block rounded-md badge bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(124,58,237,1),rgba(168,85,247,1),rgba(124,58,237,1))] px-3 py-1 text-xs font-bold uppercase tracking-widest [animation:shine_2s_linear_infinite]">
-        🔥 Oferta Exclusiva
-      </span>
-      <div class="h-px w-8 bg-gradient-to-r from-[var(--acc)] to-transparent"></div>
-    </div>
-    
-    <h2 class="mt-4 text-3xl font-bold leading-tight md:text-4xl">
-      Pacote <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">Anúncio Completo</span>
-    </h2>
-    
-    <p class="mt-4 text-lg text-[var(--muted)] max-w-2xl mx-auto">
-      Tudo o que você precisa para um anúncio de alto desempenho: imagens estratégicas, título e descrição baseados em dados de mercado, relatório completo e 2 alterações gratuitas.
-    </p>
-  </div>
 
-  <!-- Layout em coluna única com card principal e cards secundários -->
-  <div class="grid gap-8 lg:grid-cols-1 max-w-3xl mx-auto">
-    <!-- Card Principal - Anúncio Completo -->
-    <div class="group relative rounded-2xl bg-gradient-to-br from-[var(--acc)]/20 to-[var(--acc-2)]/20 p-6 ring-1 ring-[var(--acc)]/30 transition-all duration-300 hover:ring-[var(--acc)]/50 hover:-translate-y-1 [animation:fade-up_0.7s_.4s_both] overflow-hidden">
+<!-- INVESTIMENTO / ANÚNCIO COMPLETO - LAYOUT LARGO E PROFISSIONAL -->
+<section id="investimento" class="w-full bg-gradient-to-b from-gray-950 to-gray-900 py-12">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    
+    <!-- Título compacto e impactante -->
+    <div class="text-center mb-8">
+      <div class="inline-block mb-3">
+        <span class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wide">
+          OFERTA EXCLUSIVA
+        </span>
+      </div>
+      <h2 class="text-4xl lg:text-5xl font-black">
+        Pacote 
+        <span class="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-400 bg-clip-text text-transparent">
+          Anúncio Completo
+        </span>
+      </h2>
+    </div>
+
+    <!-- CARD PRINCIPAL - LAYOUT LARGO E HORIZONTAL -->
+    <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-2xl border border-purple-500/30 shadow-2xl overflow-hidden">
       
-      <!-- Selo "Mais Escolhido" -->
-      <div class="absolute -top-1 -right-8 rotate-45 bg-gradient-to-r from-yellow-500 to-orange-500 px-10 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
-        Mais Escolhido
-      </div>
-
-      <!-- Badge de Economia -->
-      <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-white ring-1 ring-white/20">
-        💰 Economia de R$ 50+
-      </div>
-
-      <div class="flex items-start justify-between mt-6">
-        <div>
-          <h3 class="text-2xl font-bold text-white">Anúncio Completo</h3>
-          <p class="mt-1 text-sm text-white/80">Imagens + Título + Descrição + Relatório</p>
-        </div>
-        <div class="text-right">
-          <p class="text-4xl font-extrabold text-white">R$ 129,90</p>
-          <p class="text-xs text-white/80 line-through">de R$ 179,90</p>
-          <p class="text-xs text-green-400 font-semibold">✔️ Pagamento único</p>
-        </div>
-      </div>
-
-      <!-- Lista de itens do pacote com ícones maiores -->
-      <ul class="mt-6 space-y-3 text-sm text-white/80">
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-purple-500/20 text-purple-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+      <!-- Layout em grid 2 colunas: lado esquerdo (conteúdo) + lado direito (valor e CTA) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+        
+        <!-- COLUNA ESQUERDA (2/3 do espaço) - Benefícios e diferenciais -->
+        <div class="lg:col-span-2 p-6 lg:p-8">
+          
+          <!-- Badge de destaque + análise de mercado em linha -->
+          <div class="flex flex-wrap items-center gap-3 mb-6">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+              <span>MAIS ESCOLHIDO</span>
+            </div>
+            <div class="h-6 w-px bg-gray-700"></div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              <span class="text-purple-300 text-sm font-semibold">ANÁLISE DE MERCADO PERSONALIZADA</span>
+            </div>
           </div>
-          <span><strong class="text-white">5 imagens profissionais</strong> criadas com base em análise de dados do seu mercado</span>
-        </li>
-
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/20 text-blue-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
+          
+          <!-- Descrição curta do diferencial -->
+          <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+            Antes de criar qualquer peça, analisamos <strong class="text-purple-300">seu nicho, concorrentes e público-alvo</strong> para entregar um anúncio único e estrategicamente posicionado para converter.
+          </p>
+          
+          <!-- Lista de benefícios em grid 2 colunas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">5 imagens profissionais</strong> sob medida</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">Título estratégico</strong> de alto desempenho</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">Descrição persuasiva</strong> com gatilhos mentais</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">Relatório completo</strong> das escolhas estratégicas</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">2 alterações gratuitas</strong> até sua aprovação</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-200 text-sm"><strong class="text-white">Entrega prioritária</strong> em até 72h</span>
+            </div>
           </div>
-          <span><strong class="text-white">Título estratégico</strong> elaborado com base em pesquisa de mercado e palavras‑chave de alta conversão</span>
-        </li>
-
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-green-500/20 text-green-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+          
+          <!-- ÁREA DE GARANTIA REFORMULADA - MAIS PREENCHIDA -->
+          <div class="mt-6 pt-4 border-t border-gray-800">
+            <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-xl p-4 border border-green-500/30">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-white font-bold text-sm">Garantia Incondicional</p>
+                    <p class="text-gray-400 text-xs">Satisfação 100% garantida ou seu dinheiro de volta</p>
+                  </div>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-4">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-xs text-gray-300">2 revisões gratuitas</span>
+                  </div>
+                  <div class="w-px h-4 bg-gray-700 hidden sm:block"></div>
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-xs text-gray-300">Sem risco na compra</span>
+                  </div>
+                  <div class="w-px h-4 bg-gray-700 hidden sm:block"></div>
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-xs text-gray-300">Suporte prioritário</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <span><strong class="text-white">Descrição persuasiva</strong> fundamentada em dados de mercado, destacando benefícios e gatilhos mentais</span>
-        </li>
-
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-500/20 text-yellow-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <span><strong class="text-white">Relatório completo</strong> explicando os motivos por trás da escolha do título e da descrição</span>
-        </li>
-
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-pink-500/20 text-pink-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </div>
-          <span><strong class="text-white">2 alterações gratuitas</strong> sem custo adicional no valor final do anúncio</span>
-        </li>
-
-        <li class="flex items-start gap-3">
-          <div class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-400 flex-shrink-0">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <span><strong class="text-white">Entrega prioritária</strong> em 48h-72h</span>
-        </li>
-      </ul>
-
-      <!-- Micro-texto de urgência -->
-      <p class="mt-4 text-xs text-center text-yellow-400 animate-pulse">
-        ⏳ Oferta por tempo limitado – garanta seu anúncio completo agora!
-      </p>
-
-      <a
-        href="https://wa.me/5519994772654?text=Olá! Gostaria do Anúncio Completo com 5 fotos + título e descrição baseados em dados por R$129,90"
-        class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-4 py-4 text-base font-bold text-white transition-all hover:scale-[1.02] hover:shadow-2xl hover:shadow-orange-500/30"
-      >
-        🔥 QUERO GARANTIR MEU ANÚNCIO COMPLETO
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-        </svg>
-      </a>
-    </div>
-
-    <!-- Cards Secundários: Formas de Pagamento e Garantia lado a lado -->
-    <div class="grid gap-6 md:grid-cols-2">
-      <!-- Informações de Pagamento -->
-      <div class="rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 [animation:fade-up_0.7s_.5s_both]">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="h-1.5 w-6 rounded-full bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]"></div>
-          <p class="text-sm font-semibold uppercase tracking-widest text-white/80">Formas de Pagamento</p>
         </div>
         
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-[var(--muted)]">PIX (à vista)</span>
-            <span class="text-sm font-medium text-white">R$ 129,90</span>
+        <!-- COLUNA DIREITA (1/3 do espaço) - VALOR EM DESTAQUE + PAGAMENTO + CTA -->
+        <div class="bg-gradient-to-br from-purple-900/20 to-fuchsia-900/20 border-l border-purple-500/30 p-6 lg:p-8 flex flex-col justify-center">
+          
+          <!-- Valor com desconto em destaque - PREÇO ANTERIOR E ATUAL -->
+          <div class="text-center mb-6">
+            <p class="text-gray-400 text-sm uppercase tracking-wide mb-2">Investimento</p>
+            
+            <!-- Preço anterior riscado -->
+            <div class="mb-2">
+              <span class="text-gray-500 text-lg line-through">De R$ 179,90</span>
+            </div>
+            
+            <!-- Preço atual com desconto em destaque -->
+            <div class="relative inline-block">
+              <span class="text-6xl lg:text-7xl font-black text-white">R$ 129</span>
+              <span class="text-2xl text-gray-400">,90</span>
+              <div class="absolute -top-2 -right-8 bg-green-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full rotate-12">
+                -28%
+              </div>
+            </div>
+            
+            <!-- Economia destacada -->
+            <p class="text-xs text-green-400 font-semibold mt-2">
+              💰 Economia de R$ 50,00
+            </p>
           </div>
-        
-        </div>
-        
-        <div class="mt-4 pt-4 border-t border-white/10">
-          <p class="text-xs text-[var(--muted)] text-center">
-            <strong>PIX:</strong> 19 99477-2654 — David Ribeiro
+          
+          <!-- Informações PIX em destaque -->
+          <div class="bg-black/40 rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-center gap-2 mb-2">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M4.5 4.5L19.5 4.5L19.5 19.5L4.5 19.5L4.5 4.5Z M7.5 7.5L16.5 7.5L16.5 16.5L7.5 16.5L7.5 7.5Z M9 9L15 9L15 15L9 15L9 9Z"/>
+              </svg>
+              <span class="text-white font-bold text-sm">PIX (à vista)</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs text-gray-400 mb-1">Chave PIX</p>
+              <p class="text-purple-300 font-mono text-sm font-bold">19 99477-2654</p>
+              <p class="text-[10px] text-gray-500 mt-1">David Ribeiro</p>
+            </div>
+          </div>
+          
+          <!-- BOTÃO CTA PRINCIPAL - DESTAQUE MÁXIMO -->
+          <a
+            href="https://wa.me/5519994772654?text=Olá! Quero contratar o ANÚNCIO COMPLETO com análise de mercado por R$129,90"
+            class="group relative w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-xl px-6 py-4 text-center font-bold text-white text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/50 overflow-hidden mb-4"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+            <span class="relative flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+              GARANTIR MEU ANÚNCIO AGORA
+            </span>
+          </a>
+          
+          <!-- Micro-copy de conversão -->
+          <p class="text-center text-[11px] text-gray-500 flex items-center justify-center gap-1">
+            <svg class="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            Análise de mercado inclusa • Entrega rápida
           </p>
         </div>
       </div>
-
-      <!-- Garantia -->
-      <div class="rounded-2xl bg-gradient-to-br from-black/30 to-black/50 p-6 ring-1 ring-white/10 [animation:fade-up_0.7s_.6s_both]">
-        <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500/20">
-            <svg class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm font-semibold text-white">Garantia de Satisfação</p>
-            <p class="text-xs text-[var(--muted)]">2 revisões gratuitas ou seu dinheiro de volta*</p>
-          </div>
-        </div>
+    </div>
+    
+    <!-- Diferencial final em linha - sem ocupar espaço vertical -->
+    <div class="flex flex-wrap items-center justify-center gap-4 mt-6 text-center">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        <span class="text-xs text-gray-400">Cada anúncio é único — análise aprofundada do seu mercado antes da criação</span>
       </div>
     </div>
   </div>
-
-  <!-- CTA Final (dúvidas) -->
-  <div class="mt-12 text-center [animation:fade-up_0.7s_.7s_both]">
-    <a href="https://wa.me/5519994772654?text=Olá David! Gostaria de tirar dúvidas sobre o Anúncio Completo antes de escolher." 
-       class="inline-flex items-center gap-2 rounded-2xl bg-white/5 px-6 py-4 text-base font-semibold ring-1 ring-white/20 transition-all hover:bg-white/10 hover:scale-[1.02]">
-      <svg class="h-5 w-5 text-[var(--acc)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-      </svg>
-      Tirar dúvidas no WhatsApp
-    </a>
-  </div>
 </section>
+
+<style>
+  /* Animações suaves e profissionalismo */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  section {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* Transições suaves para todos elementos */
+  * {
+    transition: all 0.2s ease;
+  }
+  
+  /* Melhor contraste para textos */
+  .text-gray-300 {
+    color: #d1d5db;
+  }
+  
+  /* Hover sutil no card */
+  .bg-gradient-to-br {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .bg-gradient-to-br:hover {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+  }
+</style>
+<style>
+  /* Animações suaves e profissionalismo */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  section {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* Transições suaves para todos elementos */
+  * {
+    transition: all 0.2s ease;
+  }
+  
+  /* Melhor contraste para textos */
+  .text-gray-300 {
+    color: #d1d5db;
+  }
+  
+  /* Hover sutil no card */
+  .bg-gradient-to-br {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .bg-gradient-to-br:hover {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+  }
+</style>
 
   <!-- CONTATO (CTA DIRETO) -->
 <!-- CONTATO / CTA FINAL MELHORADO -->

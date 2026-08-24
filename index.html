@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Pacifico&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
-    <link rel="preload" as="image" href="img/adaptadorhdmi.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="img/toalha1.webp" type="image/webp" fetchpriority="high">
 
     <style>
         /*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
@@ -71,25 +71,55 @@
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
-            aspect-ratio: 1/1;
+            aspect-ratio: 1200/1480;
             overflow: hidden;
             border-radius: 1.5rem;
             position: relative;
             box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         
-        .carousel-images { display: flex; height: 100%; transition: transform 0.8s ease-in-out; }
-        .carousel-image { min-width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+        .carousel-images { 
+            display: flex; 
+            height: 100%; 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .carousel-image { 
+            min-width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            flex-shrink: 0; 
+            will-change: opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
         .carousel-indicators { position: absolute; bottom: 16px; right: 16px; display: flex; gap: 6px; pointer-events: none; }
         .carousel-indicator { width: 8px; height: 8px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); transition: all 0.3s ease; }
         .carousel-indicator.active { background-color: white; transform: scale(1.2); }
         
-        .carousel-container-small { position: relative; overflow: hidden; border-radius: 1rem; }
-        .carousel-images-small { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-        .carousel-image-small { min-width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+        .carousel-container-small { position: relative; overflow: hidden; border-radius: 1rem; transform: translate3d(0,0,0); backface-visibility: hidden; }
+        .carousel-images-small { display: flex; height: 100%; transition: transform 0.5s ease-in-out; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden; }
+        .carousel-image-small { min-width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; backface-visibility: hidden; }
         .carousel-indicators-small { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; pointer-events: none; }
         .carousel-indicator-small { width: 6px; height: 6px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); transition: all 0.3s ease; cursor: pointer; pointer-events: all; }
         .carousel-indicator-small.active { background-color: white; transform: scale(1.2); }
+
+        /* Aceleração de Hardware nos Carrosséis e Galerias */
+        .port-gallery-wrap, .port-gallery-img, .ratio-1200-1200, .showcase-frame, .res-device-frame, .res-carousel-container, .res-carousel-img, .nc-img-main img, .nc-img-sub img, #carrosselDepoimentos {
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
 
         img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; }
     </style>
@@ -202,11 +232,11 @@
             <div class="carousel-indicator"></div>
         </div>
         <div class="carousel-images" id="main-carousel">
-            <img src="img/toalha1.jpg" alt="Edição profissional" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/toalha.jpg" alt="Composição criativa" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/parafuso.png" alt="Infográfico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/paleta.jpg" alt="Destaque estratégico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/teste5.png" alt="Destaque estratégico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/toalha1.webp" alt="Edição profissional de toalha" class="carousel-image" width="1200" height="1480" loading="eager" fetchpriority="high" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/toalha.webp" alt="Composição criativa de toalha" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/parafuso.webp" alt="Infográfico técnico parafuso" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/paleta.webp" alt="Destaque estratégico maquiagem" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/teste5.webp" alt="Destaque estratégico" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
         </div>
     </div>
 </div>
@@ -810,7 +840,7 @@
       <div class="showcase-frame p-4 w-full" style="max-width: 490px;">
         <!-- Imagem 1200x1200 Quadrada Exata (Sem traços) -->
         <div class="ratio-1200-1200" style="border-radius: 1.25rem; box-shadow: 0 12px 36px rgba(0,0,0,0.6);">
-          <img id="showcaseDesktopImg" src="img/compatibilidade.jpg" alt="Exemplo de anúncio 1200x1200" class="transition-opacity duration-200" />
+          <img id="showcaseDesktopImg" src="img/compatibilidade.webp" alt="Exemplo de anúncio 1200x1200" width="1200" height="1200" loading="lazy" decoding="async" class="transition-opacity duration-200" />
         </div>
 
         <!-- Seletor de Abas Desktop (Sem borda divisória) -->
@@ -851,7 +881,7 @@
       
       <!-- 1. Imagem Limpa 1200x1200 (Sem traços) -->
       <div class="ratio-1200-1200" style="border-radius: 1.15rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
-        <img id="showcaseMobileImg" src="img/compatibilidade.jpg" alt="Exemplo de anúncio profissional 1200x1200" class="transition-opacity duration-200" />
+        <img id="showcaseMobileImg" src="img/compatibilidade.webp" alt="Exemplo de anúncio profissional 1200x1200" width="1200" height="1200" loading="lazy" decoding="async" class="transition-opacity duration-200" />
       </div>
 
       <!-- 2. Bloco Explicativo do Slide Atual -->
@@ -898,26 +928,33 @@
 <script>
   const showcaseData = [
     {
-      img: 'img/compatibilidade.jpg',
+      img: 'img/compatibilidade.webp',
       title: '1. Compatibilidade e Aplicação',
       desc: 'Demonstração visual de conexões, modelos e aparelhos compatíveis, eliminando dúvidas técnicas e evitando devoluções.'
     },
     {
-      img: 'img/alicate.jpg',
+      img: 'img/alicate.webp',
       title: '2. Design Publicitário',
       desc: 'Tratamento profissional de iluminação, ângulos e sombras para transformar fotos simples em anúncios de alto impacto.'
     },
     {
-      img: 'img/31321.png',
+      img: 'img/31321.webp',
       title: '3. Montagem de Kits',
       desc: 'Criação de cenários e agrupamento de produtos em kits para elevar o valor percebido e aumentar o ticket médio.'
     },
     {
-      img: 'img/estojo f.png',
+      img: 'img/estojo f.webp',
       title: '4. Destaque de Benefícios',
       desc: 'Apontamento visual claro das vantagens, diferenciais técnicos e benefícios práticos que aceleram a decisão de compra.'
     }
   ];
+
+  // Pre-carregamento imediato de todas as imagens do Showcase
+  showcaseData.forEach(item => {
+    const im = new Image();
+    im.decoding = 'async';
+    im.src = item.img;
+  });
 
   let currentShowcaseIdx = 0;
 
@@ -932,11 +969,9 @@
     // Desktop Image
     const desktopImg = document.getElementById('showcaseDesktopImg');
     if (desktopImg) {
-      desktopImg.style.opacity = '0.35';
-      setTimeout(() => {
-        desktopImg.src = item.img;
-        desktopImg.style.opacity = '1';
-      }, 110);
+      desktopImg.style.opacity = '0.7';
+      desktopImg.src = item.img;
+      requestAnimationFrame(() => { desktopImg.style.opacity = '1'; });
     }
 
     // Mobile Elements
@@ -946,11 +981,9 @@
     const mobileIndicator = document.getElementById('mobileStepIndicator');
 
     if (mobileImg) {
-      mobileImg.style.opacity = '0.35';
-      setTimeout(() => {
-        mobileImg.src = item.img;
-        mobileImg.style.opacity = '1';
-      }, 110);
+      mobileImg.style.opacity = '0.7';
+      mobileImg.src = item.img;
+      requestAnimationFrame(() => { mobileImg.style.opacity = '1'; });
     }
     if (mobileTitle) mobileTitle.innerText = item.title;
     if (mobileDesc) mobileDesc.innerText = item.desc;
@@ -1221,16 +1254,16 @@
         
         <!-- Imagem Principal em Destaque -->
         <div class="nc-img-main">
-          <img id="nichoDesktopMainImg" src="img/capa chuteira olimpia.jpg" alt="Exemplo de anúncio do segmento" />
+          <img id="nichoDesktopMainImg" src="img/capa chuteira olimpia.webp" alt="Exemplo de anúncio do segmento" width="1200" height="1200" loading="lazy" decoding="async" />
         </div>
 
         <!-- 2 Imagens Secundárias -->
         <div class="nc-sub-grid">
           <div class="nc-img-sub">
-            <img id="nichoDesktopSub1Img" src="img/tenis.jpg" alt="Criativo complementar 1" />
+            <img id="nichoDesktopSub1Img" src="img/tenis.webp" alt="Criativo complementar 1" width="600" height="600" loading="lazy" decoding="async" />
           </div>
           <div class="nc-img-sub">
-            <img id="nichoDesktopSub2Img" src="img/teste1.jpg" alt="Criativo complementar 2" />
+            <img id="nichoDesktopSub2Img" src="img/teste1.webp" alt="Criativo complementar 2" width="600" height="600" loading="lazy" decoding="async" />
           </div>
         </div>
 
@@ -1265,16 +1298,16 @@
       
       <!-- Imagem Principal -->
       <div class="nc-img-main">
-        <img id="nichoMobileMainImg" src="img/capa chuteira olimpia.jpg" alt="Exemplo de anúncio do segmento" />
+        <img id="nichoMobileMainImg" src="img/capa chuteira olimpia.webp" alt="Exemplo de anúncio do segmento" width="1200" height="1200" loading="lazy" decoding="async" />
       </div>
 
       <!-- 2 Imagens Secundárias -->
       <div class="nc-sub-grid">
         <div class="nc-img-sub">
-          <img id="nichoMobileSub1Img" src="img/tenis.jpg" alt="Criativo complementar 1" />
+          <img id="nichoMobileSub1Img" src="img/tenis.webp" alt="Criativo complementar 1" width="600" height="600" loading="lazy" decoding="async" />
         </div>
         <div class="nc-img-sub">
-          <img id="nichoMobileSub2Img" src="img/teste1.jpg" alt="Criativo complementar 2" />
+          <img id="nichoMobileSub2Img" src="img/teste1.webp" alt="Criativo complementar 2" width="600" height="600" loading="lazy" decoding="async" />
         </div>
       </div>
 
@@ -1341,59 +1374,68 @@
   const nichosData = [
     {
       name: "1. Moda & Vestuário",
-      main: "img/capa chuteira olimpia.jpg",
-      sub1: "img/tenis.jpg",
-      sub2: "img/teste1.jpg",
+      main: "img/capa chuteira olimpia.webp",
+      sub1: "img/tenis.webp",
+      sub2: "img/teste1.webp",
       altMain: "Anúncio de Moda e Acessórios",
       alt1: "Calçados e Moda Esportiva",
       alt2: "Bolsas e Acessórios"
     },
     {
       name: "2. Eletrônicos & Tech",
-      main: "img/placa de video.jpg",
-      sub1: "img/telefone2.jpg",
-      sub2: "img/adaptadorhdmi.jpg",
+      main: "img/placa de video.webp",
+      sub1: "img/telefone2.webp",
+      sub2: "img/adaptadorhdmi.webp",
       altMain: "Anúncio de Acessórios Tech",
       alt1: "Mouse e Periféricos",
       alt2: "Cabos e Adaptadores"
     },
     {
       name: "3. Beleza & Cosméticos",
-      main: "img/minnecessaire.jpeg",
-      sub1: "img/removex.jpg",
-      sub2: "img/toucacozinha.jpeg",
+      main: "img/minnecessaire.webp",
+      sub1: "img/removex.webp",
+      sub2: "img/toucacozinha.webp",
       altMain: "Cosméticos e Maquiagem",
       alt1: "Cuidados Pessoais e Estética",
       alt2: "Destaque de Produtos de Beleza"
     },
     {
       name: "4. Casa & Decoração",
-      main: "img/stanley.jpg",
-      sub1: "img/copo.jpg",
-      sub2: "img/puffs kit1.jpeg",
+      main: "img/stanley.webp",
+      sub1: "img/copo.webp",
+      sub2: "img/puffs kit1.webp",
       altMain: "Organizadores e Ambientes",
       alt1: "Espelhos e Decoração",
       alt2: "Móveis e Conforto"
     },
     {
       name: "5. Esportes & Fitness",
-      main: "img/macaquin.jpeg",
-      sub1: "img/mindboost1.jpg",
-      sub2: "img/bolacorin.jpg",
+      main: "img/macaquin.webp",
+      sub1: "img/mindboost1.webp",
+      sub2: "img/bolacorin.webp",
       altMain: "Equipamentos Esportivos",
       alt1: "Tênis e Calçados de Treino",
       alt2: "Vestuário Esportivo"
     },
     {
       name: "6. Infantil & Bebês",
-      main: "img/lençolinfantil.jpeg",
-      sub1: "img/chuteira.png",
-      sub2: "img/kit goleiro infantil4.png",
+      main: "img/lencolinfantil.webp",
+      sub1: "img/chuteira.webp",
+      sub2: "img/kit goleiro infantil4.webp",
       altMain: "Linha Infantil e Bebês",
       alt1: "Acessórios Escolares",
       alt2: "Kits Infantis"
     }
   ];
+
+  // Pre-carregamento imediato de todas as imagens de Nichos
+  nichosData.forEach(item => {
+    [item.main, item.sub1, item.sub2].forEach(url => {
+      const im = new Image();
+      im.decoding = 'async';
+      im.src = url;
+    });
+  });
 
   let currentNichoIdx = 0;
 
@@ -1417,12 +1459,10 @@
 
     const updateImgEl = (el, newSrc, newAlt) => {
       if (!el) return;
-      el.style.opacity = '0.35';
-      setTimeout(() => {
-        el.src = newSrc;
-        if (newAlt) el.alt = newAlt;
-        el.style.opacity = '1';
-      }, 110);
+      el.style.opacity = '0.7';
+      el.src = newSrc;
+      if (newAlt) el.alt = newAlt;
+      requestAnimationFrame(() => { el.style.opacity = '1'; });
     };
 
     updateImgEl(dMain, data.main, data.altMain);
@@ -1784,7 +1824,7 @@
         
         <!-- Tela do Carrossel de Métricas (100% Limpa sem barras) -->
         <div class="res-carousel-container">
-          <img id="resCarouselDesktopImg" src="img/calculadora.png" alt="Métricas do Produto 1" class="res-carousel-img" />
+          <img id="resCarouselDesktopImg" src="img/calculadora.webp" alt="Métricas do Produto 1" width="1200" height="800" loading="lazy" decoding="async" class="res-carousel-img" />
         </div>
 
         <!-- Rodapé do Carrossel com Navegação e Indicador de Produto -->
@@ -1856,7 +1896,7 @@
       
       <!-- Imagem do Carrossel Mobile -->
       <div class="res-carousel-container">
-        <img id="resCarouselMobileImg" src="img/calculadora.png" alt="Métricas do Produto 1" class="res-carousel-img" />
+        <img id="resCarouselMobileImg" src="img/calculadora.webp" alt="Métricas do Produto 1" width="1200" height="800" loading="lazy" decoding="async" class="res-carousel-img" />
       </div>
 
       <!-- Controles do Carrossel Mobile -->
@@ -1950,14 +1990,21 @@
 <script>
   const metricsSlides = [
     {
-      img: 'img/calculadora.png',
+      img: 'img/calculadora.webp',
       label: 'Métricas do Produto 1'
     },
     {
-      img: 'img/relatos.jpeg',
+      img: 'img/relatos.webp',
       label: 'Métricas do Produto 2'
     }
   ];
+
+  // Pre-carregamento imediato das métricas
+  metricsSlides.forEach(item => {
+    const im = new Image();
+    im.decoding = 'async';
+    im.src = item.img;
+  });
 
   let currentMetricSlideIdx = 0;
 
@@ -1976,12 +2023,10 @@
 
     const updateSlideImg = (el) => {
       if (!el) return;
-      el.style.opacity = '0.35';
-      setTimeout(() => {
-        el.src = data.img;
-        el.alt = data.label;
-        el.style.opacity = '1';
-      }, 100);
+      el.style.opacity = '0.7';
+      el.src = data.img;
+      el.alt = data.label;
+      requestAnimationFrame(() => { el.style.opacity = '1'; });
     };
 
     updateSlideImg(dImg);
@@ -2280,7 +2325,7 @@
         <button class="port-img-btn prev" onclick="changePortCardImg(0, -1, 'd')" aria-label="Foto Anterior">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <img id="portImg_d_goleiro" src="img/kit goleiro infantil.png" alt="Kit Goleiro Infantil" class="port-gallery-img" />
+        <img id="portImg_d_goleiro" src="img/kit goleiro infantil.webp" alt="Kit Goleiro Infantil" width="1200" height="1480" loading="lazy" decoding="async" class="port-gallery-img" />
         <button class="port-img-btn next" onclick="changePortCardImg(0, 1, 'd')" aria-label="Próxima Foto">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -2310,7 +2355,7 @@
         <button class="port-img-btn prev" onclick="changePortCardImg(1, -1, 'd')" aria-label="Foto Anterior">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <img id="portImg_d_puff" src="img/puffs kit1.jpeg" alt="Puff Design em Veludo" class="port-gallery-img" />
+        <img id="portImg_d_puff" src="img/puffs kit1.webp" alt="Puff Design em Veludo" width="1200" height="1480" loading="lazy" decoding="async" class="port-gallery-img" />
         <button class="port-img-btn next" onclick="changePortCardImg(1, 1, 'd')" aria-label="Próxima Foto">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -2340,7 +2385,7 @@
         <button class="port-img-btn prev" onclick="changePortCardImg(2, -1, 'd')" aria-label="Foto Anterior">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <img id="portImg_d_espelho" src="img/espelho1.jpeg" alt="Espelho Redondo com Alça" class="port-gallery-img" />
+        <img id="portImg_d_espelho" src="img/espelho1.webp" alt="Espelho Redondo com Alça" width="1200" height="1480" loading="lazy" decoding="async" class="port-gallery-img" />
         <button class="port-img-btn next" onclick="changePortCardImg(2, 1, 'd')" aria-label="Próxima Foto">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -2394,7 +2439,7 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
 
-        <img id="portImg_mobile" src="img/kit goleiro infantil.png" alt="Anúncio Selecionado" class="port-gallery-img" />
+        <img id="portImg_mobile" src="img/kit goleiro infantil.webp" alt="Anúncio Selecionado" width="1200" height="1480" loading="lazy" decoding="async" class="port-gallery-img" />
 
         <button class="port-img-btn next" onclick="changeMobilePhoto(1)" aria-label="Próxima Foto">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -2458,11 +2503,11 @@
       desc: 'Composição fotográfica imersiva destacando proteção nas articulações e apelo esportivo.',
       tags: ['Ambientação Real', 'Foco em Segurança', 'Kit Completo'],
       images: [
-        'img/kit goleiro infantil.png',
+        'img/kit goleiro infantil.webp',
         'img/kit_goleiro_infantil2_otimizado.webp',
-        'img/kit goleiro infantil3.png',
-        'img/kit goleiro infantil4.png',
-        'img/kit goleiro infantil5.png'
+        'img/kit goleiro infantil3.webp',
+        'img/kit goleiro infantil4.webp',
+        'img/kit goleiro infantil5.webp'
       ],
       current: 0
     },
@@ -2472,11 +2517,11 @@
       desc: 'Destaque técnico de dimensões e resistência com linguagem visual sofisticada.',
       tags: ['Guia de Medidas', 'Textura e Acabamento', 'Decoração'],
       images: [
-        'img/puffs kit1.jpeg',
-        'img/puffs kit2.jpeg',
-        'img/puffskit3.jpeg',
-        'img/puffskit4.jpeg',
-        'img/puffskit6.jpeg'
+        'img/puffs kit1.webp',
+        'img/puffs kit2.webp',
+        'img/puffskit3.webp',
+        'img/puffskit4.webp',
+        'img/puffskit6.webp'
       ],
       current: 0
     },
@@ -2486,15 +2531,24 @@
       desc: 'Guia de tamanhos em escala real para eliminar dúvidas do comprador e acelerar a decisão.',
       tags: ['Escala Visual', 'Design Minimalista', 'Acabamento Couro'],
       images: [
-        'img/espelho1.jpeg',
-        'img/espelho2.jpeg',
-        'img/espelho3.jpeg',
-        'img/espelho4.jpeg',
-        'img/espelho5.jpeg'
+        'img/espelho1.webp',
+        'img/espelho2.webp',
+        'img/espelho3.webp',
+        'img/espelho4.webp',
+        'img/espelho5.webp'
       ],
       current: 0
     }
   ];
+
+  // Pre-carregamento de todas as imagens do Portfólio
+  portfolioData.forEach(p => {
+    p.images.forEach(url => {
+      const im = new Image();
+      im.decoding = 'async';
+      im.src = url;
+    });
+  });
 
   let currentMobileProductIdx = 0;
 
@@ -2520,11 +2574,9 @@
     const dots = document.getElementById('portDots_d_' + p.id);
 
     if (img) {
-      img.style.opacity = '0.35';
-      setTimeout(() => {
-        img.src = p.images[p.current];
-        img.style.opacity = '1';
-      }, 90);
+      img.style.opacity = '0.7';
+      img.src = p.images[p.current];
+      requestAnimationFrame(() => { img.style.opacity = '1'; });
     }
     if (count) count.innerText = (p.current + 1) + ' / ' + p.images.length;
     if (dots) {
@@ -2576,11 +2628,9 @@
     const dots = document.getElementById('portDots_mobile');
 
     if (img) {
-      img.style.opacity = '0.35';
-      setTimeout(() => {
-        img.src = p.images[p.current];
-        img.style.opacity = '1';
-      }, 90);
+      img.style.opacity = '0.7';
+      img.src = p.images[p.current];
+      requestAnimationFrame(() => { img.style.opacity = '1'; });
     }
     if (count) count.innerText = (p.current + 1) + ' / ' + p.images.length;
     if (dots) {

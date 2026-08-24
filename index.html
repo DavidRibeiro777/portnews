@@ -211,627 +211,3312 @@
     </div>
 </div>
             </div>
+<!-- METODOLOGIA & PROCESSO — Pipeline v5 (Acessível) -->
+<style>
+  /* Orbs */
+  .met-orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+
+  /* Wrapper */
+  .met-pipe-wrap{position:relative;z-index:1;overflow:hidden}
+
+  /* Neon connector line (desktop) */
+  .met-pipe-line{
+    display:none;
+    position:absolute;top:32px;left:80px;right:80px;
+    height:2px;
+    background:linear-gradient(90deg,transparent,rgba(124,58,237,.6) 10%,rgba(168,85,247,.9) 50%,rgba(124,58,237,.6) 90%,transparent);
+    pointer-events:none;z-index:0;
+  }
+  @media(min-width:768px){ .met-pipe-line{display:block} }
+
+  /* Scrollable row */
+  .met-pipe-row{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    padding:70px 10px 25px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    scroll-behavior:smooth;
+    box-sizing:border-box;
+    width:100%;
+  }
+  .met-pipe-row::-webkit-scrollbar{display:none}
+
+  /* Card wrapper */
+  .met-card-wrap{
+    position:relative;
+    flex:0 0 100%;
+    width:100%;
+    min-width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    scroll-snap-align:center;
+    padding:0 2px;
+  }
+
+  /* Floating badge */
+  .met-badge{
+    position:absolute;top:-52px;left:50%;transform:translateX(-50%);
+    width:50px;height:50px;border-radius:50%;
+    background:linear-gradient(135deg,#7c3aed,#a855f7);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:800;color:#fff;
+    box-shadow:0 0 0 5px rgba(168,85,247,.2),0 0 24px rgba(168,85,247,.8);
+    z-index:10;
+    border:2px solid rgba(255,255,255,.2);
+  }
+  .met-badge.done{
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    box-shadow:0 0 0 5px rgba(74,222,128,.2),0 0 24px rgba(74,222,128,.8);
+  }
+
+  /* Card */
+  .met-card{
+    width:100%;
+    box-sizing:border-box;
+    border-radius:22px;
+    background:#0d0919;
+    border:2px solid rgba(168,85,247,.45);
+    box-shadow:0 0 28px rgba(168,85,247,.2),0 0 70px rgba(124,58,237,.1);
+    transition:all .3s ease;
+    overflow:hidden;
+  }
+  .met-card:hover{
+    border-color:rgba(168,85,247,.85);
+    box-shadow:0 0 40px rgba(168,85,247,.45),0 0 90px rgba(124,58,237,.18);
+    transform:translateY(-5px);
+  }
+  .met-card.done{
+    border-color:rgba(74,222,128,.5);
+    box-shadow:0 0 28px rgba(74,222,128,.22),0 0 70px rgba(22,163,74,.1);
+  }
+  .met-card.done:hover{
+    border-color:rgba(74,222,128,.9);
+    box-shadow:0 0 40px rgba(74,222,128,.45);
+    transform:translateY(-5px);
+  }
+
+  /* Card header */
+  .met-head{
+    padding:22px 24px 18px;
+    border-bottom:1px solid rgba(168,85,247,.18);
+    display:flex;align-items:center;gap:14px;
+    background:rgba(124,58,237,.08);
+  }
+  .met-head.done{
+    border-bottom-color:rgba(74,222,128,.2);
+    background:rgba(22,163,74,.08);
+  }
+  .met-head-title{font-size:18px;font-weight:700;color:#fff;line-height:1.25;flex:1}
+
+  /* Card body */
+  .met-body{padding:20px 24px 26px;display:flex;flex-direction:column;gap:14px}
+
+  /* Software pill */
+  .met-sw{
+    font-size:13px;font-family:ui-monospace,monospace;font-weight:600;
+    color:rgba(168,85,247,.95);
+    background:rgba(0,0,0,.55);
+    border:1px solid rgba(168,85,247,.3);
+    border-radius:8px;padding:8px 14px;
+    display:flex;align-items:center;gap:8px;
+    width:fit-content;
+  }
+  .met-sw-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#a855f7;flex-shrink:0;
+    box-shadow:0 0 8px rgba(168,85,247,.9);
+    animation:met-pulse 2s ease-in-out infinite;
+  }
+  @keyframes met-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* Bullet */
+  .met-bullet{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:rgba(225,218,245,.95);line-height:1.6}
+  .met-dot{width:8px;height:8px;border-radius:50%;background:rgba(168,85,247,.8);flex-shrink:0;margin-top:7px}
+  .met-dot.green{background:rgba(74,222,128,.8)}
+
+  /* Progress bar */
+  .met-bar-wrap{display:flex;flex-direction:column;gap:6px}
+  .met-bar-label{font-size:12px;color:rgba(168,85,247,.75);font-family:ui-monospace,monospace;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+  .met-bar-bg{height:7px;border-radius:6px;background:rgba(255,255,255,.09);overflow:hidden}
+  .met-bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#7c3aed,#a855f7)}
+
+  /* Status rows */
+  .met-status{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:15px;padding:10px 15px;border-radius:10px;
+  }
+  .met-status .lbl{color:rgba(215,208,235,.9);font-weight:500}
+  .met-status .val{font-weight:700;font-size:14.5px}
+  .met-status.ok{background:rgba(22,163,74,.14)}
+  .met-status.ok .val{color:rgba(74,222,128,.95)}
+  .met-status.bad{background:rgba(239,68,68,.12)}
+  .met-status.bad .val{color:rgba(252,165,165,.95)}
+
+  /* Chip tag */
+  .met-chip{
+    display:inline-block;width:fit-content;
+    font-size:11.5px;font-family:ui-monospace,monospace;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;
+    color:rgba(168,85,247,.95);background:rgba(124,58,237,.16);
+    border:1px solid rgba(168,85,247,.28);border-radius:6px;padding:5px 12px;
+  }
+  .met-chip.green{color:rgba(74,222,128,.95);background:rgba(22,163,74,.14);border-color:rgba(74,222,128,.28)}
+
+  /* Done button */
+  .met-done-btn{
+    background:rgba(22,163,74,.2);border:2px solid rgba(74,222,128,.48);
+    border-radius:12px;padding:15px 18px;text-align:center;
+    font-size:16px;font-weight:800;color:rgba(74,222,128,.98);letter-spacing:.07em;
+  }
+
+  /* Mobile nav */
+  .met-nav{
+    display:flex;align-items:center;justify-content:center;gap:20px;
+    margin-top:24px;
+  }
+  .met-nav-btn{
+    width:52px;height:52px;border-radius:50%;
+    background:rgba(124,58,237,.22);
+    border:2px solid rgba(168,85,247,.45);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .25s ease;
+    color:rgba(168,85,247,.95);
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  .met-nav-btn:hover,.met-nav-btn:active{background:rgba(124,58,237,.45);border-color:rgba(168,85,247,.85)}
+  .met-nav-btn:disabled{opacity:.25;cursor:default;pointer-events:none}
+  .met-nav-dots{display:flex;gap:8px;align-items:center}
+  .met-nav-dot{
+    width:9px;height:9px;border-radius:50%;
+    background:rgba(168,85,247,.28);
+    border:none;cursor:pointer;padding:0;
+    transition:all .3s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .met-nav-dot.active{background:rgba(168,85,247,.95);width:28px;border-radius:5px}
+
+  /* Tablet */
+  @media(min-width:768px){
+    .met-pipe-wrap{overflow:visible}
+    .met-pipe-row{padding:70px 16px 25px;gap:18px}
+    .met-card-wrap{flex:0 0 280px;width:280px;min-width:280px;max-width:320px;padding:0}
+    .met-nav{display:none !important}
+  }
+
+  /* Desktop */
+  @media(min-width:1200px){
+    .met-pipe-row{overflow-x:visible;justify-content:center;padding-top:70px;padding-left:0;padding-right:0;gap:18px}
+    .met-card-wrap{flex:1 1 0;width:auto;min-width:0;max-width:245px}
+  }
+</style>
+
+<section id="processo" class="relative mx-auto max-w-7xl px-4 mt-24 scroll-mt-24">
+  <div class="met-orb" style="width:520px;height:520px;background:rgba(124,58,237,0.07);top:-150px;left:-180px"></div>
+  <div class="met-orb" style="width:380px;height:380px;background:rgba(168,85,247,0.06);bottom:-100px;right:-100px"></div>
+
+  <!-- Header -->
+  <div class="text-center mb-16" style="position:relative;z-index:1">
+    <div class="inline-flex items-center gap-2 mb-5">
+      <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">METODOLOGIA</span>
+    </div>
+    <h2 class="text-3xl font-bold md:text-5xl mb-4 leading-tight">
+      Como suas <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">imagens são criadas</span>
+    </h2>
+    <p class="text-[var(--muted)] max-w-xl mx-auto text-lg">
+      Processo orientado a dados e metodologias comprovadas para maximizar conversão e impressões.
+    </p>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="met-pipe-wrap">
+    <div class="met-pipe-line" aria-hidden="true"></div>
+
+    <div class="met-pipe-row" id="metRow">
+
+      <!-- 01 — Análise de Mercado -->
+      <div class="met-card-wrap">
+        <div class="met-badge">01</div>
+        <div class="met-card">
+          <div class="met-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(168,85,247,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+            <span class="met-head-title">Análise de Mercado</span>
+          </div>
+          <div class="met-body">
+            <div class="met-sw"><span class="met-sw-dot"></span>Software de coleta ativo</div>
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Varre a <strong style="color:#fff">1ª página do marketplace</strong> escolhido em tempo real</span>
+            </div>
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Coleta palavras-chave de alto volume e os anúncios líderes da categoria</span>
+            </div>
+            <div class="met-bar-wrap">
+              <span class="met-bar-label">Dados coletados</span>
+              <div class="met-bar-bg"><div class="met-bar-fill" style="width:92%"></div></div>
+            </div>
+            <span class="met-chip">MINERAÇÃO DE DADOS</span>
+          </div>
         </div>
-    </section>
-    <!-- Processo de Criação - 6 Passos + Diferenciais -->
-<section id="processo" class="mx-auto max-w-7xl px-4 mt-24 scroll-mt-24">
-    <!-- Cabeçalho -->
-    <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-3 mb-4">
-            <span class="inline-block rounded-md badge px-3 py-1 text-xs font-bold uppercase tracking-widest">Metodologia</span>
+      </div>
+
+      <!-- 02 — Diagnóstico do Anúncio -->
+      <div class="met-card-wrap">
+        <div class="met-badge">02</div>
+        <div class="met-card">
+          <div class="met-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(168,85,247,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="met-head-title">Diagnóstico do Anúncio</span>
+          </div>
+          <div class="met-body">
+            <div class="met-sw"><span class="met-sw-dot"></span>Software de análise ativo</div>
+            <div class="met-status ok">
+              <span class="lbl">Título</span>
+              <span class="val">&#10003; Bom</span>
+            </div>
+            <div class="met-status bad">
+              <span class="lbl">Descrição</span>
+              <span class="val">&#9888; Fraco</span>
+            </div>
+            <div class="met-status bad">
+              <span class="lbl">Características</span>
+              <span class="val">&#9888; Fraco</span>
+            </div>
+            <span class="met-chip">RELATÓRIO DE AUDITORIA</span>
+          </div>
         </div>
-        <h2 class="text-3xl font-bold md:text-5xl mb-4">Como suas <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">imagens são criadas</span></h2>
-        <p class="text-[var(--muted)] max-w-2xl mx-auto text-lg">Um processo estratégico baseado em dados reais de mercado para garantir o máximo de conversão.</p>
+      </div>
+
+      <!-- 03 — Imagens Estratégicas -->
+      <div class="met-card-wrap">
+        <div class="met-badge">03</div>
+        <div class="met-card">
+          <div class="met-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(168,85,247,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span class="met-head-title">Imagens Estratégicas</span>
+          </div>
+          <div class="met-body">
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Criadas com <strong style="color:#fff">metodologias comprovadas</strong> de conversão e aumento de CTR</span>
+            </div>
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Composição, ângulos e gatilhos visuais validados por dados reais de mercado</span>
+            </div>
+            <div class="met-bar-wrap">
+              <span class="met-bar-label">Aumento de Cliques</span>
+              <div class="met-bar-bg"><div class="met-bar-fill" style="width:85%"></div></div>
+            </div>
+            <span class="met-chip">OTIMIZAÇÃO DE CLIQUES</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 — Imagens Ambientadas -->
+      <div class="met-card-wrap">
+        <div class="met-badge">04</div>
+        <div class="met-card">
+          <div class="met-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(168,85,247,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            <span class="met-head-title">Imagens Ambientadas</span>
+          </div>
+          <div class="met-body">
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Produto contextualizado para <strong style="color:#fff">valorizar a percepção</strong> e aumentar desejo de compra</span>
+            </div>
+            <div class="met-bullet">
+              <span class="met-dot"></span>
+              <span>Reduz custo por clique e aumenta a relevância do anúncio no algoritmo</span>
+            </div>
+            <div class="met-bar-wrap">
+              <span class="met-bar-label">CPC Reduzido</span>
+              <div class="met-bar-bg"><div class="met-bar-fill" style="width:78%"></div></div>
+            </div>
+            <span class="met-chip">CONTEXTO VISUAL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 — Entrega & Relatório -->
+      <div class="met-card-wrap">
+        <div class="met-badge done">05</div>
+        <div class="met-card done">
+          <div class="met-head done">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(74,222,128,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span class="met-head-title">Entrega &amp; Relatório</span>
+          </div>
+          <div class="met-body">
+            <div class="met-done-btn">PRONTO PARA VENDER</div>
+            <div class="met-bullet">
+              <span class="met-dot green"></span>
+              <span>Relatório completo com as <strong style="color:#fff">estratégias de cada imagem</strong> criada</span>
+            </div>
+            <div class="met-bullet">
+              <span class="met-dot green"></span>
+              <span>Explicação do título e descrição otimizados para o algoritmo do marketplace</span>
+            </div>
+            <span class="met-chip green">PRONTO PARA VENDER</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end row -->
+
+    <!-- Mobile nav (arrows + dots) — controlado por JS -->
+    <div class="met-nav" id="metNav" style="display:none">
+      <button class="met-nav-btn" id="metPrev" aria-label="Etapa anterior" disabled>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="met-nav-dots" id="metDots"></div>
+      <button class="met-nav-btn" id="metNext" aria-label="Próxima etapa">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
 
-    <!-- Grid dos 6 Passos (2x3 no desktop) -->
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-20">
-        <!-- Passo 1 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">01</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 2a6 6 0 110 12 6 6 0 010-12z"/><path d="M10 6a1 1 0 00-1 1v3a1 1 0 001 1h2a1 1 0 100-2h-1V7a1 1 0 00-1-1z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Análise de Mercado</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Estudo aprofundado do seu nicho, concorrentes diretos, palavras-chave de alto volume e tendências de consumo.</p>
-            </div>
-        </div>
+  </div><!-- end pipe-wrap -->
 
-        <!-- Passo 2 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">02</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2h14a1 1 0 100-2H3zm0 4a1 1 0 000 2h14a1 1 0 100-2H3zm0 4a1 1 0 100 2h14a1 1 0 100-2H3zm0 4a1 1 0 100 2h14a1 1 0 100-2H3z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Benchmarking</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Crio uma base com os anúncios de maior performance na sua plataforma (Mercado Livre, Shopee, Amazon).</p>
-            </div>
-        </div>
+  <!-- CTA -->
+  <div class="text-center mt-24" style="position:relative;z-index:1">
+    <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20que%20voc%C3%AA%20analise%20meu%20an%C3%BAncio%20e%20crie%20imagens%20estrat%C3%A9gicas%20para%20meu%20produto." class="inline-flex items-center gap-3 badge px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50">
+      Quero meu anúncio analisado
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <p class="mt-4 text-sm text-gray-500">Análise gratuita + resposta em até 5 minutos</p>
+  </div>
 
-        <!-- Passo 3 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">03</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-3L9 4H4z"/><path d="M10 11a2 2 0 100-4 2 2 0 000 4z"/><path d="M13 9a1 1 0 100-2 1 1 0 000 2z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Briefing Criativo</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Identifico os diferenciais do seu produto e defino a estratégia visual mais adequada para o seu público-alvo.</p>
-            </div>
-        </div>
-
-        <!-- Passo 4 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">04</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M13 7V6a3 3 0 00-6 0v1H5v10h10V7h-2zm-4 0V6a1 1 0 112 0v1H9z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Criação Estratégica</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Suas imagens são criadas com base em dados reais, utilizando composições, ângulos e elementos que convertem.</p>
-            </div>
-        </div>
-
-        <!-- Passo 5 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">05</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Copy Otimizada</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Título com SEO e descrição persuasiva com gatilhos mentais, baseados em concorrentes de sucesso.</p>
-            </div>
-        </div>
-
-        <!-- Passo 6 -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute -top-4 left-6">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-purple-400/50">06</div>
-            </div>
-            <div class="mt-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
-                    <h3 class="text-xl font-bold text-white">Entrega + Relatório</h3>
-                </div>
-                <p class="text-gray-400 leading-relaxed text-sm">Você recebe um documento claro com todas as alterações: imagens, título, descrição e estratégia utilizada.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Diferenciais - 3 Cards com foco em benefícios -->
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
-        <div class="rounded-2xl bg-gradient-to-br from-purple-900/20 to-purple-800/10 p-6 ring-1 ring-purple-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="p-2 rounded-xl bg-purple-500/20">
-                    <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z"/></svg>
-                </div>
-                <h3 class="text-lg font-bold text-white">Base de Dados Exclusiva</h3>
-            </div>
-            <p class="text-gray-300 leading-relaxed text-sm">Não trabalho com "achismo". Minhas criações são baseadas em uma base de dados real com anúncios que já performam.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <span class="text-[11px] text-purple-300">✅ Dados reais</span>
-                <span class="text-[11px] text-purple-300">✅ Análise de concorrência</span>
-                <span class="text-[11px] text-purple-300">✅ Tendências do nicho</span>
-            </div>
-        </div>
-
-        <div class="rounded-2xl bg-gradient-to-br from-emerald-900/20 to-emerald-800/10 p-6 ring-1 ring-emerald-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="p-2 rounded-xl bg-emerald-500/20">
-                    <svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/></svg>
-                </div>
-                <h3 class="text-lg font-bold text-white">Resultados Comprovados</h3>
-            </div>
-            <p class="text-gray-300 leading-relaxed text-sm">Clientes relatam aumento significativo de CTR e conversão após aplicarmos essa metodologia baseada em dados.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <span class="text-[11px] text-emerald-300">📈 +50% de CTR</span>
-                <span class="text-[11px] text-emerald-300">💰 +50% em conversão</span>
-                <span class="text-[11px] text-emerald-300">⭐ 1 pagina posicionamento</span>
-            </div>
-        </div>
-
-        <div class="rounded-2xl bg-gradient-to-br from-amber-900/20 to-amber-800/10 p-6 ring-1 ring-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="p-2 rounded-xl bg-amber-500/20">
-                    <svg class="w-6 h-6 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>
-                </div>
-                <h3 class="text-lg font-bold text-white">Transparência Total</h3>
-            </div>
-            <p class="text-gray-300 leading-relaxed text-sm">Você recebe um relatório detalhado explicando cada alteração, desde as imagens até o título e descrição.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <span class="text-[11px] text-amber-300">📋 Relatório executivo</span>
-                <span class="text-[11px] text-amber-300">🔍 Explicação estratégica</span>
-                <span class="text-[11px] text-amber-300">📊 Dados de benchmark</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Final -->
-    <div class="text-center">
-        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20que%20voc%C3%AA%20analise%20meu%20an%C3%BAncio%20e%20crie%20imagens%20estrat%C3%A9gicas%20para%20meu%20produto." class="inline-flex items-center gap-3 badge px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50">
-            Quero meu anúncio analisado
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-        </a>
-        <p class="mt-4 text-sm text-gray-500">Análise gratuita + resposta em até 5 minutos</p>
-    </div>
 </section>
 
-<!-- Segmentos - Versão melhorada -->
+<!-- ══════════════════════════════════<!-- ═══════════════════════════════════════════════════════════
+     SHOWCASE DE ANÚNCIOS / IMAGENS ESTRATÉGICAS
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  /* Separação Garantida Desktop e Mobile */
+  .sc-desktop-wrap {
+    display: none;
+  }
+  .sc-mobile-wrap {
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .sc-desktop-wrap {
+      display: grid !important;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .sc-mobile-wrap {
+      display: none !important;
+    }
+  }
+
+  .showcase-frame {
+    background: rgba(13, 9, 25, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(168, 85, 247, 0.3);
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.12);
+  }
+  .ratio-1200-1200 {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border: none;
+    outline: none;
+    line-height: 0;
+  }
+  .ratio-1200-1200 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border: none;
+    outline: none;
+  }
+  .pilar-card-item {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.1rem;
+    padding: 1rem 1.25rem;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .pilar-card-item:hover, .pilar-card-item.active {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.18);
+    transform: translateX(4px);
+  }
+  .pilar-card-item.active {
+    border-color: rgba(168, 85, 247, 0.95);
+    background: rgba(124, 58, 237, 0.2);
+  }
+  /* Botões de navegação no mobile */
+  .sc-btn-nav {
+    height: 52px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(124, 58, 237, 0.25);
+    border: 1.5px solid rgba(168, 85, 247, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .sc-btn-nav:hover, .sc-btn-nav:active {
+    background: rgba(124, 58, 237, 0.5);
+    border-color: rgba(168, 85, 247, 0.85);
+  }
+  .tab-pill {
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: rgba(215, 205, 235, 0.85);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab-pill:hover {
+    color: #fff;
+    background: rgba(124, 58, 237, 0.25);
+    border-color: rgba(168, 85, 247, 0.5);
+  }
+  .tab-pill.active {
+    color: #fff;
+    background: rgba(124, 58, 237, 0.45);
+    border-color: rgba(168, 85, 247, 0.9);
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.4);
+  }
+</style>
+
 <section id="segmentos" class="mx-auto mt-24 max-w-7xl px-4 scroll-mt-24">
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <!-- Coluna esquerda - texto e diferenciais -->
-        <div class="space-y-8">
-            <div class="space-y-4">
-                <div class="inline-flex items-center gap-3">
-                    <span class="inline-block rounded-md badge px-3 py-1 text-xs font-bold uppercase tracking-widest">Segmentos</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                    Imagens estratégicas que <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">aumentam o desejo</span> de compra
-                </h2>
-                <p class="text-[var(--muted)] text-lg">Não importa o nicho – sua foto precisa contar uma história. Eu transformo produtos comuns em anúncios que geram cliques e vendas.</p>
-            </div>
+  
+  <!-- ═══════════════════════════════════════════════════════════
+       1. LAYOUT DESKTOP (Garantido via @media min-width: 1024px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="sc-desktop-wrap">
+    
+    <!-- Coluna Esquerda Desktop: Título + 4 Pilares -->
+    <div class="space-y-6">
+      
+      <!-- Título Padrão à Esquerda -->
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2">
+          <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:4px 16px;text-transform:uppercase">
+            [ SHOWCASE DE ANÚNCIOS ]
+          </span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white text-left">
+          Imagens que <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">aumentam sua conversão</span>
+        </h2>
+        <p class="text-gray-300 text-base lg:text-lg leading-relaxed text-left">
+          Otimização estratégica de criativos focada em cliques, retenção e aumento direto nas vendas dos seus produtos.
+        </p>
+      </div>
 
-            <!-- Cards de diferenciais -->
-            <div class="grid gap-4">
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Destaque de benefícios e detalhes</h3>
-                        <p class="text-sm text-gray-400">Valorizamos cada característica do seu produto para atrair o cliente certo.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Fotos simples → anúncios impactantes</h3>
-                        <p class="text-sm text-gray-400">Técnicas de edição e composição que transformam qualquer imagem em material publicitário.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Edição e montagem de kits</h3>
-                        <p class="text-sm text-gray-400">Criação de cenas que mostram o produto em uso, aumentando o valor percebido.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Entrega rápida e formatos otimizados</h3>
-                        <p class="text-sm text-gray-400">Arquivos prontos para cada marketplace (Mercado Livre, Shopee, Amazon, etc.).</p>
-                    </div>
-                </div>
+      <!-- 4 Cards de Pilares -->
+      <div class="space-y-3">
+        
+        <!-- Pilar 1: Compatibilidade -->
+        <div class="pilar-card-item active" onclick="switchShowcase(0)">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
+            <div>
+              <h3 class="text-white font-bold text-base mb-1">1. Compatibilidade e Aplicação</h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Demonstração visual de conexões, modelos e aparelhos compatíveis, eliminando dúvidas técnicas e evitando devoluções.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Coluna direita - galeria de imagens com efeito -->
-        <div class="grid grid-cols-2 gap-4">
-            <div class="col-span-2 rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-[4/3] overflow-hidden rounded-xl">
-                    <img src="img/mouse.jpg" alt="Produto destacado" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </div>
+        <!-- Pilar 2: Design Publicitário -->
+        <div class="pilar-card-item" onclick="switchShowcase(1)">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
             </div>
-            <div class="rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-square overflow-hidden rounded-xl">
-                    <img src="img/alicate.jpg" alt="Ferramenta" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
+            <div>
+              <h3 class="text-white font-bold text-base mb-1">2. Design Publicitário</h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Tratamento profissional de iluminação, ângulos e sombras para transformar fotos simples em anúncios de alto impacto.
+              </p>
             </div>
-            <div class="rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-square overflow-hidden rounded-xl">
-                    <img src="img/92.jpg" alt="Edição criativa" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-            </div>
+          </div>
         </div>
+
+        <!-- Pilar 3: Montagem de Kits -->
+        <div class="pilar-card-item" onclick="switchShowcase(2)">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-bold text-base mb-1">3. Montagem de Kits</h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Criação de cenários e agrupamento de produtos em kits para elevar o valor percebido e aumentar o ticket médio.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pilar 4: Destaque de Benefícios -->
+        <div class="pilar-card-item" onclick="switchShowcase(3)">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-bold text-base mb-1">4. Destaque de Benefícios</h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Apontamento visual claro das vantagens, diferenciais técnicos e benefícios práticos que aceleram a decisão de compra.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- Coluna Direita Desktop: Frame no Padrão 1200x1200 (1:1) Ampliado -->
+    <div class="flex justify-center">
+      <div class="showcase-frame p-4 w-full" style="max-width: 490px;">
+        <!-- Imagem 1200x1200 Quadrada Exata (Sem traços) -->
+        <div class="ratio-1200-1200" style="border-radius: 1.25rem; box-shadow: 0 12px 36px rgba(0,0,0,0.6);">
+          <img id="showcaseDesktopImg" src="img/compatibilidade.jpg" alt="Exemplo de anúncio 1200x1200" class="transition-opacity duration-200" />
+        </div>
+
+        <!-- Seletor de Abas Desktop (Sem borda divisória) -->
+        <div class="mt-4 flex flex-wrap gap-2 justify-center">
+          <button class="tab-pill active" onclick="switchShowcase(0)">1. Compatibilidade</button>
+          <button class="tab-pill" onclick="switchShowcase(1)">2. Design</button>
+          <button class="tab-pill" onclick="switchShowcase(2)">3. Kits</button>
+          <button class="tab-pill" onclick="switchShowcase(3)">4. Benefícios</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. LAYOUT MOBILE (Garantido via @media max-width: 1023px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="sc-mobile-wrap space-y-6">
+    
+    <!-- Título Mobile -->
+    <div class="text-center">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">
+          [ SHOWCASE DE ANÚNCIOS ]
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold leading-tight text-white">
+        Imagens que <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">aumentam sua conversão</span>
+      </h2>
+      <p class="text-gray-300 text-sm sm:text-base mt-2 px-2">
+        Otimização estratégica de criativos focada em cliques, retenção e aumento direto nas vendas dos seus produtos.
+      </p>
+    </div>
+
+    <!-- Card Unificado Mobile no Padrão 1200x1200 (1:1) Ampliado -->
+    <div class="showcase-frame p-3.5 sm:p-5" style="max-width: 460px; margin: 0 auto;">
+      
+      <!-- 1. Imagem Limpa 1200x1200 (Sem traços) -->
+      <div class="ratio-1200-1200" style="border-radius: 1.15rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+        <img id="showcaseMobileImg" src="img/compatibilidade.jpg" alt="Exemplo de anúncio profissional 1200x1200" class="transition-opacity duration-200" />
+      </div>
+
+      <!-- 2. Bloco Explicativo do Slide Atual -->
+      <div class="mt-4 p-4 rounded-xl bg-purple-950/30 border border-purple-500/25">
+        <div class="flex items-center justify-between gap-2 mb-1.5">
+          <h3 id="mobileShowcaseTitle" class="text-lg sm:text-xl font-bold text-white leading-tight">
+            1. Compatibilidade e Aplicação
+          </h3>
+          <span id="mobileStepIndicator" class="text-xs font-mono font-bold text-purple-300 bg-purple-900/60 border border-purple-500/30 px-2.5 py-1 rounded-md">
+            1 de 4
+          </span>
+        </div>
+        <p id="mobileShowcaseDesc" class="text-sm sm:text-base text-gray-300 leading-relaxed">
+          Demonstração visual de conexões, modelos e aparelhos compatíveis, eliminando dúvidas técnicas e evitando devoluções.
+        </p>
+      </div>
+
+      <!-- 3. Botões Grandes de Navegação -->
+      <div class="grid grid-cols-2 gap-3 mt-3.5">
+        <button class="sc-btn-nav" onclick="prevShowcase()" aria-label="Exemplo Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          <span>Anterior</span>
+        </button>
+        <button class="sc-btn-nav bg-purple-600/35 border-purple-500/70 hover:bg-purple-600/55" onclick="nextShowcase()" aria-label="Próximo Exemplo">
+          <span>Próximo</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- 4. Pílulas de Atalho Direto (Sem borda divisória) -->
+      <div class="mt-4 flex flex-wrap gap-2 justify-center">
+        <button class="tab-pill active" onclick="switchShowcase(0)">1. Compatibilidade</button>
+        <button class="tab-pill" onclick="switchShowcase(1)">2. Design</button>
+        <button class="tab-pill" onclick="switchShowcase(2)">3. Kits</button>
+        <button class="tab-pill" onclick="switchShowcase(3)">4. Benefícios</button>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<!-- Nichos - Versão melhorada com cards e ícones -->
+<script>
+  const showcaseData = [
+    {
+      img: 'img/compatibilidade.jpg',
+      title: '1. Compatibilidade e Aplicação',
+      desc: 'Demonstração visual de conexões, modelos e aparelhos compatíveis, eliminando dúvidas técnicas e evitando devoluções.'
+    },
+    {
+      img: 'img/alicate.jpg',
+      title: '2. Design Publicitário',
+      desc: 'Tratamento profissional de iluminação, ângulos e sombras para transformar fotos simples em anúncios de alto impacto.'
+    },
+    {
+      img: 'img/31321.png',
+      title: '3. Montagem de Kits',
+      desc: 'Criação de cenários e agrupamento de produtos em kits para elevar o valor percebido e aumentar o ticket médio.'
+    },
+    {
+      img: 'img/estojo f.png',
+      title: '4. Destaque de Benefícios',
+      desc: 'Apontamento visual claro das vantagens, diferenciais técnicos e benefícios práticos que aceleram a decisão de compra.'
+    }
+  ];
+
+  let currentShowcaseIdx = 0;
+
+  function switchShowcase(index) {
+    if (index < 0) index = 0;
+    if (index >= showcaseData.length) index = showcaseData.length - 1;
+    currentShowcaseIdx = index;
+
+    const item = showcaseData[currentShowcaseIdx];
+    if (!item) return;
+
+    // Desktop Image
+    const desktopImg = document.getElementById('showcaseDesktopImg');
+    if (desktopImg) {
+      desktopImg.style.opacity = '0.35';
+      setTimeout(() => {
+        desktopImg.src = item.img;
+        desktopImg.style.opacity = '1';
+      }, 110);
+    }
+
+    // Mobile Elements
+    const mobileImg = document.getElementById('showcaseMobileImg');
+    const mobileTitle = document.getElementById('mobileShowcaseTitle');
+    const mobileDesc = document.getElementById('mobileShowcaseDesc');
+    const mobileIndicator = document.getElementById('mobileStepIndicator');
+
+    if (mobileImg) {
+      mobileImg.style.opacity = '0.35';
+      setTimeout(() => {
+        mobileImg.src = item.img;
+        mobileImg.style.opacity = '1';
+      }, 110);
+    }
+    if (mobileTitle) mobileTitle.innerText = item.title;
+    if (mobileDesc) mobileDesc.innerText = item.desc;
+    if (mobileIndicator) mobileIndicator.innerText = (currentShowcaseIdx + 1) + ' de ' + showcaseData.length;
+
+    // Atualizar cards desktop
+    const pilares = document.querySelectorAll('.pilar-card-item');
+    pilares.forEach((p, i) => {
+      if (i === currentShowcaseIdx) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+
+    // Atualizar todas as abas (Desktop e Mobile)
+    const tabs = document.querySelectorAll('.tab-pill');
+    tabs.forEach((t, i) => {
+      if ((i % showcaseData.length) === currentShowcaseIdx) t.classList.add('active');
+      else t.classList.remove('active');
+    });
+  }
+
+  function prevShowcase() {
+    let nextIdx = currentShowcaseIdx - 1;
+    if (nextIdx < 0) nextIdx = showcaseData.length - 1;
+    switchShowcase(nextIdx);
+  }
+
+  function nextShowcase() {
+    let nextIdx = currentShowcaseIdx + 1;
+    if (nextIdx >= showcaseData.length) nextIdx = 0;
+    switchShowcase(nextIdx);
+  }
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NICHOS DE MERCADO / SEGMENTOS (ISOLAMENTO DESKTOP / MOBILE)
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  /* 1. Layout Isolado Desktop / Mobile */
+  .nc-desktop-wrap {
+    display: none;
+  }
+  .nc-mobile-wrap {
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .nc-desktop-wrap {
+      display: grid !important;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .nc-mobile-wrap {
+      display: none !important;
+    }
+  }
+
+  /* 2. Cards de Segmentos no Desktop */
+  .nc-desktop-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    color: #d1d5db;
+    font-weight: 600;
+    font-size: 14.5px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nc-desktop-card:hover {
+    background: rgba(168, 85, 247, 0.08);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+  .nc-desktop-card.active {
+    background: rgba(124, 58, 237, 0.18);
+    border-color: rgba(168, 85, 247, 0.85);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+  }
+  .nc-desktop-card svg {
+    color: #9ca3af;
+    transition: color 0.25s ease;
+  }
+  .nc-desktop-card:hover svg, .nc-desktop-card.active svg {
+    color: #c084fc;
+  }
+
+  /* 3. Bento Grid Frames Ampliado (+25% a +35% de Tamanho e Visibilidade) */
+  .nc-bento-box {
+    width: 100%;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1023px) {
+    .nc-mobile-wrap .nc-bento-box {
+      max-width: 540px !important;
+      width: 100% !important;
+      padding: 12px 10px !important;
+    }
+  }
+  .nc-img-main {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.35rem;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+    line-height: 0;
+  }
+  .nc-img-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.2s ease;
+  }
+  .nc-sub-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  @media (max-width: 639px) {
+    .nc-sub-grid {
+      gap: 10px;
+      margin-top: 10px;
+    }
+  }
+  .nc-img-sub {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 1.15rem;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.5);
+    line-height: 0;
+  }
+  .nc-img-sub img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.2s ease;
+  }
+  .nc-img-main:hover img, .nc-img-sub:hover img {
+    transform: scale(1.04);
+  }
+
+  /* 4. Botões e Pílulas no Mobile */
+  .nc-mobile-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+    column-gap: 8px;
+  }
+  .nc-mobile-pill-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.09);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nc-mobile-pill-btn.active {
+    background: rgba(124, 58, 237, 0.25);
+    border-color: rgba(168, 85, 247, 0.85);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+  }
+  .nc-mobile-pill-btn svg {
+    color: #94a3b8;
+  }
+  .nc-mobile-pill-btn.active svg {
+    color: #c084fc;
+  }
+</style>
+
 <section id="nichos" class="mx-auto mt-24 max-w-7xl px-4 scroll-mt-24">
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-start">
-        <!-- Coluna esquerda - texto e cards dos nichos -->
-        <div class="space-y-8">
-            <div class="space-y-4">
-                <div class="inline-flex items-center gap-3">
-                    <span class="inline-block rounded-md badge px-3 py-1 text-xs font-bold uppercase tracking-widest">Nichos</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                    Para <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">todos os nichos</span>
-                </h2>
-                <p class="text-[var(--muted)] text-lg">Crio imagens impactantes para diversos segmentos, sempre focando na conversão e no apelo visual.</p>
-            </div>
-
-            <!-- Grid de cards dos nichos (2x3 ou 2x2 dependendo da tela) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Moda -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-lg">👗</div>
-                    <span class="text-white font-medium">Moda & Vestuário</span>
-                </div>
-                <!-- Eletrônicos -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-lg">📱</div>
-                    <span class="text-white font-medium">Eletrônicos</span>
-                </div>
-                <!-- Beleza -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center text-lg">💄</div>
-                    <span class="text-white font-medium">Beleza & Perfumaria</span>
-                </div>
-                <!-- Casa & Decoração -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-lg">🛋️</div>
-                    <span class="text-white font-medium">Casa & Decoração</span>
-                </div>
-                <!-- Esportes -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-lg">⚽</div>
-                    <span class="text-white font-medium">Esportes</span>
-                </div>
-                <!-- Infantil -->
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center text-lg">🧸</div>
-                    <span class="text-white font-medium">Infantil</span>
-                </div>
-            </div>
-
-     
+  
+  <!-- ═══════════════════════════════════════════════════════════
+       1. LAYOUT DESKTOP (Garantido via @media min-width: 1024px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="nc-desktop-wrap">
+    
+    <!-- Coluna Esquerda Desktop: Título + 6 Cards de Nichos -->
+    <div class="space-y-6">
+      
+      <!-- Título Padrão à Esquerda -->
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2">
+          <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:4px 16px;text-transform:uppercase">
+            [ NICHOS & SEGMENTOS ]
+          </span>
         </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white text-left">
+          Estratégia visual <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">validada para todos os nichos</span>
+        </h2>
+        <p class="text-gray-300 text-base lg:text-lg leading-relaxed text-left">
+          Adaptação de linguagem visual e composição estética para o perfil específico do seu produto.
+        </p>
+      </div>
 
-        <!-- Coluna direita - galeria de imagens -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Imagem grande (destaque) -->
-            <div class="sm:col-span-2 rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-[4/3] overflow-hidden rounded-xl">
-                    <img src="img/estojo felpudo.jpg" alt="Exemplo de anúncio para nicho de moda/acessórios" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                        <span class="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded-full">Acessórios</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Imagem 2 -->
-            <div class="rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-square overflow-hidden rounded-xl">
-                    <img src="img/recrie_essa_imagem_202604212134.jpeg" alt="Organizadores / Casa" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-            </div>
-            <!-- Imagem 3 -->
-            <div class="rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 group">
-                <div class="relative aspect-square overflow-hidden rounded-xl">
-                    <img src="img/tenis.jpg" alt="Tênis - esportes" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-            </div>
-        </div>
+      <!-- Grid de 6 Nichos (2 Colunas x 3 Linhas) -->
+      <div class="grid grid-cols-2 gap-3 pt-1">
+        
+        <!-- 1. Moda -->
+        <button class="nc-desktop-card active" onclick="switchNicho(0)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10a2 2 0 002 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/></svg>
+          <span>Moda & Vestuário</span>
+        </button>
+
+        <!-- 2. Tech -->
+        <button class="nc-desktop-card" onclick="switchNicho(1)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+          <span>Eletrônicos & Tech</span>
+        </button>
+
+        <!-- 3. Beleza -->
+        <button class="nc-desktop-card" onclick="switchNicho(2)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3zM5 3v4M3 5h4M19 17v4M17 19h4"/></svg>
+          <span>Beleza & Cosméticos</span>
+        </button>
+
+        <!-- 4. Casa -->
+        <button class="nc-desktop-card" onclick="switchNicho(3)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6a1 1 0 00-1-1h-2a1 1 0 00-1 1v6H4a1 1 0 01-1-1V9.5z"/></svg>
+          <span>Casa & Decoração</span>
+        </button>
+
+        <!-- 5. Esportes -->
+        <button class="nc-desktop-card" onclick="switchNicho(4)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9v1a6 6 0 0012 0V9M6 9H4a2 2 0 01-2-2V5a2 2 0 012-2h2M18 9h2a2 2 0 002-2V5a2 2 0 00-2-2h-2M12 16v4M8 20h8"/></svg>
+          <span>Esportes & Fitness</span>
+        </button>
+
+        <!-- 6. Infantil -->
+        <button class="nc-desktop-card" onclick="switchNicho(5)">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h.01M15 12h.01M10 16c.5.5 1.2.8 2 .8s1.5-.3 2-.8M19 6.3a9 9 0 011.8 3.9 2 2 0 010 3.6 9 9 0 01-17.6 0 2 2 0 010-3.6A9 9 0 0119 6.3z"/></svg>
+          <span>Infantil & Bebês</span>
+        </button>
+
+      </div>
+
     </div>
+
+    <!-- Coluna Direita Desktop: Galeria Bento Grid -->
+    <div class="flex justify-center">
+      <div class="showcase-frame p-4 nc-bento-box">
+        
+        <!-- Imagem Principal em Destaque -->
+        <div class="nc-img-main">
+          <img id="nichoDesktopMainImg" src="img/capa chuteira olimpia.jpg" alt="Exemplo de anúncio do segmento" />
+        </div>
+
+        <!-- 2 Imagens Secundárias -->
+        <div class="nc-sub-grid">
+          <div class="nc-img-sub">
+            <img id="nichoDesktopSub1Img" src="img/tenis.jpg" alt="Criativo complementar 1" />
+          </div>
+          <div class="nc-img-sub">
+            <img id="nichoDesktopSub2Img" src="img/teste1.jpg" alt="Criativo complementar 2" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. LAYOUT MOBILE (Garantido via @media max-width: 1023px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="nc-mobile-wrap space-y-6">
+    
+    <!-- Título Mobile -->
+    <div class="text-center">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">
+          [ NICHOS & SEGMENTOS ]
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold leading-tight text-white">
+        Estratégia visual <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">validada para todos os nichos</span>
+      </h2>
+      <p class="text-gray-300 text-sm sm:text-base mt-2 px-2">
+        Adaptação de linguagem visual e composição estética para o perfil específico do seu produto.
+      </p>
+    </div>
+
+    <!-- Card Unificado da Galeria Mobile -->
+    <div class="showcase-frame p-3.5 sm:p-4 nc-bento-box">
+      
+      <!-- Imagem Principal -->
+      <div class="nc-img-main">
+        <img id="nichoMobileMainImg" src="img/capa chuteira olimpia.jpg" alt="Exemplo de anúncio do segmento" />
+      </div>
+
+      <!-- 2 Imagens Secundárias -->
+      <div class="nc-sub-grid">
+        <div class="nc-img-sub">
+          <img id="nichoMobileSub1Img" src="img/tenis.jpg" alt="Criativo complementar 1" />
+        </div>
+        <div class="nc-img-sub">
+          <img id="nichoMobileSub2Img" src="img/teste1.jpg" alt="Criativo complementar 2" />
+        </div>
+      </div>
+
+      <!-- Indicador do Nicho Atual -->
+      <div class="mt-4 p-3 rounded-xl bg-purple-950/30 border border-purple-500/25 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-purple-300 font-mono font-bold uppercase tracking-wider block">Nicho Selecionado:</span>
+          <h3 id="nichoMobileTitle" class="text-base font-bold text-white leading-tight">
+            1. Moda & Vestuário
+          </h3>
+        </div>
+        <span id="nichoStepIndicator" class="text-xs font-mono font-bold text-purple-300 bg-purple-900/60 border border-purple-500/30 px-2.5 py-1 rounded-md">
+          1 de 6
+        </span>
+      </div>
+
+      <!-- Botões Grandes de Navegação (Acessíveis para +30 anos) -->
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <button class="sc-btn-nav" onclick="prevNicho()" aria-label="Nicho Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          <span>Anterior</span>
+        </button>
+        <button class="sc-btn-nav bg-purple-600/35 border-purple-500/70 hover:bg-purple-600/55" onclick="nextNicho()" aria-label="Próximo Nicho">
+          <span>Próximo</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- 6 Pílulas de Acesso Rápido com Espaçamento Vertical Suave -->
+      <div class="nc-mobile-pills mt-4">
+        <button class="nc-mobile-pill-btn active" onclick="switchNicho(0)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10a2 2 0 002 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/></svg>
+          <span>Moda</span>
+        </button>
+        <button class="nc-mobile-pill-btn" onclick="switchNicho(1)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+          <span>Tech</span>
+        </button>
+        <button class="nc-mobile-pill-btn" onclick="switchNicho(2)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3zM5 3v4M3 5h4M19 17v4M17 19h4"/></svg>
+          <span>Beleza</span>
+        </button>
+        <button class="nc-mobile-pill-btn" onclick="switchNicho(3)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6a1 1 0 00-1-1h-2a1 1 0 00-1 1v6H4a1 1 0 01-1-1V9.5z"/></svg>
+          <span>Casa</span>
+        </button>
+        <button class="nc-mobile-pill-btn" onclick="switchNicho(4)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9v1a6 6 0 0012 0V9M6 9H4a2 2 0 01-2-2V5a2 2 0 012-2h2M18 9h2a2 2 0 002-2V5a2 2 0 00-2-2h-2M12 16v4M8 20h8"/></svg>
+          <span>Esportes</span>
+        </button>
+        <button class="nc-mobile-pill-btn" onclick="switchNicho(5)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h.01M15 12h.01M10 16c.5.5 1.2.8 2 .8s1.5-.3 2-.8M19 6.3a9 9 0 011.8 3.9 2 2 0 010 3.6 9 9 0 01-17.6 0 2 2 0 010-3.6A9 9 0 0119 6.3z"/></svg>
+          <span>Infantil</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<!-- Resultados - Versão melhorada -->
+<script>
+  const nichosData = [
+    {
+      name: "1. Moda & Vestuário",
+      main: "img/capa chuteira olimpia.jpg",
+      sub1: "img/tenis.jpg",
+      sub2: "img/teste1.jpg",
+      altMain: "Anúncio de Moda e Acessórios",
+      alt1: "Calçados e Moda Esportiva",
+      alt2: "Bolsas e Acessórios"
+    },
+    {
+      name: "2. Eletrônicos & Tech",
+      main: "img/placa de video.jpg",
+      sub1: "img/telefone2.jpg",
+      sub2: "img/adaptadorhdmi.jpg",
+      altMain: "Anúncio de Acessórios Tech",
+      alt1: "Mouse e Periféricos",
+      alt2: "Cabos e Adaptadores"
+    },
+    {
+      name: "3. Beleza & Cosméticos",
+      main: "img/minnecessaire.jpeg",
+      sub1: "img/removex.jpg",
+      sub2: "img/toucacozinha.jpeg",
+      altMain: "Cosméticos e Maquiagem",
+      alt1: "Cuidados Pessoais e Estética",
+      alt2: "Destaque de Produtos de Beleza"
+    },
+    {
+      name: "4. Casa & Decoração",
+      main: "img/stanley.jpg",
+      sub1: "img/copo.jpg",
+      sub2: "img/puffs kit1.jpeg",
+      altMain: "Organizadores e Ambientes",
+      alt1: "Espelhos e Decoração",
+      alt2: "Móveis e Conforto"
+    },
+    {
+      name: "5. Esportes & Fitness",
+      main: "img/macaquin.jpeg",
+      sub1: "img/mindboost1.jpg",
+      sub2: "img/bolacorin.jpg",
+      altMain: "Equipamentos Esportivos",
+      alt1: "Tênis e Calçados de Treino",
+      alt2: "Vestuário Esportivo"
+    },
+    {
+      name: "6. Infantil & Bebês",
+      main: "img/lençolinfantil.jpeg",
+      sub1: "img/chuteira.png",
+      sub2: "img/kit goleiro infantil4.png",
+      altMain: "Linha Infantil e Bebês",
+      alt1: "Acessórios Escolares",
+      alt2: "Kits Infantis"
+    }
+  ];
+
+  let currentNichoIdx = 0;
+
+  function switchNicho(index) {
+    if (index < 0) index = 0;
+    if (index >= nichosData.length) index = nichosData.length - 1;
+    currentNichoIdx = index;
+
+    const data = nichosData[currentNichoIdx];
+    if (!data) return;
+
+    // Desktop Imgs
+    const dMain = document.getElementById('nichoDesktopMainImg');
+    const dSub1 = document.getElementById('nichoDesktopSub1Img');
+    const dSub2 = document.getElementById('nichoDesktopSub2Img');
+
+    // Mobile Imgs
+    const mMain = document.getElementById('nichoMobileMainImg');
+    const mSub1 = document.getElementById('nichoMobileSub1Img');
+    const mSub2 = document.getElementById('nichoMobileSub2Img');
+
+    const updateImgEl = (el, newSrc, newAlt) => {
+      if (!el) return;
+      el.style.opacity = '0.35';
+      setTimeout(() => {
+        el.src = newSrc;
+        if (newAlt) el.alt = newAlt;
+        el.style.opacity = '1';
+      }, 110);
+    };
+
+    updateImgEl(dMain, data.main, data.altMain);
+    updateImgEl(dSub1, data.sub1, data.alt1);
+    updateImgEl(dSub2, data.sub2, data.alt2);
+
+    updateImgEl(mMain, data.main, data.altMain);
+    updateImgEl(mSub1, data.sub1, data.alt1);
+    updateImgEl(mSub2, data.sub2, data.alt2);
+
+    // Mobile Info
+    const mTitle = document.getElementById('nichoMobileTitle');
+    const mStep = document.getElementById('nichoStepIndicator');
+    if (mTitle) mTitle.innerText = data.name;
+    if (mStep) mStep.innerText = (currentNichoIdx + 1) + ' de ' + nichosData.length;
+
+    // Atualizar botões Desktop
+    const desktopBtns = document.querySelectorAll('.nc-desktop-card');
+    desktopBtns.forEach((btn, i) => {
+      if (i === currentNichoIdx) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+
+    // Atualizar pílulas Mobile
+    const mobileBtns = document.querySelectorAll('.nc-mobile-pill-btn');
+    mobileBtns.forEach((btn, i) => {
+      if (i === currentNichoIdx) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+
+  function prevNicho() {
+    let nextIdx = currentNichoIdx - 1;
+    if (nextIdx < 0) nextIdx = nichosData.length - 1;
+    switchNicho(nextIdx);
+  }
+
+  function nextNicho() {
+    let nextIdx = currentNichoIdx + 1;
+    if (nextIdx >= nichosData.length) nextIdx = 0;
+    switchNicho(nextIdx);
+  }
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RESULTADOS REAIS & MÉTRICAS (MÉTRICAS EXCLUSIVAS)
+     ═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     RESULTADOS REAIS & MÉTRICAS (CARROSSEL DE MÉTRICAS)
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  /* 1. Layout Isolado Resultados Desktop / Mobile */
+  .res-desktop-wrap {
+    display: none;
+  }
+  .res-mobile-wrap {
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .res-desktop-wrap {
+      display: grid !important;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .res-mobile-wrap {
+      display: none !important;
+    }
+  }
+
+  /* 2. Stat Cards */
+  .res-stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 1.15rem;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .res-stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(168, 85, 247, 0.6);
+    background: rgba(124, 58, 237, 0.08);
+    box-shadow: 0 12px 30px rgba(168, 85, 247, 0.18);
+  }
+  .res-stat-number {
+    font-size: 1.55rem;
+    font-weight: 900;
+    line-height: 1.15;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #c084fc 0%, #e879f9 50%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    padding-bottom: 2px;
+  }
+  @media (min-width: 640px) {
+    .res-stat-number {
+      font-size: 1.85rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .res-stat-number {
+      font-size: 2.1rem;
+    }
+  }
+
+  /* 3. Plataformas Atendidas - Grid 3x2 Perfeito & Sofisticado */
+  .res-ecosystem-box {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+  }
+  .res-ecosystem-pills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 639px) {
+    .res-ecosystem-pills {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  }
+  .res-eco-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .res-eco-pill:hover {
+    background: rgba(124, 58, 237, 0.18);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(168, 85, 247, 0.2);
+  }
+
+  /* 4. Carrossel de Métricas (Visual Limpo sem Barras ou Bordas Verticais) */
+  .res-device-frame {
+    background: rgba(13, 9, 25, 0.6);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.12);
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+  }
+
+  /* Tela do Carrossel no Formato Padrão 4:3 */
+  .res-carousel-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    line-height: 0;
+    border-radius: 1.25rem 1.25rem 0 0;
+    background: #080511;
+  }
+  .res-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Controles do Carrossel */
+  .res-carousel-footer {
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 0 1.25rem 1.25rem;
+  }
+  .res-carousel-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .res-carousel-btn:hover, .res-carousel-btn:active {
+    background: rgba(124, 58, 237, 0.45);
+    border-color: rgba(168, 85, 247, 0.8);
+    transform: scale(1.05);
+  }
+  .res-carousel-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .res-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .res-carousel-dot.active {
+    width: 22px;
+    border-radius: 4px;
+    background: #c084fc;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.8);
+  }
+</style>
+
 <section id="resultados" class="mx-auto mt-24 max-w-7xl px-4 scroll-mt-24">
-    <div class="grid gap-12 lg:grid-cols-2">
-        <!-- Coluna esquerda - texto e métricas -->
-        <div class="space-y-8">
-            <!-- Badge e título -->
-            <div class="space-y-4">
-                <div class="inline-flex items-center gap-3">
-                    <span class="inline-block rounded-md badge px-3 py-1 text-xs font-bold uppercase tracking-widest">Resultados reais</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                    <span class="text-white">Números que</span><br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">comprovam a eficácia</span>
-                </h2>
-                <p class="text-[var(--muted)] text-lg">Clientes de diferentes nichos alcançaram crescimentos expressivos após adotarem anúncios otimizados com imagens estratégicas, títulos SEO e copy persuasiva.</p>
-            </div>
 
-            <!-- Cards de métricas principais (3 colunas) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="rounded-xl bg-gradient-to-br from-white/5 to-white/0 p-4 ring-1 ring-white/10 text-center hover:scale-105 transition-transform duration-300">
-                    <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">+187%</div>
-                    <div class="text-xs text-gray-400 mt-1">Aumento médio de CTR</div>
-                </div>
-                <div class="rounded-xl bg-gradient-to-br from-white/5 to-white/0 p-4 ring-1 ring-white/10 text-center hover:scale-105 transition-transform duration-300">
-                    <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">+220%</div>
-                    <div class="text-xs text-gray-400 mt-1">Impressões orgânicas</div>
-                </div>
-                <div class="rounded-xl bg-gradient-to-br from-white/5 to-white/0 p-4 ring-1 ring-white/10 text-center hover:scale-105 transition-transform duration-300">
-                    <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">+94%</div>
-                    <div class="text-xs text-gray-400 mt-1">Taxa de conversão</div>
-                </div>
-            </div>
+  <!-- ═══════════════════════════════════════════════════════════
+       1. LAYOUT DESKTOP (Garantido via @media min-width: 1024px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="res-desktop-wrap">
+    
+    <!-- Coluna Esquerda: Textos + 3 Stat Cards + Plataformas -->
+    <div class="space-y-6">
+      
+      <!-- Header da Seção (Sem colchetes/caracteres extras) -->
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2">
+          <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">
+            RESULTADOS COMPROVADOS
+          </span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white text-left">
+          Números que <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">comprovam a eficácia</span>
+        </h2>
+        <p class="text-gray-300 text-base lg:text-lg leading-relaxed text-left">
+          Crescimento consistente em tráfego orgânico e conversão com imagens e títulos otimizados para o algoritmo.
+        </p>
+      </div>
 
-       
+      <!-- 3 Stat Cards em Grid (Desktop) -->
+      <div class="grid grid-cols-3 gap-3 pt-1">
+        <div class="res-stat-card">
+          <div class="res-stat-number">+187%</div>
+          <div class="text-xs sm:text-sm text-gray-200 font-bold mt-1">Aumento CTR</div>
+          <div class="text-[11px] text-gray-400 mt-0.5 leading-tight">Mais cliques</div>
+        </div>
+        <div class="res-stat-card">
+          <div class="res-stat-number">+220%</div>
+          <div class="text-xs sm:text-sm text-gray-200 font-bold mt-1">Impressões</div>
+          <div class="text-[11px] text-gray-400 mt-0.5 leading-tight">Mais alcance</div>
+        </div>
+        <div class="res-stat-card">
+          <div class="res-stat-number">+94%</div>
+          <div class="text-xs sm:text-sm text-gray-200 font-bold mt-1">Conversão</div>
+          <div class="text-[11px] text-gray-400 mt-0.5 leading-tight">Mais vendas</div>
+        </div>
+      </div>
 
-            <!-- Plataformas atendidas -->
-            <div class="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
-                <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-3 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                    Plataformas com melhores resultados
-                </p>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">📘 Mercado Livre</span>
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">🛍️ Shopee</span>
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">🎵 TikTok Shop</span>
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">👗 Shein</span>
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">📦 Amazon</span>
-                    <span class="px-3 py-2 bg-white/5 rounded-lg text-xs text-white text-center hover:bg-purple-500/20 transition">🟢 Magalu</span>
-                </div>
-            </div>
+      <!-- Plataformas Atendidas - Layout Sofisticado -->
+      <div class="res-ecosystem-box space-y-3">
+        <div class="flex items-center justify-between">
+          <p class="text-xs font-bold uppercase tracking-widest text-purple-300 flex items-center gap-2">
+            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Plataformas Atendidas
+          </p>
+          <span class="text-[11px] text-gray-400 font-mono">100% nas diretrizes</span>
         </div>
 
-        <!-- Coluna direita - imagens com infográfico/selo -->
-        <div class="space-y-6">
-            <!-- Card com crescimento gráfico (simulado) -->
-     
+        <div class="res-ecosystem-pills">
+          <!-- Mercado Livre Oficial (Amarelo / Navy Handshake) -->
+          <div class="res-eco-pill">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="12" fill="#FFE600"/>
+              <path d="M5 14.5l3-3 1.8 1.8-1.2 1.2 1.2 1.2 1.2-1.2 1.2 1.2-3 3c-.5.5-1.3.5-1.8 0L5 16.3v-1.8z" fill="#2D3277"/>
+              <path d="M19 9.5l-3 3-1.8-1.8 1.2-1.2-1.2-1.2-1.2 1.2-1.2-1.2 3-3c.5-.5 1.3-.5 1.8 0l2.4 2.4v1.8z" fill="#2D3277"/>
+            </svg>
+            <span>Mercado Livre</span>
+          </div>
 
-            <!-- Imagem 1 - relatos/feedback -->
-            <div class="group rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50">
-                <div class="relative aspect-[1200/750]">
-                    <img src="img/relatos.jpg" alt="Depoimentos de clientes" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-xl pointer-events-none"></div>
-                </div>
-            </div>
+          <!-- Shopee Oficial (Laranja com Sacola e S) -->
+          <div class="res-eco-pill">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#EE4D2D"/>
+              <path d="M8 8V6.5C8 4.6 9.8 3 12 3s4 1.6 4 3.5V8h2a1 1 0 011 1.1l-1 10.5a2 2 0 01-2 1.4H6a2 2 0 01-2-1.4L3 9.1A1 1 0 014 8h4zm2 0h4V6.5C14 5.1 13.1 4 12 4s-2 1.1-2 2.5V8zm2 3.5c-1.4 0-2.3.7-2.3 1.6 0 1.6 2.8 1.4 2.8 2.3 0 .4-.4.6-1.1.6-.8 0-1.5-.4-1.8-.7l-.5 1c.5.4 1.3.7 2.3.7 1.4 0 2.4-.7 2.4-1.7 0-1.6-2.8-1.5-2.8-2.3 0-.3.3-.5 1-.5.7 0 1.3.3 1.6.6l.5-1c-.5-.4-1.2-.6-2.1-.6z" fill="#FFFFFF"/>
+            </svg>
+            <span>Shopee</span>
+          </div>
 
-            <!-- Imagem 2 - métricas/dados -->
-            <div class="group rounded-2xl overflow-hidden bg-black/30 p-2 ring-1 ring-white/10 transition-all duration-300 hover:ring-purple-500/50">
-                <div class="relative aspect-[1200/750]">
-                    <img src="img/calculadora.jpg" alt="Métricas de crescimento" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-xl pointer-events-none"></div>
-                </div>
-            </div>
+          <!-- Amazon Oficial (Amazon 'a' com Smile Arrow Laranja) -->
+          <div class="res-eco-pill">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+              <path d="M13.8 11.4c-.1-.7-.6-1.2-1.4-1.2-1 0-1.5.5-1.7 1.2h3.1zm-4.4 1.3c0 1.6 1.1 2.6 2.7 2.6 1.1 0 1.9-.3 2.5-.8v1.1c-.6.4-1.6.7-2.7.7-2.3 0-3.9-1.5-3.9-3.7 0-2.2 1.5-3.8 3.7-3.8 2.3 0 3.5 1.6 3.5 3.5v.4H9.4z" fill="#FFFFFF"/>
+              <path d="M20.2 16.8c-2.4 1.7-5.7 2.6-9.1 2.6-4.6 0-8.7-1.6-11.7-4.2-.2-.2 0-.5.3-.4 3.4 1.9 7.5 3 11.7 3 3.2 0 6.2-.7 8.5-2.1.4-.3.7.3.3.7z" fill="#FF9900"/>
+              <path d="M21 15.6c-.3-.4-1.8-.2-2.7-.1-.3 0-.3-.2-.1-.4 1.4-.9 3.6-.6 3.9-.2.3.4-.2 2.6-1.5 3.6-.2.2-.4.1-.3-.1.5-.7.9-2.4.7-2.8z" fill="#FF9900"/>
+            </svg>
+            <span>Amazon</span>
+          </div>
+
+          <!-- Magalu Oficial (Azul com M) -->
+          <div class="res-eco-pill">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#0086FF"/>
+              <path d="M6 6h2.8l3.2 5.1L15.2 6H18v12h-2.5V9.8l-2.7 4.2h-1.6L8.5 9.8V18H6V6z" fill="#FFFFFF"/>
+            </svg>
+            <span>Magalu</span>
+          </div>
+
+          <!-- SHEIN Oficial (Tipografia Oficial SHEIN) -->
+          <div class="res-eco-pill">
+            <span style="font-family:system-ui,-apple-system,sans-serif;font-weight:900;font-size:9.5px;letter-spacing:0.06em;background:#fff;color:#000;padding:2px 5px;border-radius:4px;line-height:1;display:inline-block">SHEIN</span>
+            <span>Shein</span>
+          </div>
+
+          <!-- TikTok Shop Oficial (Branco com Roxo) -->
+          <div class="res-eco-pill">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#000000"/>
+              <path d="M17.2 7.6a4.2 4.2 0 01-3.2-3.4V3.5h-2.8v11a2.4 2.4 0 11-2.4-2.4c.3 0 .6 0 .8.1V9.4a5.2 5.2 0 104.8 5.2V9.1a6.8 6.8 0 003.8 1.2V7.6h-1z" fill="#A855F7"/>
+              <path d="M16 6.8a3.8 3.8 0 01-3-3.2V3h-2.5v10.5a2.2 2.2 0 11-2.2-2.2c.2 0 .5 0 .7.1V8.9a4.8 4.8 0 104.5 4.8V8.6a6.3 6.3 0 003.5 1.1V6.8h-1z" fill="#FFFFFF"/>
+            </svg>
+            <span>TikTok Shop</span>
+          </div>
         </div>
+      </div>
+
     </div>
+
+    <!-- Coluna Direita: Carrossel de Métricas dos 2 Produtos (Desktop) -->
+    <div class="flex justify-center">
+      <div class="res-device-frame">
+        
+        <!-- Tela do Carrossel de Métricas (100% Limpa sem barras) -->
+        <div class="res-carousel-container">
+          <img id="resCarouselDesktopImg" src="img/calculadora.png" alt="Métricas do Produto 1" class="res-carousel-img" />
+        </div>
+
+        <!-- Rodapé do Carrossel com Navegação e Indicador de Produto -->
+        <div class="res-carousel-footer">
+          <button class="res-carousel-btn" onclick="prevMetricsSlide()" aria-label="Produto Anterior">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+
+          <div class="text-center">
+            <span id="resProductLabelDesktop" class="text-xs font-bold text-white block">Métricas do Produto 1</span>
+            <div class="res-carousel-dots mt-1.5 justify-center">
+              <div class="res-carousel-dot active" onclick="setMetricsSlide(0)"></div>
+              <div class="res-carousel-dot" onclick="setMetricsSlide(1)"></div>
+            </div>
+          </div>
+
+          <button class="res-carousel-btn" onclick="nextMetricsSlide()" aria-label="Próximo Produto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. LAYOUT MOBILE (Garantido via @media max-width: 1023px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="res-mobile-wrap space-y-6">
+    
+    <!-- Título Mobile (Sem colchetes/caracteres extras) -->
+    <div class="text-center">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">
+          RESULTADOS COMPROVADOS
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold leading-tight text-white">
+        Números que <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">comprovam a eficácia</span>
+      </h2>
+      <p class="text-gray-300 text-sm sm:text-base mt-2 px-2">
+        Crescimento consistente em tráfego orgânico e conversão com imagens e títulos otimizados para o algoritmo.
+      </p>
+    </div>
+
+    <!-- 3 Stat Cards Mobile (Grid 3 Colunas com proporções seguras) -->
+    <div class="grid grid-cols-3 gap-2 sm:gap-3">
+      <div class="res-stat-card" style="padding: 10px 4px;">
+        <div class="res-stat-number" style="font-size: 1.35rem;">+187%</div>
+        <div class="text-[11px] sm:text-xs text-gray-200 font-bold mt-1 leading-tight">CTR Médio</div>
+        <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Mais cliques</div>
+      </div>
+      <div class="res-stat-card" style="padding: 10px 4px;">
+        <div class="res-stat-number" style="font-size: 1.35rem;">+220%</div>
+        <div class="text-[11px] sm:text-xs text-gray-200 font-bold mt-1 leading-tight">Impressões</div>
+        <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Mais alcance</div>
+      </div>
+      <div class="res-stat-card" style="padding: 10px 4px;">
+        <div class="res-stat-number" style="font-size: 1.35rem;">+94%</div>
+        <div class="text-[11px] sm:text-xs text-gray-200 font-bold mt-1 leading-tight">Conversão</div>
+        <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Mais vendas</div>
+      </div>
+    </div>
+
+    <!-- Carrossel de Métricas Mobile (Sem barras ou molduras extras) -->
+    <div class="res-device-frame">
+      
+      <!-- Imagem do Carrossel Mobile -->
+      <div class="res-carousel-container">
+        <img id="resCarouselMobileImg" src="img/calculadora.png" alt="Métricas do Produto 1" class="res-carousel-img" />
+      </div>
+
+      <!-- Controles do Carrossel Mobile -->
+      <div class="res-carousel-footer">
+        <button class="res-carousel-btn" onclick="prevMetricsSlide()" aria-label="Produto Anterior">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+
+        <div class="text-center">
+          <span id="resProductLabelMobile" class="text-xs font-bold text-white block">Métricas do Produto 1</span>
+          <div class="res-carousel-dots mt-1.5 justify-center">
+            <div class="res-carousel-dot active" onclick="setMetricsSlide(0)"></div>
+            <div class="res-carousel-dot" onclick="setMetricsSlide(1)"></div>
+          </div>
+        </div>
+
+        <button class="res-carousel-btn" onclick="nextMetricsSlide()" aria-label="Próximo Produto">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Plataformas Atendidas Mobile -->
+    <div class="res-ecosystem-box space-y-3">
+      <div class="text-center">
+        <p class="text-xs font-bold uppercase tracking-widest text-purple-300 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Plataformas Atendidas
+        </p>
+      </div>
+
+      <div class="res-ecosystem-pills justify-center">
+        <!-- Mercado Livre Oficial (Amarelo / Navy Handshake) -->
+        <div class="res-eco-pill">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="12" fill="#FFE600"/>
+            <path d="M5 14.5l3-3 1.8 1.8-1.2 1.2 1.2 1.2 1.2-1.2 1.2 1.2-3 3c-.5.5-1.3.5-1.8 0L5 16.3v-1.8z" fill="#2D3277"/>
+            <path d="M19 9.5l-3 3-1.8-1.8 1.2-1.2-1.2-1.2-1.2 1.2-1.2-1.2 3-3c.5-.5 1.3-.5 1.8 0l2.4 2.4v1.8z" fill="#2D3277"/>
+          </svg>
+          <span>Mercado Livre</span>
+        </div>
+
+        <!-- Shopee Oficial (Laranja com Sacola e S) -->
+        <div class="res-eco-pill">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#EE4D2D"/>
+            <path d="M8 8V6.5C8 4.6 9.8 3 12 3s4 1.6 4 3.5V8h2a1 1 0 011 1.1l-1 10.5a2 2 0 01-2 1.4H6a2 2 0 01-2-1.4L3 9.1A1 1 0 014 8h4zm2 0h4V6.5C14 5.1 13.1 4 12 4s-2 1.1-2 2.5V8zm2 3.5c-1.4 0-2.3.7-2.3 1.6 0 1.6 2.8 1.4 2.8 2.3 0 .4-.4.6-1.1.6-.8 0-1.5-.4-1.8-.7l-.5 1c.5.4 1.3.7 2.3.7 1.4 0 2.4-.7 2.4-1.7 0-1.6-2.8-1.5-2.8-2.3 0-.3.3-.5 1-.5.7 0 1.3.3 1.6.6l.5-1c-.5-.4-1.2-.6-2.1-.6z" fill="#FFFFFF"/>
+          </svg>
+          <span>Shopee</span>
+        </div>
+
+        <!-- Amazon Oficial (Amazon 'a' com Smile Arrow Laranja) -->
+        <div class="res-eco-pill">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+            <path d="M13.8 11.4c-.1-.7-.6-1.2-1.4-1.2-1 0-1.5.5-1.7 1.2h3.1zm-4.4 1.3c0 1.6 1.1 2.6 2.7 2.6 1.1 0 1.9-.3 2.5-.8v1.1c-.6.4-1.6.7-2.7.7-2.3 0-3.9-1.5-3.9-3.7 0-2.2 1.5-3.8 3.7-3.8 2.3 0 3.5 1.6 3.5 3.5v.4H9.4z" fill="#FFFFFF"/>
+            <path d="M20.2 16.8c-2.4 1.7-5.7 2.6-9.1 2.6-4.6 0-8.7-1.6-11.7-4.2-.2-.2 0-.5.3-.4 3.4 1.9 7.5 3 11.7 3 3.2 0 6.2-.7 8.5-2.1.4-.3.7.3.3.7z" fill="#FF9900"/>
+            <path d="M21 15.6c-.3-.4-1.8-.2-2.7-.1-.3 0-.3-.2-.1-.4 1.4-.9 3.6-.6 3.9-.2.3.4-.2 2.6-1.5 3.6-.2.2-.4.1-.3-.1.5-.7.9-2.4.7-2.8z" fill="#FF9900"/>
+          </svg>
+          <span>Amazon</span>
+        </div>
+
+        <!-- Magalu Oficial (Azul com M) -->
+        <div class="res-eco-pill">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#0086FF"/>
+            <path d="M6 6h2.8l3.2 5.1L15.2 6H18v12h-2.5V9.8l-2.7 4.2h-1.6L8.5 9.8V18H6V6z" fill="#FFFFFF"/>
+          </svg>
+          <span>Magalu</span>
+        </div>
+
+        <!-- SHEIN Oficial (Tipografia Oficial SHEIN) -->
+        <div class="res-eco-pill">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-weight:900;font-size:9.5px;letter-spacing:0.06em;background:#fff;color:#000;padding:2px 5px;border-radius:4px;line-height:1;display:inline-block">SHEIN</span>
+          <span>Shein</span>
+        </div>
+
+        <!-- TikTok Shop Oficial (Branco com Roxo) -->
+        <div class="res-eco-pill">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#000000"/>
+            <path d="M17.2 7.6a4.2 4.2 0 01-3.2-3.4V3.5h-2.8v11a2.4 2.4 0 11-2.4-2.4c.3 0 .6 0 .8.1V9.4a5.2 5.2 0 104.8 5.2V9.1a6.8 6.8 0 003.8 1.2V7.6h-1z" fill="#A855F7"/>
+            <path d="M16 6.8a3.8 3.8 0 01-3-3.2V3h-2.5v10.5a2.2 2.2 0 11-2.2-2.2c.2 0 .5 0 .7.1V8.9a4.8 4.8 0 104.5 4.8V8.6a6.3 6.3 0 003.5 1.1V6.8h-1z" fill="#FFFFFF"/>
+          </svg>
+          <span>TikTok Shop</span>
+        </div>
+      </div>
+    </div>
+
 </section>
 
-    <!-- Portfólio -->
-  <section id="portfolio" class="mx-auto mt-24 max-w-7xl px-4 scroll-mt-24">
-    <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-3 mb-4">
-            <span class="inline-block rounded-md badge px-3 py-1 text-xs font-bold uppercase tracking-widest">Portfólio</span>
+<script>
+  const metricsSlides = [
+    {
+      img: 'img/calculadora.png',
+      label: 'Métricas do Produto 1'
+    },
+    {
+      img: 'img/relatos.jpeg',
+      label: 'Métricas do Produto 2'
+    }
+  ];
+
+  let currentMetricSlideIdx = 0;
+
+  function setMetricsSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= metricsSlides.length) index = metricsSlides.length - 1;
+    currentMetricSlideIdx = index;
+
+    const data = metricsSlides[currentMetricSlideIdx];
+    if (!data) return;
+
+    const dImg = document.getElementById('resCarouselDesktopImg');
+    const mImg = document.getElementById('resCarouselMobileImg');
+    const dLabel = document.getElementById('resProductLabelDesktop');
+    const mLabel = document.getElementById('resProductLabelMobile');
+
+    const updateSlideImg = (el) => {
+      if (!el) return;
+      el.style.opacity = '0.35';
+      setTimeout(() => {
+        el.src = data.img;
+        el.alt = data.label;
+        el.style.opacity = '1';
+      }, 100);
+    };
+
+    updateSlideImg(dImg);
+    updateSlideImg(mImg);
+
+    if (dLabel) dLabel.innerText = data.label;
+    if (mLabel) mLabel.innerText = data.label;
+
+    // Atualizar pontos indicadores
+    const allDots = document.querySelectorAll('.res-carousel-dot');
+    allDots.forEach((dot, i) => {
+      if ((i % metricsSlides.length) === currentMetricSlideIdx) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+
+  function prevMetricsSlide() {
+    let nextIdx = currentMetricSlideIdx - 1;
+    if (nextIdx < 0) nextIdx = metricsSlides.length - 1;
+    setMetricsSlide(nextIdx);
+  }
+
+  function nextMetricsSlide() {
+    let nextIdx = currentMetricSlideIdx + 1;
+    if (nextIdx >= metricsSlides.length) nextIdx = 0;
+    setMetricsSlide(nextIdx);
+  }
+
+  // Inicializar o slide na montagem do DOM
+  document.addEventListener('DOMContentLoaded', () => {
+    setMetricsSlide(0);
+  });
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════
+     SEÇÃO PORTFÓLIO & CASES (ISOLAMENTO DESKTOP / MOBILE +30 ANOS)
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  /* 1. Isolamento Desktop / Mobile */
+  .port-desktop-wrap {
+    display: none;
+  }
+  .port-mobile-wrap {
+    display: block;
+  }
+  @media (min-width: 1024px) {
+    .port-desktop-wrap {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+    .port-mobile-wrap {
+      display: none !important;
+    }
+  }
+
+  /* 2. Card Glassmorphism Dark */
+  .port-card {
+    background: rgba(20, 16, 32, 0.65);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(168, 85, 247, 0.25);
+    border-radius: 1.5rem;
+    padding: 1.6rem;
+    transition: all 0.35s ease;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .port-card:hover {
+    border-color: rgba(168, 85, 247, 0.65);
+    box-shadow: 0 0 32px rgba(168, 85, 247, 0.22), 0 20px 45px rgba(0, 0, 0, 0.7);
+    transform: translateY(-4px);
+  }
+
+  /* 3. Moldura no Formato Vertical Original Sem Cortes (1200x1480) */
+  .port-gallery-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1200 / 1480;
+    border-radius: 1.15rem;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #1b1433 0%, #090712 100%);
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.7);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .port-gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.2s ease, transform 0.4s ease;
+  }
+
+  /* Contador de Fotos Transparente / Discreto */
+  .port-photo-count {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.8);
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Botões Grandes de Navegação de Fotos (+30 Anos) */
+  .port-img-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 10, 25, 0.85);
+    border: 1.5px solid rgba(168, 85, 247, 0.5);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 15;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+  .port-img-btn:hover, .port-img-btn:active {
+    background: rgba(124, 58, 237, 0.95);
+    border-color: rgba(216, 180, 254, 0.9);
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+  }
+  .port-img-btn.prev {
+    left: 12px;
+  }
+  .port-img-btn.next {
+    right: 12px;
+  }
+
+  /* Mini-dots no Rodapé da Imagem */
+  .port-gallery-dots {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+  }
+  .port-g-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .port-g-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: #c084fc;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.9);
+  }
+
+  /* Tags de Técnicas */
+  .port-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .port-tag-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-family: ui-monospace, monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .port-tag-pill:hover {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #ffffff;
+  }
+
+  /* 4. Abas e Botões Mobile Super Acessíveis */
+  .port-mobile-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .port-mobile-tab-btn {
+    padding: 13px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .port-mobile-tab-btn.active {
+    background: rgba(124, 58, 237, 0.35);
+    border-color: rgba(168, 85, 247, 0.9);
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.35);
+  }
+  .port-prod-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+    font-size: 13.5px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .port-prod-btn:active {
+    transform: scale(0.97);
+  }
+  .port-prod-btn.primary {
+    background: rgba(124, 58, 237, 0.45);
+    border-color: rgba(168, 85, 247, 0.85);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+  }
+
+  /* Espaçamento Vertical Robusto entre Resultados Comprovados e Portfólio */
+  #portfolio {
+    margin-top: 140px !important;
+  }
+  @media (min-width: 1024px) {
+    #portfolio {
+      margin-top: 200px !important;
+    }
+  }
+</style>
+
+<section id="portfolio" class="mx-auto max-w-7xl px-4 scroll-mt-24">
+  
+  <!-- Header da Seção -->
+  <div class="text-center mb-16">
+    <div class="inline-flex items-center gap-2 mb-3.5">
+      <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:6px 20px;text-transform:uppercase">
+        [ PORTFÓLIO & CASES ]
+      </span>
+    </div>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
+      Transformações <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">que vendem</span> mais
+    </h2>
+    <p class="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-4 px-2 leading-relaxed">
+      Criativos de alto impacto projetados para elevar a percepção de valor e multiplicar os cliques do seu produto.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. LAYOUT DESKTOP (3 Cards Lado a Lado - min-width: 1024px)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="port-desktop-wrap">
+    
+    <!-- Card 01 - Kit Goleiro Infantil -->
+    <div class="port-card">
+      <div class="port-gallery-wrap">
+        <span id="portCount_d_goleiro" class="port-photo-count">1 / 5</span>
+        <button class="port-img-btn prev" onclick="changePortCardImg(0, -1, 'd')" aria-label="Foto Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <img id="portImg_d_goleiro" src="img/kit goleiro infantil.png" alt="Kit Goleiro Infantil" class="port-gallery-img" />
+        <button class="port-img-btn next" onclick="changePortCardImg(0, 1, 'd')" aria-label="Próxima Foto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div id="portDots_d_goleiro" class="port-gallery-dots">
+          <div class="port-g-dot active" onclick="setPortCardImg(0, 0, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(0, 1, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(0, 2, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(0, 3, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(0, 4, 'd')"></div>
         </div>
-        <h2 class="text-3xl font-bold md:text-5xl mb-4">Transformações <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">que vendem</span> mais</h2>
-        <p class="mt-4 text-[var(--muted)] max-w-2xl mx-auto text-lg">Veja como transformei produtos comuns em anúncios de alto desempenho para meus clientes.</p>
+      </div>
+      <h3 class="text-xl font-bold text-white mb-2 leading-tight">Kit Goleiro Infantil</h3>
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Composição fotográfica imersiva destacando proteção nas articulações e apelo esportivo.
+      </p>
+      <div class="port-tags-wrap">
+        <span class="port-tag-pill">Ambientação Real</span>
+        <span class="port-tag-pill">Foco em Segurança</span>
+        <span class="port-tag-pill">Kit Completo</span>
+      </div>
     </div>
 
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Kit Goleiro Infantil -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-500 hover:ring-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20">
-            <!-- Badge de destaque -->
-            <div class="absolute -top-3 left-6 z-10">
-                <span class="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-purple-600 to-purple-800 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    Destaque
-                </span>
-            </div>
-            
-            <div class="carousel-container-small mb-5 overflow-hidden rounded-xl" style="aspect-ratio: 1200/1480;">
-                <div class="carousel-images-small">
-                    <img src="img/kit goleiro infantil.png" alt="Kit Goleiro 1" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/kit_goleiro_infantil2_otimizado.webp" alt="Kit Goleiro 2" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/kit goleiro infantil3.png" alt="Kit Goleiro 3" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/kit goleiro infantil4.png" alt="Kit Goleiro 4" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/kit goleiro infantil5.png" alt="Kit Goleiro 5" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                </div>
-                <div class="carousel-indicators-small">
-                    <div class="carousel-indicator-small active"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                </div>
-            </div>
-            
-            <h3 class="text-xl font-bold text-white mb-2">Kit Goleiro Infantil</h3>
-            
-            <p class="text-sm text-gray-400 leading-relaxed mb-4">Kit completo com luva, camisa, calção e meião. Design profissional para pequenos campeões.</p>
-            
-            <div class="flex flex-wrap gap-2">
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">⚽ Futebol</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">👶 Infantil</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">💪 Conforto</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">🛡️ Proteção</span>
-            </div>
+    <!-- Card 02 - Puff Design em Veludo -->
+    <div class="port-card">
+      <div class="port-gallery-wrap">
+        <span id="portCount_d_puff" class="port-photo-count">1 / 5</span>
+        <button class="port-img-btn prev" onclick="changePortCardImg(1, -1, 'd')" aria-label="Foto Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <img id="portImg_d_puff" src="img/puffs kit1.jpeg" alt="Puff Design em Veludo" class="port-gallery-img" />
+        <button class="port-img-btn next" onclick="changePortCardImg(1, 1, 'd')" aria-label="Próxima Foto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div id="portDots_d_puff" class="port-gallery-dots">
+          <div class="port-g-dot active" onclick="setPortCardImg(1, 0, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(1, 1, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(1, 2, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(1, 3, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(1, 4, 'd')"></div>
         </div>
-
-        <!-- Kit 2 Puffs -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-500 hover:ring-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20">
-            <div class="absolute -top-3 left-6 z-10">
-                <span class="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    Tendência
-                </span>
-            </div>
-            
-            <div class="carousel-container-small mb-5 overflow-hidden rounded-xl" style="aspect-ratio: 1200/1480;">
-                <div class="carousel-images-small">
-                    <img src="img/puffs kit1.jpeg" alt="Puffs Kit 1" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/puffs kit2.jpeg" alt="Puffs Kit 2" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/puffskit3.jpeg" alt="Puffs Kit 3" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/puffskit4.jpeg" alt="Puffs Kit 4" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/puffskit6.jpeg" alt="Puffs Kit 5" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                </div>
-                <div class="carousel-indicators-small">
-                    <div class="carousel-indicator-small active"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                </div>
-            </div>
-            
-            <h3 class="text-xl font-bold text-white mb-2">Kit 2 Puffs</h3>
-            
-            <p class="text-sm text-gray-400 leading-relaxed mb-4">Puffs macios e charmosos, perfeitos para sala e quarto. Design atrativo e confortável.</p>
-            
-            <div class="flex flex-wrap gap-2">
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">🛋️ Puffs</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">😊 Conforto</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">🎨 Decoração</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">✨ Macio</span>
-            </div>
-        </div>
-
-        <!-- Espelho com Alça de Couro -->
-        <div class="group relative rounded-2xl bg-gradient-to-br from-black/40 to-black/20 p-6 ring-1 ring-white/10 transition-all duration-500 hover:ring-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20">
-            <div class="absolute -top-3 left-6 z-10">
-                <span class="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-600 to-orange-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    Premium
-                </span>
-            </div>
-            
-            <div class="carousel-container-small mb-5 overflow-hidden rounded-xl" style="aspect-ratio: 1200/1480;">
-                <div class="carousel-images-small">
-                    <img src="img/espelho1.jpeg" alt="Espelho 1" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/espelho2.jpeg" alt="Espelho 2" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/espelho3.jpeg" alt="Espelho 3" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/espelho4.jpeg" alt="Espelho 4" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                    <img src="img/espelho5.jpeg" alt="Espelho 5" class="carousel-image-small" style="object-fit: contain; background: linear-gradient(135deg, #0a0a0c, #111118);" />
-                </div>
-                <div class="carousel-indicators-small">
-                    <div class="carousel-indicator-small active"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                    <div class="carousel-indicator-small"></div>
-                </div>
-            </div>
-            
-            <h3 class="text-xl font-bold text-white mb-2">Espelho com Alça de Couro</h3>
-            
-            <p class="text-sm text-gray-400 leading-relaxed mb-4">Espelho portátil com acabamento premium e alça em couro legítimo. Elegância e praticidade.</p>
-            
-            <div class="flex flex-wrap gap-2">
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">🪞 Espelho</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">👝 Couro Legítimo</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">🎒 Portátil</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">✨ Elegante</span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-gray-300 ring-1 ring-white/10 transition-all duration-300 hover:bg-purple-500/20 hover:ring-purple-500/50">💎 Premium</span>
-            </div>
-        </div>
+      </div>
+      <h3 class="text-xl font-bold text-white mb-2 leading-tight">Puff Design em Veludo</h3>
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Destaque técnico de dimensões e resistência com linguagem visual sofisticada.
+      </p>
+      <div class="port-tags-wrap">
+        <span class="port-tag-pill">Guia de Medidas</span>
+        <span class="port-tag-pill">Textura e Acabamento</span>
+        <span class="port-tag-pill">Decoração</span>
+      </div>
     </div>
+
+    <!-- Card 03 - Espelho Redondo com Alça -->
+    <div class="port-card">
+      <div class="port-gallery-wrap">
+        <span id="portCount_d_espelho" class="port-photo-count">1 / 5</span>
+        <button class="port-img-btn prev" onclick="changePortCardImg(2, -1, 'd')" aria-label="Foto Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <img id="portImg_d_espelho" src="img/espelho1.jpeg" alt="Espelho Redondo com Alça" class="port-gallery-img" />
+        <button class="port-img-btn next" onclick="changePortCardImg(2, 1, 'd')" aria-label="Próxima Foto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div id="portDots_d_espelho" class="port-gallery-dots">
+          <div class="port-g-dot active" onclick="setPortCardImg(2, 0, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(2, 1, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(2, 2, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(2, 3, 'd')"></div>
+          <div class="port-g-dot" onclick="setPortCardImg(2, 4, 'd')"></div>
+        </div>
+      </div>
+      <h3 class="text-xl font-bold text-white mb-2 leading-tight">Espelho Redondo com Alça</h3>
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Guia de tamanhos em escala real para eliminar dúvidas do comprador e acelerar a decisão.
+      </p>
+      <div class="port-tags-wrap">
+        <span class="port-tag-pill">Escala Visual</span>
+        <span class="port-tag-pill">Design Minimalista</span>
+        <span class="port-tag-pill">Acabamento Couro</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. LAYOUT MOBILE (Showcase Interativo com Abas e Botões Grandes)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="port-mobile-wrap" style="max-width: 480px; margin: 0 auto;">
+    
+    <!-- 3 Abas Rápidas de Seleção de Produto -->
+    <div class="port-mobile-tabs">
+      <button class="port-mobile-tab-btn active" onclick="switchMobileProduct(0)">
+        1. Goleiro
+      </button>
+      <button class="port-mobile-tab-btn" onclick="switchMobileProduct(1)">
+        2. Puff Veludo
+      </button>
+      <button class="port-mobile-tab-btn" onclick="switchMobileProduct(2)">
+        3. Espelho
+      </button>
+    </div>
+
+    <!-- Card em Destaque Mobile com Carrossel de 5 Fotos -->
+    <div class="port-card">
+      
+      <!-- Moldura 1200x1480 Sem Cortes -->
+      <div class="port-gallery-wrap">
+        <span id="portCount_mobile" class="port-photo-count">1 / 5</span>
+        
+        <button class="port-img-btn prev" onclick="changeMobilePhoto(-1)" aria-label="Foto Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+
+        <img id="portImg_mobile" src="img/kit goleiro infantil.png" alt="Anúncio Selecionado" class="port-gallery-img" />
+
+        <button class="port-img-btn next" onclick="changeMobilePhoto(1)" aria-label="Próxima Foto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <!-- Indicador de Pontos das 5 Fotos -->
+        <div id="portDots_mobile" class="port-gallery-dots">
+          <div class="port-g-dot active" onclick="setMobilePhoto(0)"></div>
+          <div class="port-g-dot" onclick="setMobilePhoto(1)"></div>
+          <div class="port-g-dot" onclick="setMobilePhoto(2)"></div>
+          <div class="port-g-dot" onclick="setMobilePhoto(3)"></div>
+          <div class="port-g-dot" onclick="setMobilePhoto(4)"></div>
+        </div>
+      </div>
+
+      <!-- Informações do Anúncio Mobile -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <h3 id="portTitle_mobile" class="text-xl font-bold text-white leading-tight">
+            Kit Goleiro Infantil
+          </h3>
+          <span id="portProductStep" class="text-xs font-mono font-bold text-purple-300 bg-purple-900/60 border border-purple-500/30 px-2.5 py-1 rounded-md">
+            Anúncio 1 de 3
+          </span>
+        </div>
+
+        <p id="portDesc_mobile" class="text-sm text-gray-300 leading-relaxed">
+          Composição fotográfica imersiva destacando proteção nas articulações e apelo esportivo.
+        </p>
+
+        <div id="portTags_mobile" class="port-tags-wrap">
+          <span class="port-tag-pill">Ambientação Real</span>
+          <span class="port-tag-pill">Foco em Segurança</span>
+          <span class="port-tag-pill">Kit Completo</span>
+        </div>
+      </div>
+
+      <!-- Botões Grandes para Mudar de Anúncio (+30 Anos) -->
+      <div class="grid grid-cols-2 gap-3 mt-5 pt-3 border-t border-purple-500/15">
+        <button class="port-prod-btn" onclick="prevMobileProduct()" aria-label="Anúncio Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          <span>Anúncio Anterior</span>
+        </button>
+        <button class="port-prod-btn primary" onclick="nextMobileProduct()" aria-label="Próximo Anúncio">
+          <span>Próximo Anúncio</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
-    <!-- Investimento - PACOTE ANÚNCIO COMPLETO (melhorado) -->
-<section id="investimento" class="w-full bg-gradient-to-b from-gray-950 to-gray-900 py-20 mt-24 scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-12">
-            <span class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-xs font-bold px-4 py-1.5 rounded-full tracking-wide">🔥 ATENÇÃO VENDEDOR</span>
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mt-4 leading-tight">
-                <span class="text-white">Enquanto você perde vendas com</span><br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">anúncios fracos, seus concorrentes faturam.</span>
-            </h2>
-            <p class="text-2xl md:text-3xl font-bold text-white mt-3">Mude agora e veja a diferença!</p>
-            <p class="text-gray-400 max-w-2xl mx-auto mt-4">Você paga por anúncio – e quanto mais contrata, menor o preço unitário.</p>
-        </div>
 
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-            <!-- Plano 1: 1 anúncio - R$ 129,90 por anúncio -->
-            <div class="rounded-2xl bg-gradient-to-br from-gray-900 to-gray-950 p-6 ring-1 ring-white/10 transition-all duration-300 hover:scale-105 hover:ring-purple-500/50 flex flex-col">
-                <div class="text-center mb-6">
-                    <h3 class="text-xl font-bold text-white">Pacote Único</h3>
-                    <p class="text-gray-400 text-sm mt-1">1 anúncio completo</p>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-center gap-1">
-                            <span class="text-3xl font-black text-white">R$ 129</span>
-                            <span class="text-base text-gray-400">,90</span>
-                        </div>
-                        <p class="text-xs text-purple-300 font-semibold mt-1">por anúncio</p>
-                        <div class="mt-2 inline-block bg-white/5 rounded-full px-3 py-1">
-                            <span class="text-xs text-gray-400">Total: R$ 129,90</span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-gray-300 flex-grow">
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>5 imagens profissionais</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Título + descrição otimizados (SEO)</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Análise de mercado básica</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Relatório entregue</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Entrega em até 72h</span></li>
-                </ul>
-                <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20o%20Pacote%20%C3%9Anico%20(1%20an%C3%BAncio)." class="mt-6 w-full py-3 rounded-xl bg-white/5 ring-1 ring-white/20 text-white font-bold text-center hover:bg-white/10 transition-all">Contratar agora</a>
-            </div>
+<script>
+  const portfolioData = [
+    {
+      id: 'goleiro',
+      title: 'Kit Goleiro Infantil',
+      desc: 'Composição fotográfica imersiva destacando proteção nas articulações e apelo esportivo.',
+      tags: ['Ambientação Real', 'Foco em Segurança', 'Kit Completo'],
+      images: [
+        'img/kit goleiro infantil.png',
+        'img/kit_goleiro_infantil2_otimizado.webp',
+        'img/kit goleiro infantil3.png',
+        'img/kit goleiro infantil4.png',
+        'img/kit goleiro infantil5.png'
+      ],
+      current: 0
+    },
+    {
+      id: 'puff',
+      title: 'Puff Design em Veludo',
+      desc: 'Destaque técnico de dimensões e resistência com linguagem visual sofisticada.',
+      tags: ['Guia de Medidas', 'Textura e Acabamento', 'Decoração'],
+      images: [
+        'img/puffs kit1.jpeg',
+        'img/puffs kit2.jpeg',
+        'img/puffskit3.jpeg',
+        'img/puffskit4.jpeg',
+        'img/puffskit6.jpeg'
+      ],
+      current: 0
+    },
+    {
+      id: 'espelho',
+      title: 'Espelho Redondo com Alça',
+      desc: 'Guia de tamanhos em escala real para eliminar dúvidas do comprador e acelerar a decisão.',
+      tags: ['Escala Visual', 'Design Minimalista', 'Acabamento Couro'],
+      images: [
+        'img/espelho1.jpeg',
+        'img/espelho2.jpeg',
+        'img/espelho3.jpeg',
+        'img/espelho4.jpeg',
+        'img/espelho5.jpeg'
+      ],
+      current: 0
+    }
+  ];
 
-            <!-- Plano 2: 3 anúncios - R$ 119,90 por anúncio -->
-            <div class="rounded-2xl bg-gradient-to-br from-gray-900 to-gray-950 p-6 ring-1 ring-white/10 transition-all duration-300 hover:scale-105 hover:ring-purple-500/50 flex flex-col">
-                <div class="text-center mb-6">
-                    <h3 class="text-xl font-bold text-white">Pacote Triplo</h3>
-                    <p class="text-gray-400 text-sm mt-1">3 anúncios completos</p>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-center gap-1">
-                            <span class="text-3xl font-black text-white">R$ 119</span>
-                            <span class="text-base text-gray-400">,90</span>
-                        </div>
-                        <p class="text-xs text-purple-300 font-semibold mt-1">por anúncio</p>
-                        <div class="mt-2 inline-block bg-white/5 rounded-full px-3 py-1">
-                            <span class="text-xs text-gray-400">Total: R$ 359,70</span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-gray-300 flex-grow">
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span><strong>15 imagens profissionais</strong> (5 por produto)</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Títulos + descrições otimizados (SEO + gatilhos)</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Análise de mercado aprofundada</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Relatório executivo por anúncio</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Entrega em até 60h úteis</span></li>
-                </ul>
-                <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20o%20Pacote%20Triplo%20(3%20an%C3%BAncios)." class="mt-6 w-full py-3 rounded-xl bg-white/5 ring-1 ring-white/20 text-white font-bold text-center hover:bg-white/10 transition-all">Contratar agora</a>
-            </div>
+  let currentMobileProductIdx = 0;
 
-            <!-- Plano 3: 5 anúncios - R$ 109,90 por anúncio (DESTAQUE CENTRAL) -->
-            <div class="relative rounded-2xl bg-gradient-to-br from-purple-900/30 to-purple-800/10 p-6 ring-2 ring-purple-500 shadow-xl shadow-purple-500/20 transition-all duration-300 hover:scale-105 flex flex-col lg:-mt-4 lg:mb-4 lg:pt-10">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span class="bg-gradient-to-r from-amber-500 to-orange-500 text-black text-[11px] font-black px-4 py-1.5 rounded-full shadow-lg">⭐ MAIS POPULAR ⭐</span>
-                </div>
-                <div class="text-center mb-6 mt-2">
-                    <h3 class="text-2xl font-black text-white">Pacote Máximo</h3>
-                    <p class="text-purple-300 text-sm mt-1">5 anúncios completos</p>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-center gap-1">
-                            <span class="text-5xl font-black text-white">R$ 109</span>
-                            <span class="text-xl text-gray-400">,90</span>
-                        </div>
-                        <p class="text-xs text-purple-300 font-semibold mt-1">por anúncio</p>
-                        <div class="mt-2 inline-block bg-purple-500/20 rounded-full px-3 py-1">
-                            <span class="text-xs text-purple-200">Total: R$ 549,50</span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-gray-200 flex-grow">
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span><strong class="text-white">25 imagens profissionais</strong> (5 por produto)</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Títulos + descrições com SEO avançado e gatilhos mentais</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Análise de mercado completa + benchmarking</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Relatório detalhado + estratégia de palavras-chave</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Entrega prioritária em até 48h úteis</span></li>
-                    <li class="flex items-start gap-2"><span class="text-purple-400">✓</span> <span>Suporte direto por 30 dias</span></li>
-                </ul>
-                <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20o%20Pacote%20M%C3%A1ximo%20(5%20an%C3%BAncios)." class="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold text-center shadow-lg transition-all hover:scale-105">GARANTIR OFERTA</a>
-            </div>
-        </div>
+  /* Funções Desktop */
+  function changePortCardImg(cardIdx, dir, mode) {
+    const p = portfolioData[cardIdx];
+    if (!p) return;
+    p.current = (p.current + dir + p.images.length) % p.images.length;
+    renderDesktopCard(cardIdx);
+  }
 
-        <!-- Informações de pagamento -->
- 
+  function setPortCardImg(cardIdx, imgIdx, mode) {
+    const p = portfolioData[cardIdx];
+    if (!p) return;
+    p.current = imgIdx;
+    renderDesktopCard(cardIdx);
+  }
+
+  function renderDesktopCard(cardIdx) {
+    const p = portfolioData[cardIdx];
+    const img = document.getElementById('portImg_d_' + p.id);
+    const count = document.getElementById('portCount_d_' + p.id);
+    const dots = document.getElementById('portDots_d_' + p.id);
+
+    if (img) {
+      img.style.opacity = '0.35';
+      setTimeout(() => {
+        img.src = p.images[p.current];
+        img.style.opacity = '1';
+      }, 90);
+    }
+    if (count) count.innerText = (p.current + 1) + ' / ' + p.images.length;
+    if (dots) {
+      dots.querySelectorAll('.port-g-dot').forEach((d, i) => {
+        if (i === p.current) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
+  }
+
+  /* Funções Mobile */
+  function switchMobileProduct(index) {
+    if (index < 0) index = 0;
+    if (index >= portfolioData.length) index = portfolioData.length - 1;
+    currentMobileProductIdx = index;
+    renderMobileShowcase();
+  }
+
+  function prevMobileProduct() {
+    let nextIdx = currentMobileProductIdx - 1;
+    if (nextIdx < 0) nextIdx = portfolioData.length - 1;
+    switchMobileProduct(nextIdx);
+  }
+
+  function nextMobileProduct() {
+    let nextIdx = currentMobileProductIdx + 1;
+    if (nextIdx >= portfolioData.length) nextIdx = 0;
+    switchMobileProduct(nextIdx);
+  }
+
+  function changeMobilePhoto(dir) {
+    const p = portfolioData[currentMobileProductIdx];
+    if (!p) return;
+    p.current = (p.current + dir + p.images.length) % p.images.length;
+    renderMobilePhoto();
+  }
+
+  function setMobilePhoto(imgIdx) {
+    const p = portfolioData[currentMobileProductIdx];
+    if (!p) return;
+    p.current = imgIdx;
+    renderMobilePhoto();
+  }
+
+  function renderMobilePhoto() {
+    const p = portfolioData[currentMobileProductIdx];
+    const img = document.getElementById('portImg_mobile');
+    const count = document.getElementById('portCount_mobile');
+    const dots = document.getElementById('portDots_mobile');
+
+    if (img) {
+      img.style.opacity = '0.35';
+      setTimeout(() => {
+        img.src = p.images[p.current];
+        img.style.opacity = '1';
+      }, 90);
+    }
+    if (count) count.innerText = (p.current + 1) + ' / ' + p.images.length;
+    if (dots) {
+      dots.querySelectorAll('.port-g-dot').forEach((d, i) => {
+        if (i === p.current) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
+  }
+
+  function renderMobileShowcase() {
+    const p = portfolioData[currentMobileProductIdx];
+    const title = document.getElementById('portTitle_mobile');
+    const desc = document.getElementById('portDesc_mobile');
+    const step = document.getElementById('portProductStep');
+    const tags = document.getElementById('portTags_mobile');
+    const tabBtns = document.querySelectorAll('.port-mobile-tab-btn');
+
+    if (title) title.innerText = p.title;
+    if (desc) desc.innerText = p.desc;
+    if (step) step.innerText = 'Anúncio ' + (currentMobileProductIdx + 1) + ' de ' + portfolioData.length;
+    
+    if (tags) {
+      tags.innerHTML = p.tags.map(t => `<span class="port-tag-pill">${t}</span>`).join('');
+    }
+
+    tabBtns.forEach((btn, i) => {
+      if (i === currentMobileProductIdx) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+
+    renderMobilePhoto();
+  }
+
+  // Touch swipe gesture no mobile
+  const mobileGalleryWrap = document.querySelector('.port-mobile-wrap .port-gallery-wrap');
+  if (mobileGalleryWrap) {
+    let startX = 0;
+    mobileGalleryWrap.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    mobileGalleryWrap.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 35) {
+        if (diff > 0) changeMobilePhoto(1);
+        else changeMobilePhoto(-1);
+      }
+    }, { passive: true });
+  }
+</script>
+<!-- ═══════════════════════════════════════════════════════════
+     SEÇÃO INVESTIMENTO & PLANOS (ISOLAMENTO DESKTOP / MOBILE INTUITIVO)
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .pricing-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 1. Isolamento Desktop / Mobile */
+  .pricing-desktop-wrap {
+    display: none;
+  }
+  .pricing-mobile-wrap {
+    display: block;
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    .pricing-desktop-wrap {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.25rem;
+      align-items: stretch;
+    }
+    .pricing-mobile-wrap {
+      display: none !important;
+    }
+  }
+
+  /* 2. Cards Padrão Desktop */
+  .pricing-card {
+    background: rgba(16, 12, 26, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.75rem;
+    padding: 2.75rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
+  .pricing-card:hover {
+    border-color: rgba(168, 85, 247, 0.45);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.15), 0 20px 45px rgba(0, 0, 0, 0.6);
+    transform: translateY(-4px);
+  }
+
+  /* Card Destaque Desktop */
+  .pricing-card.featured {
+    background: linear-gradient(180deg, rgba(88, 28, 135, 0.4) 0%, rgba(20, 15, 35, 0.8) 45%, rgba(10, 8, 18, 0.98) 100%);
+    border: 1.5px solid rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 45px rgba(168, 85, 247, 0.25), 0 20px 50px rgba(0, 0, 0, 0.7);
+  }
+  @media (min-width: 1024px) {
+    .pricing-card.featured {
+      transform: scale(1.03);
+      z-index: 2;
+    }
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 0 0 55px rgba(168, 85, 247, 0.4), 0 25px 60px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  /* Badge Superior */
+  .pricing-badge-top {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #9333ea, #c026d3);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 6px 18px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    white-space: nowrap;
+  }
+
+  /* Painel de Preços Clean & Sofisticado */
+  .pricing-price-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.25rem 1.4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+  }
+  .pricing-price-panel.featured {
+    background: rgba(147, 51, 234, 0.15);
+    border: 1.5px solid rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 25px rgba(147, 51, 234, 0.15);
+  }
+
+  /* Valor Principal Gigante (Por Anúncio) */
+  .pricing-unit-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+  .pricing-unit-cur {
+    font-family: ui-monospace, monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #c084fc;
+  }
+  .pricing-unit-num {
+    font-size: 2.85rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+  }
+  .pricing-unit-cents {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+  .pricing-unit-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  /* Linha Secundária do Total */
+  .pricing-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+    color: #94a3b8;
+  }
+  .pricing-total-row strong {
+    color: #f1f5f9;
+    font-weight: 700;
+  }
+
+  /* Selo de Economia Clean */
+  .pricing-save-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #34d399;
+    background: rgba(6, 78, 59, 0.55);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+
+  /* Ícone Circular de Check */
+  .pricing-check-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #c084fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .pricing-card.featured .pricing-check-icon,
+  .pricing-m-card.featured .pricing-check-icon {
+    background: rgba(192, 132, 252, 0.25);
+    border-color: rgba(216, 180, 254, 0.7);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+  }
+
+  /* Lista de Recursos / Benefícios com Espaçamento e Divisórias Claras */
+  .pricing-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pricing-features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.935rem;
+    line-height: 1.6;
+    padding-bottom: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    margin: 0;
+  }
+  .pricing-features-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Botões CTA */
+  .pricing-btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15.5px;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    margin-top: 2rem;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pricing-btn-secondary:hover, .pricing-btn-secondary:active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.6);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  }
+
+  .pricing-btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #9333ea 0%, #d946ef 100%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 16.5px;
+    letter-spacing: 0.02em;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    margin-top: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.45);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pricing-btn-primary:hover, .pricing-btn-primary:active {
+    background: linear-gradient(135deg, #a855f7 0%, #e879f9 100%);
+    box-shadow: 0 8px 35px rgba(168, 85, 247, 0.7);
+  }
+
+  /* 3. Estilos Específicos Mobile */
+  .pricing-m-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 6px;
+    margin-bottom: 1.5rem;
+  }
+  .pricing-m-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #9ca3af;
+    background: transparent;
+    border: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+  }
+  .pricing-m-tab-btn.active {
+    background: linear-gradient(135deg, #9333ea, #7e22ce);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(147, 51, 234, 0.4);
+  }
+  .pricing-m-tab-btn.active .m-tag {
+    color: #f5d0fe;
+  }
+  .pricing-m-tab-btn .m-tag {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  .pricing-m-card {
+    background: rgba(20, 16, 32, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(168, 85, 247, 0.3);
+    border-radius: 1.6rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    display: none;
+    animation: fadeInPlan 0.25s ease-out forwards;
+  }
+  .pricing-m-card.active {
+    display: flex;
+    flex-direction: column;
+  }
+  .pricing-m-card.featured {
+    background: linear-gradient(180deg, rgba(88, 28, 135, 0.45) 0%, rgba(22, 16, 40, 0.85) 45%, rgba(12, 10, 22, 0.98) 100%);
+    border-color: rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 35px rgba(168, 85, 247, 0.25), 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  @keyframes fadeInPlan {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pricing-m-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .pricing-m-nav-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: #e5e7eb;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pricing-m-nav-btn:active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.5);
+  }
+</style>
+
+<section id="investimento" class="w-full py-20 mt-20 scroll-mt-24 overflow-hidden">
+  <div class="pricing-wrapper px-4">
+    
+    <!-- Header da Seção com Linha Superior Branca e Inferior Roxa -->
+    <div class="text-center mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span style="font-size:11px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.14em;color:rgba(168,85,247,.95);background:rgba(124,58,237,.15);border:1px solid rgba(168,85,247,.3);border-radius:6px;padding:5px 18px;text-transform:uppercase">
+          [ INVESTIMENTO & PLANOS ]
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white max-w-4xl mx-auto px-2">
+        Enquanto você perde vendas com anúncios, <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--acc)] to-[var(--acc-2)]">seus concorrentes faturam.</span>
+      </h2>
+      <p class="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-4 px-2 leading-relaxed">
+        Escolha o pacote ideal para sua operação e aumente a conversão dos seus produtos.
+      </p>
     </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         1. LAYOUT DESKTOP (Garantido via @media min-width: 1024px)
+         ══════════════════════════════════════════════════════ -->
+    <div class="pricing-desktop-wrap">
+      
+      <!-- Plano 01 Desktop: Pacote Único -->
+      <div class="pricing-card">
+        <div class="pb-6 border-b border-white/10">
+          <span class="text-xs font-mono font-bold text-purple-400 tracking-wider uppercase">Entrada</span>
+          <h3 class="text-2xl font-bold text-white mt-1">Pacote Único</h3>
+          <p class="text-gray-400 text-sm mt-1">1 anúncio completo</p>
+
+          <div class="pricing-price-panel">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">129</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total a pagar: <strong>R$ 129,90</strong></span>
+              <span class="text-xs text-gray-400 font-mono">1 anúncio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-7 flex-grow">
+          <p class="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider mb-5">O que está incluso:</p>
+          <ul class="pricing-features-list text-gray-300">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">5 imagens profissionais e estratégicas</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Título + descrição otimizados para SEO</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Análise de mercado e gaps da concorrência</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório de publicação incluso</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega em até 72h</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20contratar%20o%20Pacote%20%C3%9Anico%20(1%20an%C3%BAncio)." target="_blank" rel="noopener noreferrer" class="pricing-btn-secondary">
+          Contratar Pacote Único
+        </a>
+      </div>
+
+      <!-- Plano 02 Desktop: Pacote Triplo -->
+      <div class="pricing-card">
+        <div class="pb-6 border-b border-white/10">
+          <span class="text-xs font-mono font-bold text-purple-400 tracking-wider uppercase">Mais Popular em Vendas</span>
+          <h3 class="text-2xl font-bold text-white mt-1">Pacote Triplo</h3>
+          <p class="text-gray-400 text-sm mt-1">3 anúncios completos</p>
+
+          <div class="pricing-price-panel">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">119</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total: <strong>R$ 359,70</strong> (3 anúncios)</span>
+              <span class="pricing-save-tag">Economize R$ 30,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-7 flex-grow">
+          <p class="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider mb-5">O que está incluso:</p>
+          <ul class="pricing-features-list text-gray-300">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed"><strong class="text-white">15 imagens profissionais</strong> (5 por anúncio)</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Títulos + descrições com SEO e gatilhos mentais</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Análise de mercado aprofundada</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório estratégico por anúncio</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega em até 60h úteis</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20contratar%20o%20Pacote%20Triplo%20(3%20an%C3%BAncios)." target="_blank" rel="noopener noreferrer" class="pricing-btn-secondary">
+          Contratar Pacote Triplo
+        </a>
+      </div>
+
+      <!-- Plano 03 Desktop: Pacote Máximo (Destaque) -->
+      <div class="pricing-card featured">
+        <span class="pricing-badge-top">[ MAIS ESCOLHIDO ]</span>
+
+        <div class="pb-6 border-b border-purple-500/25 mt-1">
+          <span class="text-xs font-mono font-bold text-fuchsia-300 tracking-wider uppercase">Melhor Custo-Benefício</span>
+          <h3 class="text-2xl font-black text-white mt-1">Pacote Máximo</h3>
+          <p class="text-purple-200 text-sm mt-1">5 anúncios completos</p>
+
+          <div class="pricing-price-panel featured">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">109</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total: <strong>R$ 549,50</strong> (5 anúncios)</span>
+              <span class="pricing-save-tag">Economize R$ 100,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-7 flex-grow">
+          <p class="text-xs font-mono font-bold text-purple-300 uppercase tracking-wider mb-5">O que está incluso:</p>
+          <ul class="pricing-features-list text-gray-100">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed"><strong class="text-white">25 imagens profissionais</strong> (5 por anúncio)</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">SEO avançado para ranqueamento no algoritmo</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Benchmarking completo dos top sellers</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório executivo + estratégia de palavras-chave</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega prioritária em até 48h úteis</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Suporte direto pós-entrega por 30 dias</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20garantir%20o%20Pacote%20M%C3%A1ximo%20(5%20an%C3%BAncios)." target="_blank" rel="noopener noreferrer" class="pricing-btn-primary">
+          Garantir Pacote Máximo
+        </a>
+      </div>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         2. LAYOUT MOBILE INTUITIVO (+30 ANOS / TOUCH FÁCIL)
+         ══════════════════════════════════════════════════════ -->
+    <div class="pricing-mobile-wrap" id="pricingMobileContainer">
+      
+      <!-- Seletor de Planos no Topo -->
+      <div class="pricing-m-tabs">
+        <button type="button" class="pricing-m-tab-btn" onclick="switchPricingMobilePlan(0)">
+          <span>1 Anúncio</span>
+          <span class="m-tag">R$ 129,90</span>
+        </button>
+        <button type="button" class="pricing-m-tab-btn" onclick="switchPricingMobilePlan(1)">
+          <span>3 Anúncios</span>
+          <span class="m-tag">R$ 119,90/un</span>
+        </button>
+        <button type="button" class="pricing-m-tab-btn active" onclick="switchPricingMobilePlan(2)">
+          <span>⭐ 5 Anúncios</span>
+          <span class="m-tag">Mais Escolhido</span>
+        </button>
+      </div>
+
+      <!-- Card Mobile 0: Pacote Único -->
+      <div class="pricing-m-card" id="pricingMCard0">
+        <div class="pb-6 border-b border-white/10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">Plano Inicial</span>
+            <span class="text-xs text-gray-400 font-medium">1 anúncio</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mt-1.5">Pacote Único</h3>
+
+          <div class="pricing-price-panel mt-4">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">129</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total a pagar: <strong>R$ 129,90</strong></span>
+              <span class="text-xs text-gray-400 font-mono">1 anúncio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-6">
+          <p class="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider mb-4">O que você recebe:</p>
+          <ul class="pricing-features-list text-gray-200">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">5 imagens profissionais e estratégicas</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Título + descrição otimizados para SEO</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Análise de concorrência e gaps de vendas</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório de publicação incluso</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega em até 72h</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20contratar%20o%20Pacote%20%C3%9Anico%20(1%20an%C3%BAncio)." target="_blank" rel="noopener noreferrer" class="pricing-btn-secondary">
+          Contratar Pacote Único
+        </a>
+      </div>
+
+      <!-- Card Mobile 1: Pacote Triplo -->
+      <div class="pricing-m-card" id="pricingMCard1">
+        <div class="pb-6 border-b border-white/10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">Mais Popular</span>
+            <span class="text-xs text-gray-400 font-medium">3 anúncios</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mt-1.5">Pacote Triplo</h3>
+
+          <div class="pricing-price-panel mt-4">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">119</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total: <strong>R$ 359,70</strong> (3 anúncios)</span>
+              <span class="pricing-save-tag">Economize R$ 30,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-6">
+          <p class="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider mb-4">O que você recebe:</p>
+          <ul class="pricing-features-list text-gray-200">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed"><strong class="text-white">15 imagens profissionais</strong> (5 por anúncio)</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Títulos + descrições com SEO e gatilhos mentais</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Análise de mercado aprofundada</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório estratégico por anúncio</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega em até 60h úteis</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20contratar%20o%20Pacote%20Triplo%20(3%20an%C3%BAncios)." target="_blank" rel="noopener noreferrer" class="pricing-btn-secondary">
+          Contratar Pacote Triplo
+        </a>
+      </div>
+
+      <!-- Card Mobile 2: Pacote Máximo (Destaque) -->
+      <div class="pricing-m-card featured active" id="pricingMCard2">
+        <div class="pb-6 border-b border-purple-500/25">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-fuchsia-300 uppercase tracking-wider">[ MAIS ESCOLHIDO ]</span>
+            <span class="text-xs text-purple-200 font-medium">5 anúncios</span>
+          </div>
+          <h3 class="text-2xl font-black text-white mt-1.5">Pacote Máximo</h3>
+
+          <div class="pricing-price-panel featured mt-4">
+            <div class="pricing-unit-wrap">
+              <span class="pricing-unit-cur">R$</span>
+              <span class="pricing-unit-num">109</span>
+              <span class="pricing-unit-cents">,90</span>
+              <span class="pricing-unit-label">/ anúncio</span>
+            </div>
+            <div class="pricing-total-row">
+              <span>Total: <strong>R$ 549,50</strong> (5 anúncios)</span>
+              <span class="pricing-save-tag">Economize R$ 100,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-6">
+          <p class="text-xs font-mono font-bold text-purple-300 uppercase tracking-wider mb-4">O que você recebe:</p>
+          <ul class="pricing-features-list text-gray-100">
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed"><strong class="text-white">25 imagens profissionais</strong> (5 por anúncio)</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">SEO avançado para ranqueamento no algoritmo</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Benchmarking completo dos top sellers</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Relatório executivo + estratégia de palavras-chave</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Entrega prioritária em até 48h úteis</span>
+            </li>
+            <li>
+              <div class="pricing-check-icon">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="leading-relaxed">Suporte direto pós-entrega por 30 dias</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="https://wa.me/5519994772654?text=Ol%C3%A1%20David!%20Quero%20garantir%20o%20Pacote%20M%C3%A1ximo%20(5%20an%C3%BAncios)." target="_blank" rel="noopener noreferrer" class="pricing-btn-primary">
+          Garantir Pacote Máximo
+        </a>
+      </div>
+
+      <!-- Navegação Entre Planos (Mobile) -->
+      <div class="pricing-m-nav">
+        <button type="button" class="pricing-m-nav-btn" onclick="prevPricingMobilePlan()">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          <span>Plano Anterior</span>
+        </button>
+        <button type="button" class="pricing-m-nav-btn" onclick="nextPricingMobilePlan()">
+          <span>Próximo Plano</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
 </section>
+
+<!-- Script do Seletor Mobile de Preços -->
+<script>
+  let currentPricingPlan = 2; // Padrão: Pacote Máximo (Mais Escolhido)
+  
+  function switchPricingMobilePlan(index) {
+    currentPricingPlan = index;
+    
+    // Atualizar Tabs
+    const tabs = document.querySelectorAll('.pricing-m-tab-btn');
+    tabs.forEach((tab, i) => {
+      if (i === index) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    // Atualizar Cards
+    for (let i = 0; i < 3; i++) {
+      const card = document.getElementById('pricingMCard' + i);
+      if (card) {
+        if (i === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      }
+    }
+  }
+
+  function prevPricingMobilePlan() {
+    let prev = currentPricingPlan - 1;
+    if (prev < 0) prev = 2;
+    switchPricingMobilePlan(prev);
+  }
+
+  function nextPricingMobilePlan() {
+    let next = currentPricingPlan + 1;
+    if (next > 2) next = 0;
+    switchPricingMobilePlan(next);
+  }
+
+  // Suporte a swipe no mobile
+  const pricingMContainer = document.getElementById('pricingMobileContainer');
+  if (pricingMContainer) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    pricingMContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    pricingMContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 45) {
+        if (diff > 0) {
+          prevPricingMobilePlan();
+        } else {
+          nextPricingMobilePlan();
+        }
+      }
+    }, { passive: true });
+  }
+</script>
 <!-- Depoimentos - Versão natural, sem redundâncias, com 2 menções ao grupo -->
 <section id="depoimentos" class="mx-auto max-w-7xl px-4 mt-24 scroll-mt-24">
     <div class="relative rounded-3xl bg-gradient-to-br from-purple-900/20 via-black/40 to-purple-800/10 p-8 md:p-12 ring-1 ring-purple-500/30 shadow-2xl overflow-hidden">
@@ -1073,6 +3758,95 @@
 </footer>
 
     <script>
+        // ── Metodologia Carousel ──────────────────────────────────────
+        (function(){
+          var row   = document.getElementById('metRow');
+          var nav   = document.getElementById('metNav');
+          var prevBtn = document.getElementById('metPrev');
+          var nextBtn = document.getElementById('metNext');
+          var dotsW = document.getElementById('metDots');
+          if (!row || !nav) return;
+
+          var cards = Array.prototype.slice.call(row.querySelectorAll('.met-card-wrap'));
+          var total = cards.length;
+          var cur   = 0;
+          var dots  = [];
+          var isScrolling = false;
+
+          // Build dots
+          dotsW.innerHTML = '';
+          for (var i = 0; i < total; i++) {
+            var d = document.createElement('button');
+            d.className = 'met-nav-dot' + (i === 0 ? ' active' : '');
+            d.setAttribute('aria-label', 'Etapa ' + (i + 1));
+            (function(idx) {
+              d.addEventListener('click', function() { goTo(idx); });
+            })(i);
+            dotsW.appendChild(d);
+            dots.push(d);
+          }
+
+          function goTo(idx) {
+            if (idx < 0) idx = 0;
+            if (idx >= total) idx = total - 1;
+            cur = idx;
+            isScrolling = true;
+            var targetCard = cards[cur];
+            if (targetCard) {
+              var scrollPos = targetCard.offsetLeft - (row.offsetWidth - targetCard.offsetWidth) / 2;
+              row.scrollTo({ left: Math.max(0, scrollPos), behavior: 'smooth' });
+            }
+            updateUI();
+            setTimeout(function() { isScrolling = false; }, 400);
+          }
+
+          function updateUI() {
+            dots.forEach(function(d, i) {
+              d.className = 'met-nav-dot' + (i === cur ? ' active' : '');
+            });
+            prevBtn.disabled = cur === 0;
+            nextBtn.disabled = cur === total - 1;
+          }
+
+          prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            goTo(cur - 1);
+          });
+          nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            goTo(cur + 1);
+          });
+
+          // Sync on manual swipe
+          row.addEventListener('scroll', function() {
+            if (isScrolling) return;
+            var rowCenter = row.scrollLeft + row.offsetWidth / 2;
+            var closestIdx = 0;
+            var minDiff = Infinity;
+            cards.forEach(function(card, i) {
+              var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+              var diff = Math.abs(rowCenter - cardCenter);
+              if (diff < minDiff) {
+                minDiff = diff;
+                closestIdx = i;
+              }
+            });
+            if (closestIdx !== cur) {
+              cur = closestIdx;
+              updateUI();
+            }
+          });
+
+          function showHideNav() {
+            var isMobile = window.innerWidth < 768;
+            nav.style.display = isMobile ? 'flex' : 'none';
+          }
+          showHideNav();
+          window.addEventListener('resize', showHideNav);
+          goTo(0);
+        })();
+        // ─────────────────────────────────────────────────────────────
+
         // Menu Mobile Toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');

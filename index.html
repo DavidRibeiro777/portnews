@@ -238,11 +238,11 @@
             <div class="carousel-indicator"></div>
         </div>
         <div class="carousel-images" id="main-carousel">
-            <img src="img/toalha1.jpg" alt="Edição profissional" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/toalha.jpg" alt="Composição criativa" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/parafuso.png" alt="Infográfico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/paleta.jpg" alt="Destaque estratégico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
-            <img src="img/teste5.png" alt="Destaque estratégico" class="carousel-image" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/toalha1.webp" alt="Edição profissional" class="carousel-image" width="1200" height="1480" loading="eager" fetchpriority="high" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/toalha.webp" alt="Composição criativa" class="carousel-image" width="1200" height="1480" loading="eager" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/parafuso.webp" alt="Infográfico" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/paleta.webp" alt="Destaque estratégico" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
+            <img src="img/teste5.webp" alt="Destaque estratégico" class="carousel-image" width="1200" height="1480" loading="lazy" decoding="async" style="object-fit: contain; background: #0a0a0c;" />
         </div>
     </div>
 </div>
@@ -3951,6 +3951,28 @@
                 indicatorsSmall.forEach((ind, i) => ind.classList.toggle('active', i === idx));
             }, 3000 + Math.random() * 1000);
         });
+
+        // Pré-carregamento imediato de imagens em memória
+        (function preloadCarouselImages() {
+            const list = [
+                'img/toalha1.webp', 'img/toalha.webp', 'img/parafuso.webp', 'img/paleta.webp', 'img/teste5.webp',
+                'img/compatibilidade.webp', 'img/alicate.webp', 'img/31321.webp', 'img/estojo f.webp',
+                'img/capa chuteira olimpia.webp', 'img/tenis.webp', 'img/teste1.webp',
+                'img/placa de video.webp', 'img/telefone2.webp', 'img/adaptadorhdmi.webp',
+                'img/minnecessaire.webp', 'img/removex.webp', 'img/toucacozinha.webp',
+                'img/stanley.webp', 'img/copo.webp', 'img/puffs kit1.webp',
+                'img/macaquin.webp', 'img/mindboost1.webp', 'img/bolacorin.webp',
+                'img/lençolinfantil.webp', 'img/chuteira.webp', 'img/kit goleiro infantil4.webp',
+                'img/calculadora.webp', 'img/relatos.webp',
+                'img/kit goleiro infantil.webp', 'img/kit_goleiro_infantil2_otimizado.webp', 'img/kit goleiro infantil3.webp', 'img/kit goleiro infantil5.webp',
+                'img/puffs kit2.webp', 'img/puffskit3.webp', 'img/puffskit4.webp', 'img/puffskit6.webp',
+                'img/espelho1.webp', 'img/espelho2.webp', 'img/espelho3.webp', 'img/espelho4.webp', 'img/espelho5.webp'
+            ];
+            list.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        })();
 
         // Anti-copy
         document.addEventListener('contextmenu', e => e.preventDefault());
